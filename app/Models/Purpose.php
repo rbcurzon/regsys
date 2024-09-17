@@ -12,4 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 class Purpose extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'purpose_id';
 }

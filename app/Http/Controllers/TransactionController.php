@@ -6,23 +6,29 @@ use App\Models\Course;
 use App\Models\Document;
 use App\Models\Purpose;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use function Laravel\Prompts\table;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        if (Auth::guest())
-        {
-            return redirect('/login');
-        }
-        $transactions = Transaction::with('user_id')->latest();
+
+        $transactions = Transaction::query('transactions')
+        ->join('documents', 'transactions.type_id', '=', 'documents.document_id')
+        ->where('transactions.user_id', Auth::id())
+        ->paginate(5);
+
+//        $transactions = Transaction::with('user')->paginate(5);
 
         return view ('transactions.index', [
-            'transactions' => Transaction::all()
+            'transactions' => $transactions
         ]);
 
     }
@@ -36,45 +42,50 @@ class TransactionController extends Controller
     }
 
     public function show(Transaction $transaction){
-        $transaction->purpose = Purpose::find($transaction->purpose_id)->name;
-        $transaction->type = Document::find($transaction->type_id)->name;
-        $transaction->program_code = Course::find($transaction->course_id)->course_code;
+        $transaction->purpose = Purpose::find($transaction->purpose_id)->purpose_name;
+        $transaction->type = Document::find($transaction->type_id)->document_name;
+        $transaction->program_code = Course::find($transaction->course_id)->code;
+
+//        dd($transaction->attributesToArray());
+
         return view('transactions.show', ['transaction' => $transaction]);
 
     }
     public function store(Request $request){
+
+//        dd($request->all());
+
         request()->validate([
             'user_id' => 'required',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'year_level' => 'required',
             'course_id' => 'required',
-            'section_id' => 'required',
-            'date_requested' => 'required',
+            'section' => 'required',
             'date_needed' => 'required',
-            'purpose_id' => 'required',
-            'type_id' => 'required',
+            'purpose_id' => 'required | gte:0',
+            'type_id' => 'required | gte:0',
         ]);
 
         Transaction::create([
             'user_id' => request('user_id'),
-            'name' => request('name'),
+            'name' => request('first_name') . " " . request('last_name'),
             'year_level' => request('year_level'),
             'course_id' => request('course_id'),
-            'section_id' => request('section_id'),
-            'date_requested' => request('date_requested'),
+            'section' => request('section'),
+            'date_requested' => Carbon::now('Asia/Manila'),
             'date_needed' => request('date_needed'),
             'purpose_id' => request('purpose_id'),
             'type_id' => request('type_id'),
         ]);
 
-        return redirect('/transactions');
+        return redirect('/');
 
     }
 
     public function edit(Transaction $transaction)
     {
-
-        //        Gate::authorize('edit-transaction', $transaction);
+//        dd($transaction->attributesToArray());
 
         $request_purposes = Purpose::all();
         $documents = Document::all();
@@ -87,10 +98,9 @@ class TransactionController extends Controller
     {
         request()->validate([
             'user_id' => ['required'],
-            'name' => ['required'],
             'year_level' => ['required'],
             'course_id' => ['required'],
-            'section_id' => ['required'],
+            'section' => ['required'],
             'date_requested' => ['required'],
             'date_needed' => ['required'],
             'purpose_id' => ['required'],
@@ -99,10 +109,9 @@ class TransactionController extends Controller
 
         $transaction->update([
             'user_id' => request()->integer('user_id'),
-            'name' => request('name'),
             'year_level' => request('year_level'),
             'course_id' => request('course_id'),
-            'section_id' => request('section_id'),
+            'section' => request('section'),
             'date_requested' => request('date_requested'),
             'date_needed' => request('date_needed'),
             'purpose_id' => request()->integer('purpose_id'),
@@ -115,6 +124,6 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction){
         $transaction->delete();
 
-        return redirect('/transactions');
+        return redirect('/');
     }
 }

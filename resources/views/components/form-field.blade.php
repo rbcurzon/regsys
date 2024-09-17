@@ -1,3 +1,3 @@
-<div class="col">
+<div {{ $attributes->merge() }}>
     {{ $slot }}
 </div>

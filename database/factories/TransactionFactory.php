@@ -22,13 +22,13 @@ class TransactionFactory extends Factory
         return [
             'user_id' => fake()->numberBetween(1, 10),
             'name' => fake()->name(),
-            'course_id' => $course->id,
-            'section_id' => $year_level . '-' . $course->code,
+            'course_id' => $course->course_id,
+            'section' => $year_level . '-' . $course->code,
             'year_level' => $year_level,
             'date_requested' => fake()->date(),
             'date_needed' => fake()->date(),
-            'purpose_id' => \App\Models\Purpose::inRandomOrder()->first()->id,
-            'type_id' => \App\Models\Document::inRandomOrder()->first()->id,
+            'purpose_id' => \App\Models\Purpose::inRandomOrder()->first()->purpose_id,
+            'type_id' => \App\Models\Document::inRandomOrder()->first()->document_id,
             'status' => $status[array_rand($status)],
             ];
     }

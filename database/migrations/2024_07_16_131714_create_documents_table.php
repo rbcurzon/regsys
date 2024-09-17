@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id($column="document_id");
+            $table->string('document_name');
             // $table->string('path');
             $table->timestamps();
         });

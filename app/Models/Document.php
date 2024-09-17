@@ -12,4 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'document_id';
 }

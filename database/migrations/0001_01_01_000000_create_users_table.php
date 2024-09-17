@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('year_level');
+            $table->foreignIdFor(\App\Models\Course::class, 'course_id');
+
+            $table->string("section");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

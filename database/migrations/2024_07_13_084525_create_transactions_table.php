@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class,'user_id');
             $table->string('name');
             $table->foreignIdFor(Course::class,'course_id');
-            $table->integer('section_id');
+            $table->integer('section');
             $table->integer('year_level');
             $table->date('date_requested');
             $table->date('date_needed');

@@ -1,95 +1,152 @@
+@php use App\Models\Course;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\URL; @endphp
 <x-layout>
-    <form method="POST" action="/transactions">
-        @csrf
-        <h2 class="text-base font-semibold leading-7 text-gray-900">Create a Transaction</h2>
-        <div class="row">
-            <div class="row">
-                <x-form-field>
-                    <label for="user_id" class="col-sm-2 col-form-label">Id</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="user_id" name="user_id" placeholder="user_id"
-                               value= {{ Auth::id() }} readonly>
-                    </div>
-                </x-form-field>
+    <div class="w-2/4 m-auto">
+        <form method="POST" action="/transactions">
+            @csrf
+            <div class="space-y-12">
+                {{--User information start--}}
+                <div class="border-b border-gray-900/10 pb-12">
+                    <h2 class="text-base font-semibold  leading-7 text-gray-900">User Information</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Use real information.</p>
 
-                <x-form-field>
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="name" value="{{ \Illuminate\Support\Facades\Auth::user()->last_name }}"
-                               readonly>
-                    </div>
-                </x-form-field>
-                <div class="col">
-                    <label for="year_level" class="col-sm-2 col-form-label">Year</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="year_level" name="year_level"
-                               placeholder="year_level"
-                               value="1" readonly>
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                        <div class="sm:col-span-3">
+                            <label for="first-nam_" class="block text-sm font-medium leading-6 text-gray-900">
+                                First name
+                            </label>
+                            <div class="mt-2">
+                                <input type="text" name="first_name" id="first_name" autocomplete="first_name"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       value="{{ Auth::user()->first_name }}">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="last_name" class="block text-sm font-medium leading-6 text-gray-900">Last
+                                name</label>
+                            <div class="mt-2">
+                                <input type="text" name="last_name" id="last_name" autocomplete="last_name"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       value="{{ Auth::user()->last_name }}">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="year_level"
+                                   class="block text-sm font-medium leading-6 text-gray-900">Year level</label>
+                            <div class="mt-2">
+                                <select id="year_level" name="year_level" autocomplete="year_level"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="course" class="block text-sm font-medium leading-6 text-gray-900">
+                                Course
+                            </label>
+                            <div class="mt-2">
+                                <input type="text" name="course" id="course" autocomplete="course"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       value="{{ Course::find(Auth::user()->course_id)->code }}">
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="section" class="block text-sm font-medium leading-6 text-gray-900">
+                                Section
+                            </label>
+                            <div class="mt-2">
+                                <input type="text" name="section" id="section" autocomplete="section"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       value="{{ Auth::user()->section }}">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
+                {{--User Information End--}}
 
-        <div class="row">
-            <div class="row">
-                <x-form-field>
-                    <label for="course_id" class="col-sm-2 col-form-label">Course</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="course_id" name="course_id" placeholder="course_id"
-                               value="1" readonly>
+                {{--Transaction Information Start--}}
+                <div class="border-b border-gray-900/10 pb-12">
+                    <h2 class="text-base font-semibold  leading-7 text-gray-900">Transaction Information</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Use real information.</p>
+
+                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                        {{--Purpose start--}}
+                        <div class="sm:col-span-3">
+                            <label for="purpose_id"
+                                   class="block text-sm font-medium leading-6 text-gray-900">Purpose</label>
+                            <div class="mt-2">
+                                <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        autocomplete="purpose_id">
+                                    <option style="display: none" value="-1">--select an option--</option>
+                                    @foreach($request_purposes as $request_purpose)
+                                        <option
+                                            value="{{$request_purpose->purpose_id}}">{{ $request_purpose->purpose_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('purpose_id')
+                                <p class="text-red-900 italic">Select your option.</p>
+                                @enderror
+                            </div>
+                        </div>
+                        {{--Purpose end--}}
+                        <div class="sm:col-span-3">
+                            <label for="type_id"
+                                   class="block text-sm font-medium leading-6 text-gray-900">Request</label>
+                            <div class="mt-2">
+                                <select id="type_id" name="type_id"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        autocomplete="type_id">
+                                    <option style="display: none" value="-1">--select an option--</option>
+                                    @foreach($documents as $document)
+                                        <option
+                                            value="{{$document->document_id}}">{{ $document->document_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('type_id')
+                                <p class="text-red-900 italic">Select your option.</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2 sm:col-start-1">
+                            <label for="date_needed" class="block text-sm font-medium leading-6 text-gray-900">Date
+                                needed</label>
+                            <div class="mt-2">
+                                <input type="date" name="date_needed" id="date_needed" autocomplete="address-level2"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            </div>
+                            @error('date_needed')
+                            <p class="text-red-900 italic">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                </x-form-field>
+                </div>
+                {{--Transaction Information End--}}
 
-                <x-form-field >
-                    <label for="section_id" class="col-sm-2 col-form-label">Section</label>
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="section_id" name="section_id"
-                               placeholder="section_id"
-                               value="1"
-                               readonly>
-                    </div>
-                </x-form-field>
             </div>
-        </div>
-
-
-        <div class="row">
-            <x-form-field>
-                <label for="date_needed" class="col-sm-3 col-form-label">Date Needed</label>
-                <x-form-input type="date" id="date_needed" name="date_needed"
-                              placeholder="date needed"/>
-
-                <x-form-error name="date_needed"/>
-            </x-form-field>
-            <x-form-field>
-                <label for="date_requested" class="col-sm-3 col-form-label">Date Requested</label>
-
-                <x-form-input type="date" id="date_requested" name="date_requested"
-                              placeholder="date"/>
-
-                <x-form-error name="date_requested"/>
-            </x-form-field>
-        </div>
-        <div class="row">
-            <fieldset class="mb-3 col-sm">
-                <legend class="col-form-label col-sm-2 pt-0 ">Purpose</legend>
-                <select class="form-select" name="type_id">
-                    @foreach ($request_purposes as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }} </option>
-                    @endforeach
-                </select>
-            </fieldset>
-            <fieldset class="mb-3 col-sm">
-                <legend class="col-form-label c5l-sm-2 pt-0">Type</legend>
-                <select class="form-select" id="purpose_id" name="purpose_id">
-                    @foreach ($documents as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </fieldset>
-        </div>
-        <div class="d-flex justify-content-end">
-            <x-form-button type="submit" value="Submit"/>
-        </div>
-    </form>
+            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+            <input type="hidden" name="course_id" value="{{ Auth::user()->course_id }}">
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+                <a
+                    class="text-sm font-semibold leading-6 text-gray-900"
+                    href="{{ URL::previous() }}">Back</a>
+                <button
+                    type="submit"
+                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >Submit
+                </button>
+            </div>
+        </form>
+        @foreach($errors->all() as $message)
+            <p class="accent-red-900">{{ $message }}</p>
+        @endforeach
+    </div>
 </x-layout>
