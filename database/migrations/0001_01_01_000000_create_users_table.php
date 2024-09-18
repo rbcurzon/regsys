@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('year_level');
             $table->foreignIdFor(\App\Models\Course::class, 'course_id');
-
             $table->string("section");
             $table->string('email')->unique();
+            $table->boolean('isAdmin')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

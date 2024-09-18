@@ -24,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        Gate::define("edit-transaction", function (User $user, Transaction $transaction) {
+        Gate::define("edit-transaction", function (User $user,Transaction $transaction) {
             return $transaction->user()->is($user);
+        });
+
+        Gate::define("edit-transactions", function (User $user, Transaction $transactions) {
+            return $user->isAdmin;
         });
 
     }

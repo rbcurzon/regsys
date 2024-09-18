@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'test@example.com',
+            'isAdmin' => true,
         ]);
 
         $document_lists = [

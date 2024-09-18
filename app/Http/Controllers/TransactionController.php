@@ -13,26 +13,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use phpDocumentor\Reflection\Types\Null_;
 use function Laravel\Prompts\table;
 
 class TransactionController extends Controller
 {
     public function index()
     {
+        $transactions = [];
 
-        $transactions = Transaction::query('transactions')
-        ->join('documents', 'transactions.type_id', '=', 'documents.document_id')
-        ->where('transactions.user_id', Auth::id())
-        ->paginate(5);
+        if (Auth::user()->isAdmin) {
+            $transactions = Transaction::query()
+                ->select('*')
+                ->paginate(5);
+            return view('transactions.admin_index', ['transactions' => $transactions]);
 
-//        $transactions = Transaction::with('user')->paginate(5);
+        } elseif ((Auth::user()->isAdmin) == false)
 
-        return view ('transactions.index', [
-            'transactions' => $transactions
-        ]);
-
+            $transactions = Transaction::query()
+                ->select('*')
+                ->where('user_id', Auth::id())
+                ->paginate(5);
+        return view('transactions.index', ['transactions' => $transactions]);
     }
-    public function create()
+
+    public
+    function create()
     {
         $request_purposes = Purpose::all();
         $documents = Document::all();
@@ -41,7 +47,9 @@ class TransactionController extends Controller
 
     }
 
-    public function show(Transaction $transaction){
+    public
+    function show(Transaction $transaction)
+    {
         $transaction->purpose = Purpose::find($transaction->purpose_id)->purpose_name;
         $transaction->type = Document::find($transaction->type_id)->document_name;
         $transaction->program_code = Course::find($transaction->course_id)->code;
@@ -51,7 +59,10 @@ class TransactionController extends Controller
         return view('transactions.show', ['transaction' => $transaction]);
 
     }
-    public function store(Request $request){
+
+    public
+    function store(Request $request)
+    {
 
 //        dd($request->all());
 
@@ -83,7 +94,8 @@ class TransactionController extends Controller
 
     }
 
-    public function edit(Transaction $transaction)
+    public
+    function edit(Transaction $transaction)
     {
 //        dd($transaction->attributesToArray());
 
@@ -94,7 +106,8 @@ class TransactionController extends Controller
         return view('transactions.edit', ['transaction' => $transaction, 'request_purposes' => $request_purposes, 'documents' => $documents]);
     }
 
-    public function update(Transaction $transaction, Request $request)
+    public
+    function update(Transaction $transaction, Request $request)
     {
         request()->validate([
             'user_id' => ['required'],
@@ -121,7 +134,10 @@ class TransactionController extends Controller
         return redirect("/transactions/" . $transaction->id . "/edit");
 
     }
-    public function destroy(Transaction $transaction){
+
+    public
+    function destroy(Transaction $transaction)
+    {
         $transaction->delete();
 
         return redirect('/');

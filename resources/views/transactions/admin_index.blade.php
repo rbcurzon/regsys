@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 @foreach ($transactions as $transaction)
-                    @can("edit-transaction", $transaction)
+                    @can("edit-transactions", $transaction)
                         <tr  class="hover:bg-blue-200">
                             <td class="border border-gray-200 px-3 py-2">{{ $transaction->id }}</td>
                             <td class="border border-gray-200 px-3 py-2">{{ $transaction->user_id }}</td>
