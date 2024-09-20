@@ -27,3 +27,8 @@ test('user has many', function () {
 
     expect($user->transaction->count())->toBe(5);
 });
+
+test('can destroy', function () {
+    $user = \App\Models\User::factory()->create();
+
+});

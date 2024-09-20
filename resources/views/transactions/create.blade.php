@@ -145,8 +145,5 @@
                 </button>
             </div>
         </form>
-        @foreach($errors->all() as $message)
-            <p class="accent-red-900">{{ $message }}</p>
-        @endforeach
     </div>
 </x-layout>

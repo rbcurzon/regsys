@@ -27,7 +27,7 @@ Route::patch('/transactions/{transaction}', [TransactionController::class, 'upda
     ->can("edit-transaction", "transaction");
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
     ->middleware('auth')
-    ->can("edit-transaction", "transaction");
+    ->can("edit-transactions", "transaction");
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create']);
