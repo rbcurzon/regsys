@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SessionController;
 use App\Models\Course;
@@ -11,6 +12,8 @@ Route::get('/test', function () {
     $courses = Course::all();
     return view('register', ['courses' => $courses]);
 });
+
+Route::get('/search', SearchController::class);
 
 //Route::resource("transactions", TransactionController::class);
 Route::get('/', [TransactionController::class, 'index'])->middleware('auth');

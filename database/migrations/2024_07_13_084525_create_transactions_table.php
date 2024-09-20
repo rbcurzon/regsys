@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Models\Course;
 use App\Models\Document;

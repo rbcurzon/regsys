@@ -3,12 +3,12 @@
 
 <x-layout>
     <div class="w-5/6 ms-auto me-0 px-4">
-            <div class="mb-2 flex justify-center">
-                <form action="/search">
-                    <input class="rounded-s-full" type="text" name="q" id="q">
-                    <input class="border rounded-e-full p-2 px-4 bg-[#2563eb] text-white" type="submit" value="Search" >
-                </form>
-            </div>
+        <div class="mb-2 flex justify-center">
+            <form action="/search">
+                <input class="rounded-s-full" type="text" name="q" id="q">
+                <input class="border rounded-e-full p-2 px-4 bg-[#2563eb] text-white" type="submit" value="Search" >
+            </form>
+        </div>
         <div class="flex-grow overflow-y-auto">
             <table class="w-full">
                 <thead>
