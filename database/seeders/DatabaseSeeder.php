@@ -23,28 +23,28 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'test@example.com',
-            'isAdmin' => true,
+            'is_admin' => true,
         ]);
 
         $document_lists = [
-            ['document_name' => 'copy_diploma', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_enrollment', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_gwa', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_grades', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_graduation', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_latin', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_units', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_auth', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_copy', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'completion_grades', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'computerized_card', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'course_description', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'endorsement_letter', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'english_medium', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'honorable_dismissal', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'form137a_tor', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'spes_certification', 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'transcript_records', 'created_at' => now(), 'updated_at' => now()]
+            ['document_name' => 'copy_diploma', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_enrollment', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_gwa', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_graduation', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_latin', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_units', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_auth', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'cert_copy', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'completion_grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'computerized_card', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'course_description', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'endorsement_letter', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'english_medium', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'honorable_dismissal', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'form137a_tor', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'spes_certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'transcript_records', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()]
         ];
 
         Document::insert($document_lists);

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Document;
+use App\Models\Purpose;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,18 +19,12 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         $status = ['pending', 'processing', 'releasing'];
-        $year_level = fake()->numberBetween(1, 5);
-        $course = \App\Models\Course::inRandomOrder()->first();
         return [
             'user_id' => fake()->numberBetween(1, 10),
-            'name' => fake()->name(),
-            'course_id' => $course->course_id,
-            'section' => $year_level . '-' . $course->code,
-            'year_level' => $year_level,
-            'date_requested' => fake()->date(),
-            'date_needed' => fake()->date(),
-            'purpose_id' => \App\Models\Purpose::inRandomOrder()->first()->purpose_id,
-            'type_id' => \App\Models\Document::inRandomOrder()->first()->document_id,
+            'requested_date' => fake()->date(),
+            'needed_date' => fake()->date(),
+            'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,
+            'doc_type_id' => Document::inRandomOrder()->first()->document_id,
             'status' => $status[array_rand($status)],
             ];
     }

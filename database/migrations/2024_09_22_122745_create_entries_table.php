@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
-            $table->id($column="document_id");
-            $table->string('document_name');
-            $table->integer('cost');
+        Schema::create('entries', function (Blueprint $table) {
+            $table->id('entry_id');
+            $table->foreignIdFor(Transaction::class, 'transaction_id');
+            $table->integer('amount');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('entries');
     }
 };

@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+//    protected $primaryKey = 'user_id';
     public function getTransactions() {
         if (Auth::user()->isAdmin)
         {
@@ -29,6 +30,8 @@ class User extends Authenticatable
             return $transactions;
         }
     }
+
+
 
     public function transaction()
     {
