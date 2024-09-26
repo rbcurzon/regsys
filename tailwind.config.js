@@ -5,11 +5,17 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-      require('@tailwindcss/forms'),
-  ],
+    theme: {
+        extend: {
+            colors: {
+                blue: {
+                    900: '#221c66'
+                }
+            },
+        },
+    },
+    plugins: [
+        require('@tailwindcss/forms'),
+    ],
 }
 

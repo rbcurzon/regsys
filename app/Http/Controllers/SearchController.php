@@ -14,7 +14,7 @@ class SearchController extends Controller
         ->orWhere("status", "LIKE", "%".request('q')."%")
         ->paginate(5);
 
-        return view('results', ['transactions' => $transactions]);
+        return view('results', ['transactions' => $transactions, 'q' => request('q')]);
 
     }
 }

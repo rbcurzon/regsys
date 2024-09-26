@@ -18,30 +18,11 @@ use function Laravel\Prompts\table;
 
 class TransactionController extends Controller
 {
-
-//    public function index()
-//    {
-//        $transactions = [];
-//
-//        if (Auth::user()->isAdmin) {
-//            $transactions = Transaction::query()
-//                ->select('*')
-//                ->paginate(5);
-//            return view('transactions.admin_index', ['transactions' => $transactions]);
-//
-//        } elseif ((Auth::user()->isAdmin) == false)
-//
-//            $transactions = Transaction::query()
-//                ->select('*')
-//                ->where('user_id', Auth::id())
-//                ->paginate(5);
-//        return view('transactions.index', ['transactions' => $transactions]);
-//    }
     public function index()
     {
         $transactions = Auth::user()->getTransactions();
-//        dd($result);
-        return view('transactions.index', ['transactions' => $transactions]);
+//        dd($transactions  );
+        return view('transactions.index', ['transactions' => $transactions, 'title' => 'Dashboard', 'user_id' => Auth::user()->id]);
     }
 
     public

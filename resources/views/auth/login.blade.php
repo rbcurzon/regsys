@@ -1,8 +1,14 @@
-<x-layout>
+@extends('components.layout')
+
+@section('title', '')
+@section('user_id', '')
+
+
+{{--<x-layout>--}}
+@section('content')
     <div class="w-3/6 mx-auto">
         <form method="POST" action="/login" class="space-y-4">
             @csrf
-
             <h2 class="text-lg font-semibold leading-7 text-gray-900">Register</h2>
             <div class="grid grid-cols-1 gap-4">
                 <x-form-field>
@@ -45,4 +51,5 @@
 
 
     </form>
-</x-layout>
+@endsection
+{{--</x-layout>--}}
