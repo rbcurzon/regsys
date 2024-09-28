@@ -12,11 +12,16 @@
 
 <body class="font-sans bg-gray-200">
 
-<header class="sticky mb-4 bg-blue-900 flex justify-end">
-        <div class="flex flex-col justify-end px-2 py-3">
-            <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
-            <div class="text-white text-base ml-2 uppercase">id: {{ $user_id  }}</div>
-        </div>
+<header class="sticky mb-4 bg-blue-900 flex justify-end items-center min-h-20">
+    <div class="flex flex-col justify-end px-5 py-3">
+        @guest()
+                <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
+        @endguest
+        @auth()
+                <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
+            <div class="text-white text-base ml-2 uppercase">id: @yield('user_id', '')</div>
+        @endauth
+    </div>
 </header>
 
 {{--https://www.creative-tim.com/twcomponents/component/3d-button-2--}}
@@ -72,7 +77,7 @@
     </aside>
 @endauth
 
-<main class="w-[75%] ms-auto me-3">
+<main>
     @yield('content')
 </main>
 

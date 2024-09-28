@@ -1,12 +1,14 @@
-@php use App\Models\Course; //remove this
+@php use App\Models\Course;use Illuminate\Support\Facades\Auth; //remove this
 @endphp
 
 @extends('components.layout')
 
 @section('title', 'Dashboard')
 
+@section('user_id', $user_id)
+
 @section('content')
-    <div>
+    <div class="w-[75%] ms-auto me-3">
         <div class="mb-2 flex justify-center">
             <form action="/search">
                 <input class="rounded-s-full" type="text" name="q" id="q">
@@ -15,26 +17,65 @@
         </div>
         <div class="bg-white rounded-md px-3 py-2">
             <div class="flex flex-wrap justify-between my-2">
-                <x-card>
-                    <x-slot:card_title>
-                        Request
-                    </x-slot>
-                    0
-                </x-card>
+                @if(Auth::user()->isAdmin)
+                    <x-card>
+                        <x-slot:card_title>
+                            Request
+                        </x-slot>
+                        0
+                    </x-card>
 
-                <x-card>
-                    <x-slot:card_title>
-                        Status
-                    </x-slot>
-                    0
-                </x-card>
+                    <x-card>
+                        <x-slot:card_title>
+                            To Receive
+                        </x-slot>
+                        0
+                    </x-card>
 
-                <x-card>
-                    <x-slot:card_title>
-                        Received
-                    </x-slot>
-                    0
-                </x-card>
+                    <x-card>
+                        <x-slot:card_title>
+                            Released
+                        </x-slot>
+                        0
+                    </x-card>
+                @elseif(Auth::user()->is_treasurer)
+                    <x-card>
+                        <x-slot:card_title>
+                            Pending
+                        </x-slot>
+                        0
+                    </x-card>
+
+                    <x-card>
+                        <x-slot:card_title>
+                            Income
+                        </x-slot>
+                        0
+                    </x-card>
+                @else
+                    <x-card>
+                        <x-slot:card_title>
+                            Request
+                        </x-slot>
+                        0
+                    </x-card>
+
+                    <x-card>
+                        <x-slot:card_title>
+                            Status
+                        </x-slot>
+                        0
+                    </x-card>
+
+                    <x-card>
+                        <x-slot:card_title>
+                            Received
+                        </x-slot>
+                        0
+                    </x-card>
+
+                @endif
+
             </div>
             <div class="flex-grow overflow-y-auto rounded-md">
                 <table class="w-full">

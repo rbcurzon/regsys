@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @method static find($id)
@@ -17,7 +19,18 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
-    public function user()
+    /**
+     * @return HasOne
+     */
+    public function document(): HasOne
+    {
+        return $this->hasOne(Transaction::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

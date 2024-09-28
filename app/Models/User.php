@@ -13,25 +13,17 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
 //    protected $primaryKey = 'user_id';
-    public function getTransactions() {
-        if (Auth::user()->isAdmin)
-        {
-            $transactions = Transaction::query()
-                ->select('*')
-                ->paginate(5);
-            return $transactions;
-        }
-        else if (Auth::user()->isAdmin == false)
-        {
-            $transactions = Transaction::query()
-                ->select('*')
+    public function getTransactions()
+    {
+        if (Auth::user()->isAdmin) {
+            return Transaction::with('user')->paginate(5);
+        } else if (Auth::user()->isAdmin == false) {
+            return Transaction::with('user')
                 ->where('user_id', Auth::id())
                 ->paginate(5);
-            return $transactions;
         }
+        return null;
     }
-
-
 
     public function transaction()
     {

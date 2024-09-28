@@ -10,29 +10,28 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use phpDocumentor\Reflection\Types\Null_;
-use function Laravel\Prompts\table;
 
 class TransactionController extends Controller
 {
-    public function index()
+    protected User $user;
+    protected Document $document;
+    protected Purpose $purpose;
+    public function __construct(User $user, Document $document, Purpose $purpose)
     {
-        $transactions = Auth::user()->getTransactions();
-//        dd($transactions  );
-        return view('transactions.index', ['transactions' => $transactions, 'title' => 'Dashboard', 'user_id' => Auth::user()->id]);
+        $this->user = $user;
+        $this->document = $document;
+        $this->purpose = $purpose;
     }
 
-    public
-    function create()
+    public function index()
     {
-        $request_purposes = Purpose::all();
-        $documents = Document::all();
+//        dd($this->user->getTransactions());
+        return view('transactions.index', ['transactions' => $this->user->getTransactions(), 'title' => 'Dashboard', 'user_id' => Auth::user()->id]);
+    }
 
-        return view('transactions.create', ['request_purposes' => $request_purposes, 'documents' => $documents]);
-
+    public function create()
+    {
+        return view('transactions.create', ['request_purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user'=> Auth::user()]);
     }
 
     public

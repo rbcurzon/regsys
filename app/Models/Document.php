@@ -14,4 +14,13 @@ class Document extends Model
     use HasFactory;
 
     protected $primaryKey = 'document_id';
+
+    public function getDocuments()
+    {
+        return Document::all();
+    }
+    public function transaction()
+    {
+        $this->belongsToMany(Transaction::class);
+    }
 }

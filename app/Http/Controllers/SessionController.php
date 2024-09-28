@@ -13,8 +13,14 @@ class SessionController extends Controller
         return view('auth.login');
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function store()
     {
+
+//        dd(request()->all());
+
         $attributes = request()->validate([
             'email' => ['required', 'email'],
             'password' => ['required']
@@ -22,7 +28,7 @@ class SessionController extends Controller
 
         if (!Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
-                "email" => "Sorry, those credentials are not matched."
+                "email" => "Sorry, those credentials are not matched.",
             ]);
         }
 
@@ -33,6 +39,6 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/login');
     }
 }

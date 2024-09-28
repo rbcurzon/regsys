@@ -1,5 +1,12 @@
-@php use App\Models\Course;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\URL; @endphp
-<x-layout>
+@php use App\Models\Course;
+use Illuminate\Support\Facades\URL; @endphp
+@extends('components.layout')
+
+@section('title', 'Create a Transaction')
+
+@section('user_id', $user->id)
+
+@section('content')
     <div class="w-2/4 m-auto">
         <form method="POST" action="/transactions">
             @csrf
@@ -17,7 +24,7 @@
                             <div class="mt-2">
                                 <input type="text" name="first_name" id="first_name" autocomplete="first_name"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                       value="{{ Auth::user()->first_name }}">
+                                       value="{{ $user->first_name }}">
                             </div>
                         </div>
 
@@ -27,7 +34,7 @@
                             <div class="mt-2">
                                 <input type="text" name="last_name" id="last_name" autocomplete="last_name"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                       value="{{ Auth::user()->last_name }}">
+                                       value="{{ $user->last_name }}">
                             </div>
                         </div>
 
@@ -53,7 +60,7 @@
                             <div class="mt-2">
                                 <input type="text" name="course" id="course" autocomplete="course"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                       value="{{ Course::find(Auth::user()->course_id)->code }}">
+                                       value="{{ Course::find($user->course_id)->code }}">
                             </div>
                         </div>
 
@@ -64,7 +71,7 @@
                             <div class="mt-2">
                                 <input type="text" name="section" id="section" autocomplete="section"
                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                       value="{{ Auth::user()->section }}">
+                                       value="{{ $user->section }}">
                             </div>
                         </div>
 
@@ -72,7 +79,7 @@
                 </div>
                 {{--User Information End--}}
 
-                {{--Transaction Information Start--}}
+                {{--Transaction Informatlayouion Start--}}
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-base font-semibold  leading-7 text-gray-900">Transaction Information</h2>
                     <p class="mt-1 text-sm leading-6 text-gray-600">Use real information.</p>
@@ -132,8 +139,8 @@
                 {{--Transaction Information End--}}
 
             </div>
-            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-            <input type="hidden" name="course_id" value="{{ Auth::user()->course_id }}">
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
+            <input type="hidden" name="course_id" value="{{ $user->course_id }}">
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <a
                     class="text-sm font-semibold leading-6 text-gray-900"
@@ -146,4 +153,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+@endsection()
