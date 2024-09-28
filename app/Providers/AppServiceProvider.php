@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define("edit-transactions", function (User $user, Transaction $transaction) {
-            return $user->isAdmin || $transaction->user()->is($user);
+            return ($user->is_admin || $transaction->user()->is($user));
         });
 
     }

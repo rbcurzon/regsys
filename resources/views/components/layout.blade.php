@@ -12,13 +12,18 @@
 
 <body class="font-sans bg-gray-200">
 
-<header class="sticky mb-4 bg-blue-900 flex justify-end items-center min-h-20">
-    <div class="flex flex-col justify-end px-5 py-3">
+<header class="sticky grid grid-cols-3 ms-52 mb-4 w-auto bg-blue-900 items-center min-h-20 px-3 py-2">
+    <div class="col-start-2">
+        <div class="text-white text-2xl font-bold ml-2 uppercase">city college of calamba</div>
+
+    </div>
+    <div class="col-end-4 flex flex-col ms-auto ">
         @guest()
-                <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
+            <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
         @endguest
         @auth()
-                <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
+
+            <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
             <div class="text-white text-base ml-2 uppercase">id: @yield('user_id', '')</div>
         @endauth
     </div>
@@ -26,7 +31,7 @@
 
 {{--https://www.creative-tim.com/twcomponents/component/3d-button-2--}}
 @auth
-    <aside class="fixed top-0 left-0 w-1/6 h-full border border-black rounded-r-md bg-blue-900 pt-5">
+    <aside class="fixed top-0 left-0 w-52 h-full border border-black rounded-r-md bg-blue-900 pt-5">
         <div class="container mt-5 px-3 py-2">
             <nav class="flex flex-col space-y-4 pb-5 border-b border-white">
                 <a href="#" class="flex flex-col m-auto text-white hover:text-blue-600">
@@ -77,7 +82,7 @@
     </aside>
 @endauth
 
-<main>
+<main class="ms-52 px-3 py-2">
     @yield('content')
 </main>
 
