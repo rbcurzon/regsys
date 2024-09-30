@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -15,9 +16,9 @@ class User extends Authenticatable
 //    protected $primaryKey = 'user_id';
     public function getTransactions()
     {
-        if (Auth::user()->isAdmin) {
+        if (Auth::user()->is_admin) {
             return Transaction::with('user')->paginate(5);
-        } else if (Auth::user()->isAdmin == false) {
+        } else if (!Auth::user()->is_admin && !Auth::user()->is_treasurer) {
             return Transaction::with('user')
                 ->where('user_id', Auth::id())
                 ->paginate(5);
@@ -25,7 +26,7 @@ class User extends Authenticatable
         return null;
     }
 
-    public function transaction()
+    public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }

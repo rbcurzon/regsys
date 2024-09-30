@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Comment\Doc;
 
 class TransactionController extends Controller
 {
@@ -25,8 +26,13 @@ class TransactionController extends Controller
 
     public function index()
     {
-//        dd($this->user->getTransactions());
-        return view('transactions.index', ['transactions' => $this->user->getTransactions(), 'title' => 'Dashboard', 'user_id' => Auth::user()->id]);
+//        dd(Auth::user());
+        $transactions = $this->user->getTransactions();
+//        $transactions->document = Document::find($transactions->document->doc_type_id)->document_name;
+        $user = Auth::user();
+        $user->course = Course::find($user->id)->code;
+//        dd($transactions);
+        return view('transactions.index', ['transactions' => $this->user->getTransactions(), 'title' => 'Dashboard', 'user' => $user]);
     }
 
     public function create()

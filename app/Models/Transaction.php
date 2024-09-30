@@ -22,7 +22,7 @@ class Transaction extends Model
     /**
      * @return HasOne
      */
-    public function document(): HasOne
+    public function document()
     {
         return $this->hasOne(Transaction::class);
     }

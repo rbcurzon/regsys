@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\URL; @endphp
 @section('user_id', $user->id)
 
 @section('content')
-    <div class="w-2/4 m-auto">
+    <div class="max-w-md m-auto">
         <form method="POST" action="/transactions">
             @csrf
             <div class="space-y-12">
                 {{--User information start--}}
                 <div class="border-b border-gray-900/10 pb-12">
-                    <h2 class="text-base font-semibold  leading-7 text-gray-900">User Information</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-600">Use real information.</p>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">User Information</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Your information you used when you create your account.</p>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div class="sm:col-span-3">

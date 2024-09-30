@@ -6,13 +6,22 @@
 
 @section('content')
 {{--<x-layout>--}}
-    <div class="w-3/6 mx-auto">
+    <div class="max-w-md mx-auto">
         <form method="POST" action="/register" class="space-y-4">
             @csrf
 
             <h2 class="text-lg font-semibold leading-7 text-gray-900">Register</h2>
             <div class="grid grid-cols-3 gap-4">
-                {{--first name start --}}
+                {{--student id start --}}
+                <x-form-field class="col-span-full">
+                    <label for="student_id" class="text-sm font-medium text-gray-700">Student id</label>
+                    <x-form-input type="student_id" id="student_id" name="student_id" placeholder="2022-10302"
+                                  :value="old('student_id')"
+                                  required
+                                  class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                    <x-form-error name="student_id"/>
+                </x-form-field>
+
                 <x-form-field class="col-span-full">
                     <label for="first_name" class="text-sm font-medium text-gray-700">First name</label>
                     <x-form-input type="first_name" id="first_name" name="first_name" placeholder="John"
@@ -21,7 +30,7 @@
                                   class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-600"/>
                     <x-form-error name="first_name"/>
                 </x-form-field>
-                {{--first name end --}}
+                {{--student id end --}}
 
                 {{--last name start --}}
                 <x-form-field class="col-span-full">
@@ -108,7 +117,7 @@
                 {{--password start--}}
 
             </div>
-            <div class="flex justify-end">
+            <div class="flex justify-end gap-2">
                 <x-form-button type="submit" value="Register"
                                class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 />

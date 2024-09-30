@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
     $courses = Course::all();
-    return view('register', ['courses' => $courses]);
+    return view('test', ['courses' => $courses]);
 });
 
 Route::get('/search', SearchController::class);

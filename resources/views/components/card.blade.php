@@ -1,4 +1,5 @@
-<div {{ $attributes->merge(['class'=> 'w-[300px] h-[130px] rounded overflow-hidden shadow-lg mt-2 mb-3 border-b rounded-b-[30px]']) }} >
+<div {{ $attributes->merge(['class'=> 'w-52 h-28 rounded overflow-hidden shadow-lg mt-2 mb-3 border-b rounded-b-[30px]']) }} >
+{{--    <div class="w-52 h-28"></div>--}}
     <div class="">
         @if($card_title->isEmpty())
             <div class="font-bold text-xl mb-2 text-center border border-[#2563eb] rounded-md ">Card Title</div>
