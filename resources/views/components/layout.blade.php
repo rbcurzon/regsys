@@ -83,9 +83,8 @@
     </aside>
 @endauth
 
-{{--ms-52 px-3 py-2--}}
-<main class="">
-    @yield('content')
-</main>
+{{--main start--}}
+        @yield('content')
+{{--main end--}}
 
 </body>

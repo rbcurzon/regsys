@@ -1,4 +1,4 @@
-@php use App\Models\Course;use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Models\Course;use App\Models\Document;use App\Models\Purpose;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\URL; @endphp
 <x-layout>
     <div class="w-2/4 m-auto">
         <form method="POST" action="/transactions/{{ $transaction->id }}">
@@ -90,9 +90,10 @@
                                         autocomplete="purpose_id">
                                     @foreach($request_purposes as $request_purpose)
                                         <option
-                                            value="{{$request_purpose->purpose_id}}">{{ $request_purpose->purpose_name }}</option>
+                                                value="{{$request_purpose->purpose_id}}">{{ $request_purpose->purpose_name }}</option>
                                     @endforeach
-                                        <option selected style="display: none" value="{{ \App\Models\Purpose::find($transaction->purpose_id)->purpose_id }}">{{ \App\Models\Purpose::find($transaction->purpose_id)->purpose_name }}</option>
+                                    <option selected style="display: none"
+                                            value="{{ Purpose::find($transaction->purpose_id)->purpose_id }}">{{ Purpose::find($transaction->purpose_id)->purpose_name }}</option>
                                 </select>
                                 @error('purpose_id')
                                 <p class="text-red-900 italic">Select your option.</p>
@@ -110,9 +111,10 @@
 
                                     @foreach($documents as $document)
                                         <option
-                                            value="{{$document->document_id}}">{{ $document->document_name }}</option>
+                                                value="{{$document->document_id}}">{{ $document->document_name }}</option>
                                     @endforeach
-                                        <option selected style="display: none" value="{{ \App\Models\Document::find($transaction->type_id)->document_id }}">{{ \App\Models\Document::find($transaction->type_id)->document_name }}</option>
+                                    <option selected style="display: none"
+                                            value="{{ Document::find($transaction->type_id)->document_id }}">{{ Document::find($transaction->type_id)->document_name }}</option>
                                 </select>
                                 @error('type_id')
                                 <p class="text-red-900 italic">Select your option.</p>
@@ -141,11 +143,11 @@
             <input type="hidden" name="date_requested" value="{{ $transaction->date_needed }}">
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <a
-                    class="text-sm font-semibold leading-6 text-gray-900"
-                    href="{{ \Illuminate\Support\Facades\URL::previous() }}">Back</a>
+                        class="text-sm font-semibold leading-6 text-gray-900"
+                        href="{{ URL::previous() }}">Back</a>
                 <button
-                    type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        type="submit"
+                        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >Update
                 </button>
             </div>

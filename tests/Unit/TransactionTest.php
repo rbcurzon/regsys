@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Transaction;
 use App\Models\User;
 
 test('belongs to a user', function () {
     $user = User::factory()->create();
-    $transaction = \App\Models\Transaction::factory()->create([
+    $transaction = Transaction::factory()->create([
         'user_id' => $user->id,
     ]);
 
@@ -13,7 +14,7 @@ test('belongs to a user', function () {
 
 test('user has', function () {
     $user = User::factory()->create();
-    $transaction = \App\Models\Transaction::factory()->create([
+    $transaction = Transaction::factory()->create([
         'user_id' => $user->id,
     ]);
 
@@ -23,7 +24,7 @@ test('user has', function () {
 
 test('user has many', function () {
     $user = User::factory()->create();
-    $transaction = \App\Models\Transaction::factory(5)->create([
+    $transaction = Transaction::factory(5)->create([
         'user_id' => $user->id,
     ]);
 

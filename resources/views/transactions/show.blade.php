@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\URL; @endphp
 <x-layout>
     <div class="w-2/4 m-auto">
         @csrf
@@ -115,8 +116,8 @@
                 </div>
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a
-                        class="text-sm font-semibold leading-6 text-gray-900"
-                        href="{{ \Illuminate\Support\Facades\URL::previous() }}">Back</a>
+                            class="text-sm font-semibold leading-6 text-gray-900"
+                            href="{{ URL::previous() }}">Back</a>
                 </div>
             </div>
 

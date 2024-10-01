@@ -1,4 +1,4 @@
-@php use App\Models\Course;
+@php use App\Models\Course;use App\Models\Document;
 @endphp
 
 <x-layout xmlns:x-slot="http://www.w3.org/1999/xlink">
@@ -66,14 +66,14 @@
                             <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->user_id }}</td>
                             <td class="text-base border border-gray-200 px-3 py-2">{{ Course::find($transaction->course_id)->code }}</td>
                             <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->date_requested }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ \App\Models\Document::find($transaction->type_id)->document_name }}</td>
+                            <td class="text-base border border-gray-200 px-3 py-2">{{ Document::find($transaction->type_id)->document_name }}</td>
                             <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->status }}</td>
                             <td class="text-base border border-gray-200 px-3 py-2 flex space-x-2">
                                 <form method="POST" action="/transactions/{{ $transaction->id }}">
                                     @csrf
                                     @method('DELETE')
                                     <button
-                                        class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                            class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"

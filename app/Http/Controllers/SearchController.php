@@ -17,4 +17,8 @@ class SearchController extends Controller
         return view('results', ['transactions' => $transactions, 'q' => request('q')]);
 
     }
+
+//    TODO: Search function for admin
+//    TODO: Search function for admin
+//    TODO: Search function for student
 }

@@ -25,7 +25,10 @@
                     <div class="col-span-3 grid grid-cols-2 gap-x-3">
                         {{--first name field start--}}
                         <x-form-field>
-                            <x-form-input type="text" id="first_name" name="first_name" placeholder="first_name"
+                            <x-form-input type="text"
+                                          id="first_name"
+                                          name="first_name"
+                                          placeholder="First name"
                                           required
                             />
                             <x-form-error name="first_name"/>
@@ -37,10 +40,9 @@
                             <x-form-input type="text"
                                           id="last_name"
                                           name="last_name"
-                                          placeholder="last_name"
+                                          placeholder="Last name"
                                           required
                             />
-                            <x-form-error name="last_name" class="italic text-red"/>
                             <x-form-error name="last_name"/>
                         </x-form-field>
                         {{--last name field end--}}
@@ -52,7 +54,7 @@
                             <x-form-input type="    "
                                           id="year_level"
                                           name="year_level"
-                                          placeholder="year_level"
+                                          placeholder="Year level"
                                           required
                             />
                             <x-form-error name="year_level"/>
@@ -62,7 +64,7 @@
                             <x-form-input type="text"
                                           id="course"
                                           name="course"
-                                          placeholder="course"
+                                          placeholder="Course"
                                           required
                             />
                             <x-form-error name="course"/>
@@ -71,7 +73,7 @@
                             <x-form-input type="text"
                                           id="section"
                                           name="section"
-                                          placeholder="section"
+                                          placeholder="Section"
                                           required
                             />
                             <x-form-error name="section"/>
@@ -84,7 +86,7 @@
                         <x-form-input type="email"
                                       id="email"
                                       name="email"
-                                      placeholder="email"
+                                      placeholder="Email"
                                       required
                         />
                     </x-form-field>
@@ -95,7 +97,7 @@
                         <x-form-input type="password"
                                       id="password"
                                       name="password"
-                                      placeholder="password"
+                                      placeholder="Password"
                                       required
                         />
                     </x-form-field>
@@ -106,7 +108,7 @@
                         <x-form-input type="password"
                                       id="confirm-password"
                                       name="password-confirmation"
-                                      placeholder="confirm-password"
+                                      placeholder="Confirm password"
                                       required
                         />
                     </x-form-field>

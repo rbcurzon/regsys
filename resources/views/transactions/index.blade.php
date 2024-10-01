@@ -1,4 +1,5 @@
-@php use App\Models\Course;use App\Models\Document;use Illuminate\Support\Facades\Auth; //remove this
+@php
+    use App\Models\Document;use Illuminate\Support\Facades\Auth; //remove this
 @endphp
 
 @extends('components.layout')
@@ -8,7 +9,8 @@
 @section('user_id', $user->id)
 
 @section('content')
-    <div class="ms-52 px-3 py-2">
+    <x-layout-main>
+
         <div class="mb-2 flex justify-center">
             <form action="/search">
                 <input class="rounded-s-full py-2 px-3 text-sm" type="text" name="q" id="q">
@@ -16,25 +18,33 @@
                        value="Search_logo">
             </form>
         </div>
+        <hr class="border border-gray-900/10 shadow-md">
         <div class="bg-white rounded-md px-3 py-2">
             <div class="flex-grow overflow-y-auto rounded-md">
                 @if(Auth::user()->is_treasurer)
                     <x-card-group>
                         <x-card>
                             <x-slot:card_title>
-                                Pending
+                                Request
+                            </x-slot>
+                            0
+                        </x-card>
+                        <x-card>
+                            <x-slot:card_title>
+                                Status
                             </x-slot>
                             0
                         </x-card>
 
                         <x-card>
                             <x-slot:card_title>
-                                Income
+                                Received
                             </x-slot>
                             0
                         </x-card>
                     </x-card-group>
-                    <table class="w-full">
+                    {{--Table--}}
+                    <table class="w-full border-collapse rounded-md">
                         <thead>
                         <x-table-header>
                             Date
@@ -48,9 +58,12 @@
                             Debit
                         </x-table-header>
 
-
                         <x-table-header>
                             Credit
+                        </x-table-header>
+
+                        <x-table-header>
+                            Action
                         </x-table-header>
                         </thead>
                         <tbody>
@@ -70,11 +83,17 @@
                             <x-table-data>
                                 0
                             </x-table-data>
+
+                            <x-table-data>
+                                0
+                            </x-table-data>
+
                         </tr>
                         </tbody>
                     </table>
                 @elseif(Auth::user()->is_admin)
-                    <x-card-group>
+
+                    <div class="flex flex-wrap justify-around my-2">
                         <x-card>
                             <x-slot:card_title>
                                 Request
@@ -95,7 +114,7 @@
                             </x-slot>
                             0
                         </x-card>
-                    </x-card-group>
+                    </div>
                     <table class="w-full">
                         <thead>
                         <tr>
@@ -172,28 +191,21 @@
                     </table>
 
                 @else
-                    <div class="flex flex-wrap justify-around my-2">
+                    <x-card-group>
                         <x-card>
                             <x-slot:card_title>
-                                Request
+                                Pending
                             </x-slot>
                             0
                         </x-card>
 
                         <x-card>
                             <x-slot:card_title>
-                                Status
+                                Income
                             </x-slot>
                             0
                         </x-card>
-
-                        <x-card>
-                            <x-slot:card_title>
-                                Received
-                            </x-slot>
-                            0
-                        </x-card>
-                    </div>
+                    </x-card-group>
                     <table class="w-full">
                         <thead>
                         <tr>
@@ -274,5 +286,5 @@
                 {{ $transactions->links() }}
             </div>
         </div>
-    </div>
+    </x-layout-main>
 @endsection
