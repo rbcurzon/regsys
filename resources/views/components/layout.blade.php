@@ -15,7 +15,6 @@
 <header class="static grid grid-cols-3 w-full mb-3 bg-blue-900 items-center min-h-20 px-3 py-2">
     <div class="col-start-2 flex justify-center">
         <div class="text-white text-2xl font-bold ml-2 uppercase">city college of calamba</div>
-
     </div>
     <div class="col-start-3 flex justify-end">
         <div>
