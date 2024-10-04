@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    $courses = Course::all();
-    return view('test', ['courses' => $courses]);
+    return view('test');
 });
 
 Route::get('/search', SearchController::class);

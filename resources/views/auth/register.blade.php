@@ -6,7 +6,8 @@
 @section('content')
     <div class="max-w-md mx-auto bg-blue-900 rounded-3xl py-3 shadow-md">
         <div class="px-6 py-4">
-            <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Create a new account</h2>
+            <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Create a
+                new account</h2>
             <form method="POST" action="/login" class="">
                 @csrf
                 <div class="grid grid-cols-3 gap-y-6 mb-3 ">
@@ -51,31 +52,40 @@
                     {{--third row start--}}
                     <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-6">
                         <x-form-field>
-                            <x-form-input type=""
-                                          id="year_level"
-                                          name="year_level"
-                                          placeholder="Year level"
-                                          required
-                            />
+                            <x-form-select id="year_level"
+                                           name="year_level"
+                                           required
+                            >
+                                <option style="display: none" value="-1">Year level</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </x-form-select>
                             <x-form-error name="year_level"/>
                         </x-form-field>
 
                         <x-form-field>
-                            <x-form-input type="text"
-                                          id="course"
-                                          name="course"
-                                          placeholder="Course"
-                                          required
-                            />
+                            <x-form-select id="course"
+                                           name="course"
+                                           required
+                            >
+                                <option style="display: none" value="-1">Course</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </x-form-select>
                             <x-form-error name="course"/>
                         </x-form-field>
                         <x-form-field>
-                            <x-form-input type="text"
-                                          id="section"
-                                          name="section"
-                                          placeholder="Section"
-                                          required
-                            />
+                            <x-form-select id="section"
+                                           name="section"
+                                           required
+                            >
+                                <option style="display: none" value="-1">Section</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </x-form-select>
                             <x-form-error name="section"/>
                         </x-form-field>
                     </div>

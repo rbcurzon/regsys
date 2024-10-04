@@ -7,39 +7,89 @@ use App\Models\Document;
 use App\Models\Purpose;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Comment\Doc;
 
+/**
+ *
+ */
 class TransactionController extends Controller
 {
+    /**
+     * @var User
+     */
     protected User $user;
+    /**
+     * @var Document
+     */
     protected Document $document;
+    /**
+     * @var Purpose
+     */
     protected Purpose $purpose;
-    public function __construct(User $user, Document $document, Purpose $purpose)
+    /**
+     * @var Transaction
+     */
+    protected Transaction $transaction;
+
+    /**
+     * @param User $users
+     * @param Document $document
+     * @param Purpose $purpose
+     * @param Transaction $transaction
+     */
+    public function __construct(User $user, Transaction $transaction, Document $document, Purpose $purpose)
     {
         $this->user = $user;
         $this->document = $document;
         $this->purpose = $purpose;
+        $this->transaction = $transaction;
     }
 
+    /**
+     * @return Factory|View|Application
+     */
     public function index()
     {
-//        dd(Auth::user());
-        $transactions = $this->user->getTransactions();
-//        $transactions->document = Document::find($transactions->document->doc_type_id)->document_name;
+        // If current user is admin get all transaction, else
+        // get transactions of current user.
+        $transactions = Auth::user()->is_admin || Auth::user()->is_treasurer ?
+            $this->transaction->getTransactions() :
+            $this->user->getTransactions();
+
         $user = Auth::user();
+
         $user->course = Course::find($user->id)->code;
-//        dd($transactions);
-        return view('transactions.index', ['transactions' => $this->user->getTransactions(), 'title' => 'Dashboard', 'user' => $user]);
+        $pending_count = Auth::user()->is_admin || Auth::user()->is_treasurer ?
+            $this->transaction->getPendingCount() :
+            $this->user->getPendingCount();
+
+        return view('transactions.index', [
+            'transactions' => $transactions,
+            'title' => 'Dashboard',
+            'user' => $user,
+            'pending_count' => $pending_count,
+        ]);
     }
 
-    public function create()
+    /**
+     * @return View|Factory|Application
+     */
+    public function create(): View|Factory|Application
     {
-        return view('transactions.create', ['request_purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user'=> Auth::user()]);
+        return view('transactions.create', ['request_purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user' => Auth::user()]);
     }
 
+    /**
+     * @param Transaction $transaction
+     * @return Factory|View|Application
+     */
     public
     function show(Transaction $transaction)
     {
@@ -53,11 +103,13 @@ class TransactionController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
     public
     function store(Request $request)
     {
-
-//        dd($request->all());
 
         request()->validate([
             'user_id' => 'required',
@@ -87,6 +139,10 @@ class TransactionController extends Controller
 
     }
 
+    /**
+     * @param Transaction $transaction
+     * @return Factory|View|Application
+     */
     public
     function edit(Transaction $transaction)
     {
@@ -99,6 +155,11 @@ class TransactionController extends Controller
         return view('transactions.edit', ['transaction' => $transaction, 'request_purposes' => $request_purposes, 'documents' => $documents]);
     }
 
+    /**
+     * @param Transaction $transaction
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     */
     public
     function update(Transaction $transaction, Request $request)
     {
@@ -128,8 +189,12 @@ class TransactionController extends Controller
 
     }
 
+    /**
+     * @param Transaction $transaction
+     * @return Application|RedirectResponse|Redirector
+     */
     public
-    function destroy(Transaction $transaction)
+    function destroy(Transaction $transaction): Application|Redirector|RedirectResponse
     {
         $transaction->delete();
 

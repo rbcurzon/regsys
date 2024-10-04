@@ -11,7 +11,6 @@
 </head>
 
 <body class="font-sans relative">
-
 <header class="static grid grid-cols-3 w-full mb-3 bg-blue-900 items-center min-h-20 px-3 py-2">
     <div class="col-start-2 flex justify-center">
         <div class="text-white text-2xl font-bold ml-2 uppercase">city college of calamba</div>
@@ -28,8 +27,6 @@
         </div>
     </div>
 </header>
-
-{{--https://www.creative-tim.com/twcomponents/component/3d-button-2--}}
 @auth
     <aside class="absolute inset-y-0 left-0  w-52 h-svh border border-black rounded-r-md bg-blue-900 pt-5">
         <div class="container mt-5 px-3 py-2">
@@ -81,9 +78,7 @@
         </div>
     </aside>
 @endauth
-
 {{--main start--}}
-        @yield('content')
+@yield('content')
 {{--main end--}}
-
 </body>

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static find($id)
  * @method static create(array $array)
  * @method static findOrFail($id)
+ * @property mixed $id
  */
 class Transaction extends Model
 {
@@ -18,6 +19,15 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     protected $guarded = [];
+
+    public function getPendingCount()
+    {
+        return Transaction::with('user')->where('status', 'pending')->count();
+    }
+    public function getTransactions()
+    {
+        return $this->with('user')->paginate(5);
+    }
 
     /**
      * @return HasOne

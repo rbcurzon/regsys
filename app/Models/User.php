@@ -3,29 +3,43 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+/**
+ *
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-//    protected $primaryKey = 'user_id';
-    public function getTransactions()
+    /**
+     * Get the total number of transactions for the current user
+     * @return int
+     */
+    public function getPendingCount()
     {
-        if (Auth::user()->is_admin) {
-            return Transaction::with('user')->paginate(5);
-        } else if (!Auth::user()->is_admin && !Auth::user()->is_treasurer) {
-            return Transaction::with('user')
-                ->where('user_id', Auth::id())
-                ->paginate(5);
-        }
-        return null;
+        return Auth::user()->with('transactions')->where('status', 'pending')->count();
     }
 
+    /**
+     * @return LengthAwarePaginator|null
+     */
+    public function getTransactions()
+    {
+        return Transaction::with('user')
+            ->where('user_id', Auth::id())
+            ->paginate(5);
+    }
+
+    /**
+     * @return HasMany
+     */
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

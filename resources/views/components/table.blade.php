@@ -21,9 +21,9 @@
                 {{ $table_body ?? ''}}
             </tbody>
         </table>
-        <div class="my-2">
-            {{ $table_links ?? '' }}
-        </div>
+    </div>
+    <div class="my-2">
+        {{ $table_links ?? '' }}
     </div>
 </div>
 {{--    </x-layout-main>--}}
