@@ -17,10 +17,10 @@ class Document extends Model
 
     public function getDocuments()
     {
-        return Document::all();
+        return Document::with('transactions');
     }
-    public function transaction()
+    public function transactions()
     {
-        $this->belongsToMany(Transaction::class);
+        $this->belongsToMany(Transaction::class,$table="transactions" ,$foreignPivotKey = 'doc_type_id', $relatedPivotKey = 'document_id');
     }
 }

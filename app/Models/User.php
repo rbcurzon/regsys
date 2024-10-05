@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 /**
  *
@@ -22,7 +21,7 @@ class User extends Authenticatable
      * Get the total number of transactions for the current user
      * @return int
      */
-    public function getPendingCount()
+    public function getPendingCount(): int
     {
         return Auth::user()->with('transactions')->where('status', 'pending')->count();
     }
@@ -30,11 +29,16 @@ class User extends Authenticatable
     /**
      * @return LengthAwarePaginator|null
      */
-    public function getTransactions()
+    public function getTransactions(): ?LengthAwarePaginator
     {
         return Transaction::with('user')
             ->where('user_id', Auth::id())
             ->paginate(5);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     /**

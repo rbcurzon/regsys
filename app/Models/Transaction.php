@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -29,12 +30,17 @@ class Transaction extends Model
         return $this->with('user')->paginate(5);
     }
 
+    public function purpose()
+    {
+        return $this->hasOne(Purpose::class, 'purpose_id', 'purpose_id');
+    }
+
     /**
      * @return HasOne
      */
-    public function document()
+    public function document(): HasOne
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasOne(Document::class, 'document_id', 'doc_type_id');
     }
 
     /**

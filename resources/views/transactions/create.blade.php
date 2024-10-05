@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\URL; @endphp
 
 @section('content')
     <div class="flex items-center justify-center">
-        <x-layout-main class="px-3 py-2 max-w-lg">
+        <x-layout-main class="px-3 py-2 max-w-md">
             <form method="POST" action="/transactions">
                 @csrf
                 <div class="space-y-12">
@@ -62,7 +62,7 @@ use Illuminate\Support\Facades\URL; @endphp
                                 <div class="mt-2">
                                     <input type="text" name="course" id="course" autocomplete="course"
                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                           value="{{ Course::find($user->course_id)->code }}">
+                                           value="{{ $user->course->code }}">
                                 </div>
                             </div>
 
@@ -96,9 +96,9 @@ use Illuminate\Support\Facades\URL; @endphp
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                             autocomplete="purpose_id">
                                         <option style="display: none" value="-1">--select an option--</option>
-                                        @foreach($request_purposes as $request_purpose)
+                                        @foreach($purposes as $purpose)
                                             <option
-                                                value="{{$request_purpose->purpose_id}}">{{ $request_purpose->purpose_name }}</option>
+                                                value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('purpose_id')

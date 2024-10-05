@@ -17,6 +17,11 @@ class Purpose extends Model
 
     public function getPurposes()
     {
-        return Purpose::all();
+        return Purpose::with('transactions')->get();
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'purpose_id', 'purpose_id');
     }
 }

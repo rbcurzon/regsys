@@ -57,15 +57,14 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        // If current user is admin get all transaction, else
-        // get transactions of current user.
+        /**
+         * If current user is admin get all transaction, else
+         * get transactions of current user.
+         */
         $transactions = Auth::user()->is_admin || Auth::user()->is_treasurer ?
             $this->transaction->getTransactions() :
             $this->user->getTransactions();
 
-        $user = Auth::user();
-
-        $user->course = Course::find($user->id)->code;
         $pending_count = Auth::user()->is_admin || Auth::user()->is_treasurer ?
             $this->transaction->getPendingCount() :
             $this->user->getPendingCount();
@@ -73,7 +72,7 @@ class TransactionController extends Controller
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => 'Dashboard',
-            'user' => $user,
+            'user' => Auth::user(),
             'pending_count' => $pending_count,
         ]);
     }
@@ -83,7 +82,7 @@ class TransactionController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        return view('transactions.create', ['request_purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user' => Auth::user()]);
+        return view('transactions.create', ['purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user' => Auth::user()]);
     }
 
     /**
@@ -146,12 +145,9 @@ class TransactionController extends Controller
     public
     function edit(Transaction $transaction)
     {
-//        dd($transaction->attributesToArray());
-
         $request_purposes = Purpose::all();
         $documents = Document::all();
 
-        // dd($transaction);
         return view('transactions.edit', ['transaction' => $transaction, 'request_purposes' => $request_purposes, 'documents' => $documents]);
     }
 
