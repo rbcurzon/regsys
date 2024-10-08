@@ -16,6 +16,23 @@ use Illuminate\Support\Facades\Auth;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    public function isNormalUser()
+    {
+        return $this->role == null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTreasurer()
+    {
+        return $this->role == 'treasurer';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == 'admin';
+    }
 
     /**
      * Get the total number of transactions for the current user
@@ -23,16 +40,17 @@ class User extends Authenticatable
      */
     public function getPendingCount(): int
     {
-        return Auth::user()->with('transactions')->where('status', 'pending')->count();
+        return $this->transactions()
+            ->where('status', 'pending')->count();
     }
 
     /**
      * @return LengthAwarePaginator|null
      */
-    public function getTransactions(): ?LengthAwarePaginator
+    public function getUnreleasedTransactions(): ?LengthAwarePaginator
     {
-        return Transaction::with('user')
-            ->where('user_id', Auth::id())
+        return $this->transactions()
+            ->whereNotLike('status', 'released')
             ->paginate(5);
     }
 
@@ -44,9 +62,9 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function transactions()
+    public function transactions(): HasMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, 'student_id', 'student_id');
     }
 
     /**

@@ -21,13 +21,22 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function getReleasedCount()
+    {
+        return $this->where('status', 'released')->count();
+    }
+    public function getOnProcessCount()
+    {
+        $status = ['processing', 'releasing', 'paid'];
+        return $this->wherein('status', $status)->count();
+    }
     public function getPendingCount()
     {
-        return Transaction::with('user')->where('status', 'pending')->count();
+        return $this->with('user')->where('status', 'pending')->count();
     }
-    public function getTransactions()
+    public function getUnreleasedTransactions()
     {
-        return $this->with('user')->paginate(5);
+        return $this->with('user')->whereNotLike('status', '%released%')->paginate(5);
     }
 
     public function purpose()
@@ -48,6 +57,6 @@ class Transaction extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'student_id', 'student_id');
     }
 }

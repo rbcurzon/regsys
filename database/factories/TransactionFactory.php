@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Document;
 use App\Models\Purpose;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +20,9 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
-        $status = ['pending', 'processing', 'releasing'];
+        $status = ['pending', 'processing', 'releasing', 'paid', 'released'];
         return [
-            'user_id' => fake()->numberBetween(1, 10),
+            'student_id' => User::inRandomOrder()->first()->student_id,
             'requested_date' => fake()->date(),
             'needed_date' => fake()->date(),
             'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,

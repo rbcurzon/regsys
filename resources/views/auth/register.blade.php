@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('title', 'Login')
+@section('title', 'Register')
 @section('user_id', '')
 
 @section('content')
@@ -8,103 +8,99 @@
         <div class="px-6 py-4">
             <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Create a
                 new account</h2>
-            <form method="POST" action="/login" class="">
+            <form action="/register" method="POST">
                 @csrf
-                <div class="grid grid-cols-3 gap-y-6 mb-3 ">
-                    {{--student id field start--}}
-                    <x-form-field class="col-span-3">
-                        <x-form-input type="student_id" id="student_id" name="student_id"
-                                      placeholder="2022-10302"
+                <div class="grid grid-cols-6 gap-4 mb-3 ">
+                    {{--first row start--}}
+                    <x-form-field class="col-span-6">
+                        <x-form-input class="w-full"
+                                      id="student_id"
+                                      name="student_id"
+                                      placeholder="Student ID"
                                       :value="old('student_id')"
+                                      pattern="^\d{4}-[a-zA-Z0-9]{5}$"
+                                      title="2022-10322"
                                       required
                         />
                         <x-form-error name="student_id"/>
                     </x-form-field>
+                    {{--first row end--}}
 
-                    {{--student id field end--}}
+                    {{--second row start--}}
+                    <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-2  gap-x-3">
+                        <x-form-input type="text"
+                                      id="first_name"
+                                      name="first_name"
+                                      placeholder="First name"
+                                      :value="old('first_name')"
+                                      required
+                        />
+                        <x-form-error name="first_name"/>
 
-                    <div class="col-span-3 grid grid-cols-2 gap-x-3">
-                        {{--first name field start--}}
-                        <x-form-field>
-                            <x-form-input type="text"
-                                          id="first_name"
-                                          name="first_name"
-                                          placeholder="First name"
-                                          required
-                            />
-                            <x-form-error name="first_name"/>
-                        </x-form-field>
-                        {{--first name field end--}}
-
-                        {{--last name field start--}}
-                        <x-form-field>
-                            <x-form-input type="text"
-                                          id="last_name"
-                                          name="last_name"
-                                          placeholder="Last name"
-                                          required
-                            />
-                            <x-form-error name="last_name"/>
-                        </x-form-field>
-                        {{--last name field end--}}
-                    </div>
+                        <x-form-input type="text"
+                                      id="last_name"
+                                      name="last_name"
+                                      placeholder="Last name"
+                                      :value="old('last_name')"
+                                      required
+                        />
+                        <x-form-error name="last_name"/>
+                    </x-form-field>
+                    {{--second row end--}}
 
                     {{--third row start--}}
-                    <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-6">
-                        <x-form-field>
-                            <x-form-select id="year_level"
-                                           name="year_level"
-                                           required
-                            >
-                                <option style="display: none" value="-1">Year level</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </x-form-select>
-                            <x-form-error name="year_level"/>
-                        </x-form-field>
+                    <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-6">
+                        <x-form-select id="year_level"
+                                       name="year_level"
+                                       required
+                        >
+                            <option style="display: none" value="-1">Year level</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </x-form-select>
+                        <x-form-error name="year_level"/>
 
-                        <x-form-field>
-                            <x-form-select id="course"
-                                           name="course"
-                                           required
-                            >
-                                <option style="display: none" value="-1">Course</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </x-form-select>
-                            <x-form-error name="course"/>
-                        </x-form-field>
-                        <x-form-field>
-                            <x-form-select id="section"
-                                           name="section"
-                                           required
-                            >
-                                <option style="display: none" value="-1">Section</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </x-form-select>
-                            <x-form-error name="section"/>
-                        </x-form-field>
-                    </div>
+                        <x-form-select id="course_id"
+                                       name="course_id"
+                                       required
+                        >
+                            <option style="display: none" value="-1">Course</option>
+                            @foreach($courses as $course)
+                                <option value="{{ $course->course_id }}">{{ $course->code }}</option>
+                            @endforeach
+                        </x-form-select>
+                        <x-form-error name="course_id"/>
+
+                        <x-form-input type="text"
+                                      id="section"
+                                      name="section"
+                                      placeholder="Section"
+                                      :value="old('section')"
+                        >
+                        </x-form-input>
+                        <x-form-error name="section"/>
+                    </x-form-field>
                     {{--third row end--}}
 
                     {{--forth row start--}}
-                    <x-form-field class="col-span-3">
-                        <x-form-input type="email"
+                    <x-form-field class="col-span-6">
+                        <x-form-input class="w-full"
+                                      type="email"
                                       id="email"
                                       name="email"
                                       placeholder="Email"
+                                      :value="old('email')"
                                       required
                         />
                     </x-form-field>
                     {{--forth row end--}}
 
                     {{--fifth row start--}}
-                    <x-form-field class="col-span-3">
-                        <x-form-input type="password"
+                    <x-form-field class="col-span-6">
+                        <x-form-input class="w-full"
+                                      type="password"
                                       id="password"
                                       name="password"
                                       placeholder="Password"
@@ -114,34 +110,31 @@
                     {{--fifth row end--}}
 
                     {{--sixth row start--}}
-                    <x-form-field class="col-span-3">
-                        <x-form-input type="password"
+                    <x-form-field class="col-span-6">
+                        <x-form-input class="w-full"
+                                      type="password"
                                       id="confirm-password"
-                                      name="password-confirmation"
+                                      name="password_confirmation"
                                       placeholder="Confirm password"
                                       required
                         />
                     </x-form-field>
 
                     {{--sixth row end--}}
-
-
                 </div>
                 <div class="flex justify-end gap-2">
-                    <x-form-button type="submit" value="Register"
-                                   class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    />
-                    {{--                <input type="submit" value="" formtarget="register-form">--}}
-                    <x-form-button type="submit" value="Login"
-                                   class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                   form="login-form"
-                    />
+                    <x-form-button value="Register"/>
                 </div>
             </form>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
-
-    <form method="get" action="/register" id="register-form">
-        @csrf
-    </form>
 @endsection

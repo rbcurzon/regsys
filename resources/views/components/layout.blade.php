@@ -22,7 +22,7 @@
             @endguest
             @auth()
                 <div class="text-white text-xl font-bold ml-2 uppercase">@yield('title', '')</div>
-                <div class="text-white text-base ml-2 uppercase">id: @yield('user_id', '')</div>
+                <div class="text-white text-base ml-2 uppercase">id: @yield('student_id', '')</div>
             @endauth
         </div>
     </div>
@@ -31,9 +31,9 @@
     <aside class="absolute inset-y-0 left-0  w-52 h-svh border border-black rounded-r-md bg-blue-900 pt-5">
         <div class="container mt-5 px-3 py-2">
             <nav class="flex flex-col space-y-4 pb-5 border-b border-white">
-                <a href="#" class="flex flex-col m-auto text-white hover:text-blue-600">
-                    <img src="https://github.com/mdo.png" alt="" class="rounded-full mr-2 w-16 h-16">
-                    <span class="text-base font-bold text-center">{{ Auth::id() }}</span>
+                <a href="#" class="flex flex-col justify-center items-center m-auto text-white hover:text-blue-600">
+                    <img src="https://github.com/mdo.png" alt="" class="rounded-full w-16 h-16">
+                    <span class="text-base font-bold text-center"> @yield('student_id')</span>
                 </a>
                 <x-nav-link href="/" :active="request()->is('/')">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -53,7 +53,7 @@
                     <span
                         class='flex flex-col justify-center items-center h-full text-black font-bold text-base '>Create</span>
                 </x-nav-link>
-                <form method="POST" action="/logout" class="">
+                <form method="POST" action="/logout">
                     <div class="w-full flex text-black text-base h-10 bg-white  cursor-pointer select-none
                             active:translate-y-2  active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]
                             active:border-b-[0px]

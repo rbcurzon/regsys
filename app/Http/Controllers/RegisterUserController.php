@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRegisterUserRequest;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
@@ -9,29 +10,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use function Pest\Laravel\get;
 
 class RegisterUserController extends Controller
 {
     public function create()
     {
-        $courses = Course::all();
-        return view('auth.register', ['courses' => $courses]);
+//        dd(request());
+        return view('auth.register', ['courses' => Course::with('users')->get()]);
     }
 
-    public function store()
+    public function store(StoreRegisterUserRequest $request)
     {
-//        dd(request()->all());
-
-        $attributes = request()->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'year_level' => ['required'],
-            'course_id' => ['required'],
-            'section' => ['required'],
-            'password' => [Password::min(8), "confirmed"],
-
-        ]);
+        $attributes = $request->validated();
 
         $user = User::create($attributes);
 

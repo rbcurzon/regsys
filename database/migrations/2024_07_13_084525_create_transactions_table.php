@@ -18,12 +18,13 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(User::class,'student_id');
             $table->date('requested_date')->default(Carbon::now()->setTimezone('UTC'));
             $table->date('needed_date');
             $table->foreignIdFor(Purpose::class,'purpose_id');
             $table->foreignIdFor(Document::class,'doc_type_id');
             $table->integer('amount')->default(0);
+            $table->boolean('isPaid')->default(false);
             $table->string('status')->default('pending')->nullable(false);
             $table->timestamps();
         });

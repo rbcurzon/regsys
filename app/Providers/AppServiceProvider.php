@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         //
 
         Gate::define('edit-payments', function (User $user) {
-            return $user->is_treasurer;
+            return $user->isTreasurer();
         });
 
         Gate::define("edit-transaction", function (User $user,Transaction $transaction) {
@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define("edit-transactions", function (User $user) {
-            return ($user->is_admin);
+            return ($user->isAdmin());
         });
 
     }

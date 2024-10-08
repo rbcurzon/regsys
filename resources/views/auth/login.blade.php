@@ -4,21 +4,21 @@
 @section('user_id', '')
 
 @section('content')
-    <div class="max-w-md mx-auto bg-blue-900 rounded-3xl">
+    <div class="max-w-md mx-auto bg-blue-900 rounded-3xl py-3 shadow-md">
         <div class="px-6 py-4">
-            <form method="POST" action="/login" class="space-y-4">
+                <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Login</h2>
+            <form method="POST" action="/login" class="">
                 @csrf
-                                <h2 class="text-lg font-semibold leading-7 text-center text-white">Login Into Regsys</h2>
                 <div class="grid grid-cols-1 gap-4 mb-3">
                     <x-form-field>
                         <x-form-input type="email" id="email" name="email" placeholder="Email"
                                       :value="old('email')"
                                       required
-                                      class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                        />
                     </x-form-field>
                     <x-form-field>
                         <x-form-input type="password" id="password" name="password" placeholder="Password" required
-                                      class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-600"/>
+                        />
 {{--                        <x-form-error name="password" class="italic text-red"/>--}}
                     </x-form-field>
                         <x-form-error name="email"/>
@@ -28,9 +28,7 @@
                     {{--                                   class="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"--}}
                     {{--                                   form="register-form"/>--}}
                     {{--                    <input type="submit" value="" formtarget="register-form">--}}
-                    <x-form-button value="Login"
-                                   class="px-4 py-2 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    />
+                    <x-form-button value="Login"/>
                 </div>
             </form>
         </div>

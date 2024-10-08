@@ -35,7 +35,7 @@ Route::delete('/transactions/{transaction}', [TransactionController::class, 'des
 Route::get('/register', [RegisterUserController::class, 'create']);
 Route::post('/register', [RegisterUserController::class, 'store']);
 
-Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
+Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 

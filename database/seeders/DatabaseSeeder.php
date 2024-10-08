@@ -20,10 +20,26 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
+            'student_id' => '2022-20301',
             'first_name' => 'John',
             'last_name' => 'Doe',
-            'email' => 'test@example.com',
-            'is_admin' => true,
+            'email' => 'jd@example.com',
+            'role' => 'admin'
+        ]);
+
+        User::factory()->create([
+            'student_id' => '2022-10301',
+            'first_name' => 'John',
+            'last_name' => 'Boe',
+            'email' => 'jb@example.com',
+        ]);
+
+        User::factory()->create([
+            'student_id' => '2022-30301',
+            'first_name' => 'John',
+            'last_name' => 'Zoe',
+            'email' => 'jz@example.com',
+            'role' => 'treasurer'
         ]);
 
         $document_lists = [

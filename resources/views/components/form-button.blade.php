@@ -1,5 +1,5 @@
 {{--<input {{ $attributes->merge(["class" => "btn btn-primary", "type" => "submit" ]) }}  >--}}
 
 @props(['active' => false])
-<input type="submit" class=" {{ $active ? 'bg-primary' : 'bg-[#0661a3]' }} rounded-full  nav-link px-3 py-2 text-white font-bold"
-    {{ $attributes }}>{{ $slot }}
+
+<input type="submit" {{ $attributes->merge(['class' => 'rounded-full bg-blue-600 nav-link px-4 py-2 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'])}}>

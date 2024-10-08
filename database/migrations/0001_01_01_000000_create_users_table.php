@@ -14,14 +14,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('student_id')->unique();
             $table->string('first_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('year_level');
             $table->foreignIdFor(Course::class, 'course_id');
             $table->string("section");
             $table->string('email')->unique();
-            $table->boolean('is_admin')->default(false);
-            $table->boolean('is_treasurer')->default(false);
+            $table->string('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

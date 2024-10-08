@@ -2,12 +2,17 @@
 
 use App\Models\User;
 
-test('example', function () {
-    expect(true)->toBeTrue();
+test('user to long student id cannot register', function () {
+    $user = User::factory()->create([
+        'student_id' => '2022-A22*d'
+    ]);
+    expect(User::find($user->id) == false)->toBeTrue();
 });
 
 test('user can register', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'student_id' => '2022-10302'
+    ]);
 
-    expect(User::find($user->id)== true)->toBeTrue();
+    expect(User::find($user->id) == true)->toBeTrue();
 });

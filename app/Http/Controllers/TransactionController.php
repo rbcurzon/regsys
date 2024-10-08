@@ -7,6 +7,7 @@ use App\Models\Document;
 use App\Models\Purpose;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -22,9 +23,9 @@ use Illuminate\Support\Facades\Auth;
 class TransactionController extends Controller
 {
     /**
-     * @var User
+     * @var Authenticatable|User|null
      */
-    protected User $user;
+    protected Authenticatable|null|User $user;
     /**
      * @var Document
      */
@@ -39,17 +40,16 @@ class TransactionController extends Controller
     protected Transaction $transaction;
 
     /**
-     * @param User $users
+     * @param Transaction $transaction
      * @param Document $document
      * @param Purpose $purpose
-     * @param Transaction $transaction
      */
-    public function __construct(User $user, Transaction $transaction, Document $document, Purpose $purpose)
+    public function __construct(Transaction $transaction, Document $document, Purpose $purpose)
     {
-        $this->user = $user;
-        $this->document = $document;
-        $this->purpose = $purpose;
+        $this->user = Auth::user();
         $this->transaction = $transaction;
+        $this->purpose = $purpose;
+        $this->document = $document;
     }
 
     /**
@@ -61,19 +61,29 @@ class TransactionController extends Controller
          * If current user is admin get all transaction, else
          * get transactions of current user.
          */
-        $transactions = Auth::user()->is_admin || Auth::user()->is_treasurer ?
-            $this->transaction->getTransactions() :
-            $this->user->getTransactions();
+        $transactions = $this->user->isAdmin() ?
+            $this->transaction->getUnreleasedTransactions() :
+            $this->user->getUnreleasedTransactions();
 
-        $pending_count = Auth::user()->is_admin || Auth::user()->is_treasurer ?
+        $pending_count = $this->user->isAdmin() ?
             $this->transaction->getPendingCount() :
             $this->user->getPendingCount();
+
+        $on_process_count = $this->user->isAdmin() ?
+            $this->transaction->getOnProcessCount() :
+            0;
+
+        $released_count = $this->user->isAdmin() ?
+            $this->transaction->getReleasedCount() :
+            0;
 
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => 'Dashboard',
             'user' => Auth::user(),
             'pending_count' => $pending_count,
+            'on_process_count' => $on_process_count,
+            'released_count' => $released_count,
         ]);
     }
 
@@ -95,8 +105,6 @@ class TransactionController extends Controller
         $transaction->purpose = Purpose::find($transaction->purpose_id)->purpose_name;
         $transaction->type = Document::find($transaction->type_id)->document_name;
         $transaction->program_code = Course::find($transaction->course_id)->code;
-
-//        dd($transaction->attributesToArray());
 
         return view('transactions.show', ['transaction' => $transaction]);
 

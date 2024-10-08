@@ -14,7 +14,7 @@ class Course extends Model
     use HasFactory;
     protected $primaryKey = 'course_id';
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class, 'course_id', 'course_id');
     }

@@ -25,6 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'student_id' => null,
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'year_level' => fake()->numberBetween(1,4),
