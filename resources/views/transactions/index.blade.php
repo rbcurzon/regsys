@@ -42,7 +42,8 @@
                     <x-slot:card_title>Pending</x-slot:card_title>
                 </x-card>
                 <x-card>
-                    <x-slot:card_title>Income</x-slot:card_title>
+                    <x-slot:card_title>Revenue</x-slot:card_title>
+                    {{ $revenue     }}
                 </x-card>
             </x-card-group>
             <x-table>

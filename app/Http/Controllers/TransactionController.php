@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Document;
+use App\Models\Journal;
 use App\Models\Purpose;
 use App\Models\User;
 use Carbon\Carbon;
@@ -38,18 +39,20 @@ class TransactionController extends Controller
      * @var Transaction
      */
     protected Transaction $transaction;
+    protected Journal $journal;
 
     /**
      * @param Transaction $transaction
      * @param Document $document
      * @param Purpose $purpose
      */
-    public function __construct(Transaction $transaction, Document $document, Purpose $purpose)
+    public function __construct(Transaction $transaction, Document $document, Purpose $purpose, Journal $journal)
     {
         $this->user = Auth::user();
         $this->transaction = $transaction;
         $this->purpose = $purpose;
         $this->document = $document;
+        $this->journal = $journal;
     }
 
     /**
@@ -77,6 +80,10 @@ class TransactionController extends Controller
             $this->transaction->getReleasedCount() :
             0;
 
+        $revenue = Auth::user()->isTreasurer() ?
+            $this->journal->getTotalDebit() :
+            0;
+
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => 'Dashboard',
@@ -84,6 +91,7 @@ class TransactionController extends Controller
             'pending_count' => $pending_count,
             'on_process_count' => $on_process_count,
             'released_count' => $released_count,
+            'revenue' => $revenue,
         ]);
     }
 
