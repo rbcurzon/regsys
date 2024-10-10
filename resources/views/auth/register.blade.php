@@ -18,7 +18,7 @@
                                       name="student_id"
                                       placeholder="Student ID"
                                       :value="old('student_id')"
-                                      pattern="^\d{4}-[a-zA-Z0-9]{5}$"
+                                      pattern="^\d{4}-\d{5,}$"
                                       title="2022-10322"
                                       required
                         />
@@ -121,9 +121,13 @@
                     </x-form-field>
 
                     {{--sixth row end--}}
-                </div>
-                <div class="flex justify-end gap-2">
-                    <x-form-button value="Register"/>
+                    <x-form-field class="col-span-6 text-center">
+
+                        <div class="flex justify-center">
+                            <x-form-button value="Register"/>
+                        </div>
+                        <a class="text-white text-sm hover:underline decoration-{white}" href="/login">Log in</a>
+                    </x-form-field>
                 </div>
             </form>
         </div>

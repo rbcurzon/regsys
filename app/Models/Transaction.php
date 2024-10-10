@@ -49,7 +49,7 @@ class Transaction extends Model
      */
     public function document(): HasOne
     {
-        return $this->hasOne(Document::class, 'document_id', 'doc_type_id');
+        return $this->hasOne(Document::class, 'document_id', 'document_id');
     }
 
     /**

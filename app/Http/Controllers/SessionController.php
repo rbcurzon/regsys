@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class SessionController extends Controller
@@ -18,9 +20,6 @@ class SessionController extends Controller
      */
     public function store()
     {
-
-//        dd(request()->all());
-
         $attributes = request()->validate([
             'email' => ['required', 'email'],
             'password' => ['required']
@@ -29,6 +28,7 @@ class SessionController extends Controller
         if (!Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
                 "email" => "Sorry, those credentials are not matched.",
+                'password' => 'The provided credentials do not match our records.'
             ]);
         }
 

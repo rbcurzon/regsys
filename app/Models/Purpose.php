@@ -17,7 +17,7 @@ class Purpose extends Model
 
     public function getPurposes()
     {
-        return Purpose::with('transactions')->get();
+        return $this->with('transactions')->get();
     }
 
     public function transactions()

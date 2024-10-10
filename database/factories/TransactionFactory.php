@@ -26,7 +26,7 @@ class TransactionFactory extends Factory
             'requested_date' => fake()->date(),
             'needed_date' => fake()->date(),
             'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,
-            'doc_type_id' => Document::inRandomOrder()->first()->document_id,
+            'document_id' => Document::inRandomOrder()->first()->document_id,
             'status' => $status[array_rand($status)],
             ];
     }

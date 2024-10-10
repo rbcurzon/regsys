@@ -25,7 +25,7 @@ class StoreRegisterUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => ['required', 'string', 'regex:/^\d{4}-[0-9]{5:}$/', 'unique:users'],
+            'student_id' => ['required', 'string', 'regex:/^\d{4}-\d{5,}$/', 'unique:users'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

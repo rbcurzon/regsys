@@ -1,12 +1,10 @@
 @php
-    use App\Models\Document;
-
 //remove this
 @endphp
 
 @extends('components.layout')
 
-@section('title', 'Dashboard')
+@section('title', $title)
 
 @section('student_id', $user->student_id)
 
@@ -39,11 +37,12 @@
             {{--treasurer dashboard start--}}
             <x-card-group>
                 <x-card>
-                    <x-slot:card_title>Pending</x-slot:card_title>
+                    <x-slot:card_title>On Process</x-slot:card_title>
+                    {{ $on_process_count }}
                 </x-card>
                 <x-card>
                     <x-slot:card_title>Revenue</x-slot:card_title>
-                    {{ $revenue     }}
+                    {{ $revenue }}
                 </x-card>
             </x-card-group>
             <x-table>
@@ -60,11 +59,11 @@
             {{--admin dashboard start--}}
             <x-card-group>
                 <x-card>
-                    <x-slot:card_title>Request</x-slot:card_title>
+                    <x-slot:card_title>Pending</x-slot:card_title>
                     {{ $pending_count }}
                 </x-card>
                 <x-card>
-                    <x-slot:card_title>Status</x-slot:card_title>
+                    <x-slot:card_title>On Process</x-slot:card_title>
                     {{ $on_process_count }}
                 </x-card>
                 <x-card>

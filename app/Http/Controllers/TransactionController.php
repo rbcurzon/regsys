@@ -72,21 +72,25 @@ class TransactionController extends Controller
             $this->transaction->getPendingCount() :
             $this->user->getPendingCount();
 
-        $on_process_count = $this->user->isAdmin() ?
+        $on_process_count = $this->user->isAdmin() || $this->user->isTreasurer() ?
             $this->transaction->getOnProcessCount() :
-            0;
+            -1;
 
         $released_count = $this->user->isAdmin() ?
             $this->transaction->getReleasedCount() :
-            0;
+            -1;
 
         $revenue = Auth::user()->isTreasurer() ?
             $this->journal->getTotalDebit() :
-            0;
+            -1;
+
+        $title = Auth::user()->isAdmin() ? 'admin dashboard'
+            : (Auth::user()->isTreasurer() ? 'treasury dashboard'
+                : 'Student Dashboard');
 
         return view('transactions.index', [
             'transactions' => $transactions,
-            'title' => 'Dashboard',
+            'title' => strtoupper($title),
             'user' => Auth::user(),
             'pending_count' => $pending_count,
             'on_process_count' => $on_process_count,
@@ -100,7 +104,12 @@ class TransactionController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        return view('transactions.create', ['purposes' => $this->purpose->getPurposes(), 'documents' => $this->document->getDocuments(), 'user' => Auth::user()]);
+        return view('transactions.create', [
+            'purposes' => $this->purpose->getPurposes(),
+            'documents' => $this->document->getDocuments(),
+            'user' => Auth::user(),
+            'title' => 'CREATE A TRANSACTION'
+            ]);
     }
 
     /**

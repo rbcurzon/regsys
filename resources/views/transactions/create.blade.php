@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\URL; @endphp
 @extends('components.layout')
 
-@section('title', 'Create a Transaction')
+@section('title', $title)
 
 @section('user_id', $user->id)
 
@@ -109,7 +109,7 @@ use Illuminate\Support\Facades\URL; @endphp
                             {{--Purpose end--}}
                             <div class="sm:col-span-3">
                                 <label for="type_id"
-                                       class="block text-sm font-medium leading-6 text-gray-900">Request</label>
+                                       class="block text-sm font-medium leading-6 text-gray-900">Document</label>
                                 <div class="mt-2">
                                     <select id="type_id" name="type_id"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
