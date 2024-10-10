@@ -64,7 +64,7 @@ class TransactionController extends Controller
          * If current user is admin get all transaction, else
          * get transactions of current user.
          */
-        $transactions = $this->user->isAdmin() ?
+        $transactions = $this->user->isAdmin() || $this->user->isTreasurer() ?
             $this->transaction->getUnreleasedTransactions() :
             $this->user->getUnreleasedTransactions();
 
@@ -80,18 +80,18 @@ class TransactionController extends Controller
             $this->transaction->getReleasedCount() :
             -1;
 
-        $revenue = Auth::user()->isTreasurer() ?
+        $revenue = $this->user->isTreasurer() ?
             $this->journal->getTotalDebit() :
             -1;
 
-        $title = Auth::user()->isAdmin() ? 'admin dashboard'
-            : (Auth::user()->isTreasurer() ? 'treasury dashboard'
+        $title = $this->user->isAdmin() ? 'admin dashboard'
+            : ($this->user->isTreasurer() ? 'treasury dashboard'
                 : 'Student Dashboard');
 
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => strtoupper($title),
-            'user' => Auth::user(),
+            'user' => $this->user,
             'pending_count' => $pending_count,
             'on_process_count' => $on_process_count,
             'released_count' => $released_count,
@@ -107,7 +107,7 @@ class TransactionController extends Controller
         return view('transactions.create', [
             'purposes' => $this->purpose->getPurposes(),
             'documents' => $this->document->getDocuments(),
-            'user' => Auth::user(),
+            'user' => $this->user,
             'title' => 'CREATE A TRANSACTION'
             ]);
     }

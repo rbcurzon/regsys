@@ -16,7 +16,8 @@ Route::get('/search', SearchController::class);
 
 //Route::resource("transactions", TransactionController::class);
 Route::get('/', [TransactionController::class, 'index'])->middleware('auth');
-Route::get('/transactions/create', [TransactionController::class, 'create'])->middleware('auth');
+Route::get('/transactions/create', [TransactionController::class, 'create'])
+    ->middleware('auth', \App\Http\Middleware\EnsureUserIsNormalUser::class);
 Route::post('/transactions', [TransactionController::class, 'store']);
 Route::get('/transactions/{transaction}/show', [TransactionController::class, 'show'])
     ->middleware('auth')

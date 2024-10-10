@@ -121,13 +121,15 @@
                     </x-form-field>
 
                     {{--sixth row end--}}
-                    <x-form-field class="col-span-6 text-center">
 
+                    {{--seventh row start--}}
+                    <x-form-field class="col-span-6 text-center">
                         <div class="flex justify-center">
                             <x-form-button value="Register"/>
                         </div>
                         <a class="text-white text-sm hover:underline decoration-{white}" href="/login">Log in</a>
                     </x-form-field>
+                    {{--seventh row end--}}
                 </div>
             </form>
         </div>

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->date('needed_date');
             $table->foreignIdFor(Purpose::class,'purpose_id');
             $table->foreignIdFor(Document::class,'document_id');
-            $table->integer('amount')->default(0);
             $table->boolean('isPaid')->default(false);
             $table->string('status')->default('pending')->nullable(false);
             $table->timestamps();

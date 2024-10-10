@@ -24,16 +24,16 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        Gate::define('edit-payments', function (User $user) {
+        Gate::define('edit-treasury', function (User $user) {
             return $user->isTreasurer();
         });
 
         Gate::define("edit-transaction", function (User $user,Transaction $transaction) {
-            return $transaction->user()->is($user);
+            return ($transaction->user()->is($user) || $user->isNormalUser() );
         });
 
-        Gate::define("edit-transactions", function (User $user) {
-            return ($user->isAdmin());
+        Gate::define("create-transaction", function (User $user) {
+            return ($user->isAdmin() || $user->isNormalUser() );
         });
 
     }

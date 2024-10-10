@@ -36,7 +36,7 @@ class Transaction extends Model
     }
     public function getUnreleasedTransactions()
     {
-        return $this->with('user')->whereNotLike('status', '%released%')->paginate(5);
+        return $this->with('user')->whereNotLike('status', '%released%')->orderBy('requested_date', 'asc')->paginate(5);
     }
 
     public function purpose()
