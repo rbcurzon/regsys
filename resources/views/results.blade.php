@@ -1,113 +1,165 @@
-@php use App\Models\Course;use App\Models\Document;
+@php use App\Models\Transaction; @endphp
+@php
+    //remove this
 @endphp
 
-<x-layout xmlns:x-slot="http://www.w3.org/1999/xlink">
-    <div class="mb-2 flex justify-center">
-        <form action="/search">
-            <input class="rounded-s-full" type="text" name="q" id="q" value="{{ $q  }}">
-            <input class="border rounded-e-full p-2 px-4 bg-[#2563eb] text-white" type="submit" value="Search">
-        </form>
-    </div>
-    <div class="bg-white rounded-md px-3 py-2">
-        <div class="flex flex-wrap justify-between my-2">
-            <x-card>
-                <x-slot:title>
-                    Request
-                </x-slot>
-                0
-            </x-card>
+@extends('components.layout')
 
-            <x-card>
-                <x-slot:title>
-                    Status
-                </x-slot>
-                0
-            </x-card>
+@section('title', $title ?? "")
 
-            <x-card>
-                <x-slot:title>
-                    Received
-                </x-slot>
-                0
-            </x-card>
+@section('student_id', $user->student_id ?? "")
+
+@section('content')
+    <x-layout-main>
+        <div class="mb-2 flex justify-end">
+            <form action="/search">
+                <label class="relative block">
+                    <input
+                        class="w-full bg-white placeholder:font-italic border border-slate-400 drop-shadow-md py-2 pl-3 pr-10 focus:outline-none rounded-full"
+                        name="q"
+                        id="q"
+                        type="text"
+                    />
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <svg class="h-5 w-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30"
+                     height="30" viewBox="0 0 30 30">
+                    <path
+                        d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+                    </path>
+                </svg>
+            </span>
+                </label>
+            </form>
         </div>
-        <div class="flex-grow overflow-y-auto rounded-md">
-            <table class="w-full">
-                <thead>
-                <tr>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        transaction_id
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        user_id
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        course_code
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        date_requested
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        type
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        status
-                    </th>
-                    <th class="text-base sticky top-0 px-3 py-2 text-primary bg-blue-100 border-b border-gray-200">
-                        action
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($transactions as $transaction)
-                    @can("edit-transactions", $transaction)
+        <hr class="border border-gray-900/10 shadow-md">
+        @if($user->isTreasurer())
+            {{--treasurer dashboard start--}}
+            <x-table>
+                <x-slot:table_headers>
+                    <x-table-header>Transaction ID</x-table-header>
+                    <x-table-header>Request date</x-table-header>
+                    <x-table-header>Student ID</x-table-header>
+                    <x-table-header>Course ID</x-table-header>
+                    <x-table-header>Cost</x-table-header>
+                    <x-table-header>Status</x-table-header>
+                    <x-table-header>Action</x-table-header>
+                </x-slot:table_headers>
+                <x-slot:table_body>
+                    @foreach($transactions as $transaction)
                         <tr class="hover:bg-blue-200">
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->id }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->user_id }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ Course::find($transaction->course_id)->code }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->date_requested }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ Document::find($transaction->type_id)->document_name }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2">{{ $transaction->status }}</td>
-                            <td class="text-base border border-gray-200 px-3 py-2 flex space-x-2">
-                                <form method="POST" action="/transactions/{{ $transaction->id }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button
+                            <x-table-data>{{ $transaction->id }}</x-table-data>
+                            <x-table-data>{{ $transaction->requested_date }}</x-table-data>
+                            <x-table-data>{{ $transaction->id }}</x-table-data>
+                            <x-table-data>{{ $transaction->user->course->code }}</x-table-data>
+                            <x-table-data>{{ $transaction->status }}</x-table-data>
+                            <x-table-data>{{ $transaction->document->cost }}</x-table-data>
+                            <x-table-data class="flex space-x-2">
+                                @can('edit-transactions', $transaction)
+                                    <form method="POST" action="/transactions/{{ $transaction->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
                                             class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                 viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    <a href="/transactions/{{ $transaction->id }}/edit"
+                                       class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             stroke-width="1.5" stroke="currentColor" class="size-6">
+                                             stroke-width="1.5" stroke="currentColor" class="size-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
                                         </svg>
-                                    </button>
-                                </form>
-                                <a href="/transactions/{{ $transaction->id }}/edit"
-                                   class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                                    </svg>
-                                </a>
+                                    </a>
+                                    <a href="/transactions/{{ $transaction->id }}/show"
+                                       class=" text-white bg-green-600 hover:bg-green-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                        </svg>
+                                    </a>
+                                @endcan
+                            </x-table-data>
+                        </tr>
+                    @endforeach
+                </x-slot:table_body>
+                <x-slot:table_links>{{ $transactions->links() }}</x-slot:table_links>
+            </x-table>
+            {{--treasurery dashboard end--}}
+        @endif
+
+        @can('viewAny', Transaction::class)
+            {{--admin dashboard start--}}
+            <x-table>
+                <x-slot:table_headers>
+                    <x-table-header>transaction_id</x-table-header>
+                    <x-table-header>student_id</x-table-header>
+                    <x-table-header>course_code</x-table-header>
+                    <x-table-header>date_requested</x-table-header>
+                    <x-table-header>type</x-table-header>
+                    <x-table-header>status</x-table-header>
+                    <x-table-header>action</x-table-header>
+                </x-slot:table_headers>
+                <x-slot:table_body>
+                    @foreach ($transactions as $transaction)
+                        <tr class="hover:bg-blue-200">
+                            <x-table-data>{{ $transaction->id }}</x-table-data>
+                            <x-table-data>{{ $transaction->student_id }}</x-table-data>
+                            <x-table-data>{{ $transaction->user->course->code }}</x-table-data>
+                            <x-table-data>{{ $transaction->requested_date }}</x-table-data>
+                            <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
+                            <x-table-data>{{ $transaction->status }}</x-table-data>
+                            <x-table-data class="flex space-x-2">
+                                @can("delete", $transaction)
+                                    <form method="POST" action="/transactions/{{ $transaction->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                 viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                @endcan
+                                @can('update',$transaction, Transaction::class)
+                                    <a href="/transactions/{{ $transaction->id }}/edit"
+                                       class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
+                                        </svg>
+                                    </a>
+                                @endcan
                                 <a href="/transactions/{{ $transaction->id }}/show"
                                    class=" text-white bg-green-600 hover:bg-green-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" class="size-6">
+                                         stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                     </svg>
                                 </a>
-                            </td>
+                            </x-table-data>
                         </tr>
-                    @endcan
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="my-2">
-            {{ $transactions->links() }}
-        </div>
-    </div>
-</x-layout>
+                    @endforeach
+                </x-slot:table_body>
+                <x-slot:table_links>{{ $transactions->links() }}</x-slot:table_links>
+            </x-table>
+        @endcan
+        {{--admin dashboard end--}}
+    </x-layout-main>
+@endsection

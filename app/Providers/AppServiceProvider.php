@@ -22,18 +22,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-
-        Gate::define('edit-treasury', function (User $user) {
-            return $user->isTreasurer();
+        Gate::define('show-transaction', function (User $user) {
+            return $user->isTreasurer() || $user->isAdmin() || $user->isNormalUser();
         });
 
         Gate::define("edit-transaction", function (User $user,Transaction $transaction) {
-            return ($transaction->user()->is($user) || $user->isNormalUser() );
+            return ( $transaction->user()->is($user));
         });
 
         Gate::define("create-transaction", function (User $user) {
-            return ($user->isAdmin() || $user->isNormalUser() );
+            return ( $user->isNormalUser() );
         });
 
     }

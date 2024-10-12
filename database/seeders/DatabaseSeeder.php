@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Course;
 use App\Models\Document;
 use App\Models\Purpose;
+use App\Models\Transaction;
 use App\Models\User;
+use Database\Factories\TransactionFactory;
 use Illuminate\Database\Seeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,14 +30,27 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'student_id' => '2022-10301',
+            'student_id' => '2022-10302',
             'first_name' => 'John',
-            'last_name' => 'Boe',
-            'email' => 'jb@example.com',
+            'last_name' => 'Voe',
+            'email' => 'jv@example.com',
         ]);
 
         User::factory()->create([
-            'student_id' => '2022-30301',
+            'student_id' => '2022-10303',
+            'first_name' => 'John',
+            'last_name' => 'Coe',
+            'email' => 'jc@example.com',
+        ]);
+        User::factory()->create([
+            'student_id' => '2022-10304',
+            'first_name' => 'John',
+            'last_name' => 'Xoe',
+            'email' => 'jx@example.com',
+        ]);
+
+        User::factory()->create([
+            'student_id' => '2022-30305',
             'first_name' => 'John',
             'last_name' => 'Zoe',
             'email' => 'jz@example.com',
@@ -93,5 +108,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         Course::insert($programs);
+
+        Transaction::factory(10)->create();
+
+        Transaction::with('user')->where('student_id', '=','2022-10301')->delete();
     }
 }
+

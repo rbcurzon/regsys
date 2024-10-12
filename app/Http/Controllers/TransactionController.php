@@ -8,6 +8,7 @@ use App\Models\Journal;
 use App\Models\Purpose;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

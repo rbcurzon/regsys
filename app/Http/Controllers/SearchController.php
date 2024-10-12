@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
@@ -14,7 +15,7 @@ class SearchController extends Controller
         ->orWhere("status", "LIKE", "%".request('q')."%")
         ->paginate(5);
 
-        return view('results', ['transactions' => $transactions, 'q' => request('q')]);
+        return view('results', ['transactions' => $transactions, 'q' => request('q'), 'user'=>Auth::user()]);
 
     }
 
