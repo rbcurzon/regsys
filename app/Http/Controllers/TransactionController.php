@@ -122,11 +122,11 @@ class TransactionController extends Controller
     public
     function show(Transaction $transaction)
     {
-        $transaction->purpose = Purpose::find($transaction->purpose_id)->purpose_name;
-        $transaction->type = Document::find($transaction->type_id)->document_name;
-        $transaction->program_code = Course::find($transaction->course_id)->code;
-
-        return view('transactions.show', ['transaction' => $transaction]);
+        return view('transactions.show', [
+            'transaction' => $transaction,
+            'user' => $this->user,
+            'title' => "view",
+        ]);
     }
 
     /**
@@ -154,10 +154,15 @@ class TransactionController extends Controller
     public
     function edit(Transaction $transaction)
     {
-        $request_purposes = Purpose::all();
+        $purposes = Purpose::all();
         $documents = Document::all();
 
-        return view('transactions.edit', ['transaction' => $transaction, 'request_purposes' => $request_purposes, 'documents' => $documents]);
+        return view('transactions.edit', [
+            'transaction' => $transaction,
+            'purposes' => $purposes,
+            'documents' => $documents,
+            'user' => $this->user,
+        ]);
     }
 
     /**
@@ -166,28 +171,14 @@ class TransactionController extends Controller
      * @return Application|RedirectResponse|Redirector
      */
     public
-    function update(Transaction $transaction, Request $request)
+    function update(Transaction $transaction, StoreTransactionRequest $request)
     {
-        request()->validate([
-            'user_id' => ['required'],
-            'year_level' => ['required'],
-            'course_id' => ['required'],
-            'section' => ['required'],
-            'date_requested' => ['required'],
-            'date_needed' => ['required'],
-            'purpose_id' => ['required'],
-            'type_id' => ['required'],
-        ]);
+//        dd($request->all());
 
         $transaction->update([
-            'user_id' => request()->integer('user_id'),
-            'year_level' => request('year_level'),
-            'course_id' => request('course_id'),
-            'section' => request('section'),
-            'date_requested' => request('date_requested'),
-            'date_needed' => request('date_needed'),
+            'needed_date' => request('needed_date'),
             'purpose_id' => request()->integer('purpose_id'),
-            'type_id' => request()->integer('type_id'),
+            'document_id' => request()->integer('document_id'),
         ]);
 
         return redirect("/transactions/" . $transaction->id . "/edit");
