@@ -96,7 +96,8 @@ use Illuminate\Support\Facades\URL; @endphp
                                     <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                             autocomplete="purpose_id">
-                                        <option class="hidden" value="{{ $transaction->purpose->purpose_id }}">{{ $transaction->purpose->purpose_name }}
+                                        <option class="hidden"
+                                                value="{{ $transaction->purpose->purpose_id }}">{{ $transaction->purpose->purpose_name }}
                                         @foreach($purposes as $purpose)
                                             <option
                                                 value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}
@@ -109,6 +110,7 @@ use Illuminate\Support\Facades\URL; @endphp
                                 </div>
                             </div>
                             {{--Purpose end--}}
+                            {{--Document start--}}
                             <div class="sm:col-span-3">
                                 <label for="document_id"
                                        class="block text-sm font-medium leading-6 text-gray-900">Document</label>
@@ -116,7 +118,8 @@ use Illuminate\Support\Facades\URL; @endphp
                                     <select id="document_id" name="document_id"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                             autocomplete="type_id">
-                                        <option class="hidden" value="{{ $transaction->document->document_id }}">{{ $transaction->document->document_name }}
+                                        <option class="hidden"
+                                                value="{{ $transaction->document->document_id }}">{{ $transaction->document->document_name }}
                                         @foreach($documents as $document)
                                             <option
                                                 value="{{$document->document_id}}">{{ $document->document_name }}</option>
@@ -127,26 +130,89 @@ use Illuminate\Support\Facades\URL; @endphp
                                     @enderror
                                 </div>
                             </div>
-
+                            {{--Document end--}}
                             {{--Date needed start--}}
                             <div class="sm:col-span-3 sm:col-start-1">
                                 <label for="needed_date" class="block text-sm font-medium leading-6 text-gray-900">Date
-                                    needed</label>
+                                    of need</label>
                                 <div class="mt-2">
                                     <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    value="{{ $transaction->needed_date }}">
+                                           value="{{ DateTime::createFromFormat('Y-m-d', $transaction->needed_date)->format('Y-m-d')  }}">
                                 </div>
                                 @error('needed_date')
                                 <p class="text-red-900 italic">{{ $message }}</p>
                                 @enderror
                             </div>
                             {{--Date needed end--}}
+                            {{--Status start--}}
+                            <div class="sm:col-span-3">
+                                    <label for="status"
+                                           class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                                @cannot('view-treasury')
+                                    <div class="mt-2">
+                                        <select id="status" name="status"
+                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                                autocomplete="type_id">
+                                            <option class="hidden"
+                                                    value="{{ $transaction->status }}">{{ $transaction->status }}</option>
+                                            @foreach($status as $s)
+                                                <option
+                                                    value="{{ $s }}">{{ $s }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('status')
+                                        <p class="text-red-900 italic">Select your option.</p>
+                                        @enderror
+                                    </div>
+                                @endcannot
+                                @can('view-treasury')
+                                    <div class="sm:col-span-3">
+                                        <div class="mt-2">
+                                            <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
+                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                                    autocomplete="purpose_id">
+                                                <option class="hidden"
+                                                        value="{{ $transaction->purpose->purpose_id }}">{{ $transaction->purpose->purpose_name }}
+                                                @foreach($purposes as $purpose)
+                                                    <option
+                                                        value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('purpose_id')
+                                            <p class="text-red-900 italic">Select your option.</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                @endcan
+                            </div>
+                            {{--Status end--}}
+                            <div class="sm:col-span-3">
+                                <label for="paid"
+                                       class="block text-sm font-medium leading-6 text-gray-900">Paid</label>
+                                <div class="mt-2">
+                                    <select id="paid" name="paid" autocomplete="paid"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                            autocomplete="paid">
+                                        <option class="hidden"
+                                                value="{{ $transaction->is_paid }}">{{ $bool_map[$transaction->is_paid] }}
+                                        @foreach($bool_map as $key => $value)
+                                            <option
+                                                value="{{ $key }}">{{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('purpose_id')
+                                    <p class="text-red-900 italic">Select your option.</p>
+                                    @enderror
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                     {{--Transaction Information End--}}
-
                 </div>
                 <input type="hidden" name="student_id" value="{{ $user->student_id }}">
                 <input type="hidden" name="course_id" value="{{ $user->course_id }}">

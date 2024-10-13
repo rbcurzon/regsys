@@ -43,7 +43,7 @@ Route::get('/transactions/{transaction}/receipt', function ($transaction) {
 Route::get('/register', [RegisterUserController::class, 'create']);
 Route::post('/register', [RegisterUserController::class, 'store']);
 
-Route::get('/login', [SessionController::class, 'create'])->name('login');
+Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 

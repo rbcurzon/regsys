@@ -21,7 +21,7 @@ class TransactionPolicy
      */
     public function view(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user) || $user->isAdmin();
+        return $transaction->user()->is($user) || $user->isAdmin() || $user->isTreasurer();
     }
 
     /**
@@ -37,7 +37,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user);
+        return $transaction->user()->is($user) || $user->isAdmin() || $user->isTreasurer();
     }
 
     /**

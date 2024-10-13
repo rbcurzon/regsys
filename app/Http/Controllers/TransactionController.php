@@ -91,6 +91,7 @@ class TransactionController extends Controller
             : ($this->user->isTreasurer() ? 'treasury dashboard'
                 : 'Student Dashboard');
 
+//        dd();
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => strtoupper($title),
@@ -156,12 +157,15 @@ class TransactionController extends Controller
     {
         $purposes = Purpose::all();
         $documents = Document::all();
+        $status = ['processing', 'releasing', 'released'];
 
         return view('transactions.edit', [
             'transaction' => $transaction,
             'purposes' => $purposes,
             'documents' => $documents,
             'user' => $this->user,
+            'status' => $status,
+            'bool_map' => ['0'=>'false', '1'=>'true',],
         ]);
     }
 
@@ -173,15 +177,14 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
-//        dd($request->all());
-
         $transaction->update([
-            'needed_date' => request('needed_date'),
-            'purpose_id' => request()->integer('purpose_id'),
-            'document_id' => request()->integer('document_id'),
+            'needed_date' => $request->get('needed_date'),
+            'purpose_id' => $request->get('purpose_id'),
+            'document_id' => $request->get('document_id'),
+            'status' => $request->get('status'),
         ]);
 
-        return redirect("/transactions/" . $transaction->id . "/edit");
+        return redirect("/");
 
     }
 

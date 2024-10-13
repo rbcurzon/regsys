@@ -62,16 +62,14 @@
             <x-table>
                 <x-slot:table_headers>
                     <x-table-header>Transaction ID</x-table-header>
+                    <x-table-header>Student ID</x-table-header>
+                    <x-table-header>First name</x-table-header>
+                    <x-table-header>Last name</x-table-header>
                     @cannot('view-treasury')
-                        <x-table-header>Student ID</x-table-header>
-                        <x-table-header>Course</x-table-header>
                         <x-table-header>Date of need</x-table-header>
                         <x-table-header>Type</x-table-header>
                     @endcannot
                     @can('view-treasury')
-                        <x-table-header>Request date</x-table-header>
-                        <x-table-header>Student ID</x-table-header>
-                        <x-table-header>Course ID</x-table-header>
                         <x-table-header>Cost</x-table-header>
                     @endcan
                     <x-table-header>Status</x-table-header>
@@ -82,20 +80,17 @@
                     @foreach ($transactions as $transaction)
                         <tr class="hover:bg-blue-200">
                             <x-table-data class="text-center">{{ $transaction->id }}</x-table-data>
+                            <x-table-data>{{ $transaction->student_id }}</x-table-data>
+                            <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
+                            <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
                             @cannot('view-treasury')
-                                <x-table-data>{{ $transaction->student_id }}</x-table-data>
-                                <x-table-data>{{ $transaction->user->course->code }}</x-table-data>
                                 <x-table-data>{{ $transaction->needed_date }}</x-table-data>
                                 <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
-                                <x-table-data>{{ $transaction->status }}</x-table-data>
                             @endcannot
                             @can('view-treasury')
-                                <x-table-data>{{ $transaction->requested_date }}</x-table-data>
-                                <x-table-data>{{ $transaction->id }}</x-table-data>
-                                <x-table-data>{{ $transaction->user->course->code }}</x-table-data>
                                 <x-table-data>{{ $transaction->document->cost }}</x-table-data>
-                                <x-table-data>{{ $transaction->status }}</x-table-data>
                             @endcan
+                            <x-table-data>{{ $transaction->status }}</x-table-data>
                             <x-table-data class="flex space-x-2">
                                 @can("delete", $transaction)
                                     <form method="POST" action="/transactions/{{ $transaction->id }}">

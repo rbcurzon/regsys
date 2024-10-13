@@ -24,7 +24,7 @@ class TransactionFactory extends Factory
         return [
             'student_id' => User::inRandomOrder()->first()->student_id,
             'requested_date' => fake()->date(),
-            'needed_date' => fake()->date(),
+            'needed_date' => fake()->dateTimeBetween('now', '+1  years')->format('Y-m-d'),
             'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,
             'document_id' => Document::inRandomOrder()->first()->document_id,
             'status' => $status[array_rand($status)],
