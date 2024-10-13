@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    return view('test');
+    return view('receipt');
 });
 
 Route::get('/search', SearchController::class)->middleware('auth');
@@ -20,22 +20,24 @@ Route::get('/', [TransactionController::class, 'index'])
     ->middleware('auth');
 Route::get('/transactions/create', [TransactionController::class, 'create'])
     ->middleware('auth')
-    ->can('create');
+    ->can('create', Transaction::class);
 Route::post('/transactions', [TransactionController::class, 'store'])
     ->middleware('auth')
-    ->can('store') ;
+    ->can('create', Transaction::class);
 Route::get('/transactions/{transaction}/show', [TransactionController::class, 'show'])
     ->middleware('auth')
     ->can("view", "transaction");
 Route::get('/transactions/{transaction}/edit', [TransactionController::class, 'edit'])
-    ->middleware('auth')
-    ->can("view", "transaction");
+    ->middleware('auth');
 Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])
     ->middleware('auth')
     ->can("update", ["transaction"]);
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
     ->middleware('auth')
     ->can("delete",['transaction']);
+Route::get('/transactions/{transaction}/receipt', function ($transaction) {
+    return view('receipt', ['transaction' => $transaction]);
+})->name('receipt');
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create']);

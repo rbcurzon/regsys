@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\URL; @endphp
 
                         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div class="sm:col-span-3">
-                                <label for="first-nam_" class="block text-sm font-medium leading-6 text-gray-900">
+                                <label for="first_name" class="block text-sm font-medium leading-6 text-gray-900">
                                     First name
                                 </label>
                                 <div class="mt-2">
@@ -108,10 +108,10 @@ use Illuminate\Support\Facades\URL; @endphp
                             </div>
                             {{--Purpose end--}}
                             <div class="sm:col-span-3">
-                                <label for="type_id"
+                                <label for="document_id"
                                        class="block text-sm font-medium leading-6 text-gray-900">Document</label>
                                 <div class="mt-2">
-                                    <select id="type_id" name="type_id"
+                                    <select id="document_id" name="document_id"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                             autocomplete="type_id">
                                         <option style="display: none" value="-1">--select an option--</option>
@@ -120,7 +120,7 @@ use Illuminate\Support\Facades\URL; @endphp
                                                 value="{{$document->document_id}}">{{ $document->document_name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('type_id')
+                                    @error('document_id')
                                     <p class="text-red-900 italic">Select your option.</p>
                                     @enderror
                                 </div>
@@ -128,13 +128,13 @@ use Illuminate\Support\Facades\URL; @endphp
 
                             {{--Date needed start--}}
                             <div class="sm:col-span-3 sm:col-start-1">
-                                <label for="date_needed" class="block text-sm font-medium leading-6 text-gray-900">Date
+                                <label for="needed_date" class="block text-sm font-medium leading-6 text-gray-900">Date
                                     needed</label>
                                 <div class="mt-2">
-                                    <input type="date" name="date_needed" id="date_needed" autocomplete="address-level2"
+                                    <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 </div>
-                                @error('date_needed')
+                                @error('needed_date')
                                 <p class="text-red-900 italic">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -145,7 +145,7 @@ use Illuminate\Support\Facades\URL; @endphp
                     {{--Transaction Information End--}}
 
                 </div>
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                <input type="hidden" name="student_id" value="{{ $user->student_id }}">
                 <input type="hidden" name="course_id" value="{{ $user->course_id }}">
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Course;
 use App\Models\Document;
 use App\Models\Journal;
 use App\Models\Purpose;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /**
  *
@@ -65,9 +66,10 @@ class TransactionController extends Controller
          * If current user is admin get all transaction, else
          * get transactions of current user.
          */
+
         $transactions = $this->user->isAdmin() || $this->user->isTreasurer() ?
-            $this->transaction->getUnreleasedTransactions() :
-            $this->user->getUnreleasedTransactions();
+            $this->transaction->getTransactions() :
+            $this->user->getTransactions();
 
         $pending_count = $this->user->isAdmin() ?
             $this->transaction->getPendingCount() :
@@ -75,11 +77,11 @@ class TransactionController extends Controller
 
         $on_process_count = $this->user->isAdmin() || $this->user->isTreasurer() ?
             $this->transaction->getOnProcessCount() :
-            -1;
+            $this->user->getOnProcessCount();
 
         $released_count = $this->user->isAdmin() ?
             $this->transaction->getReleasedCount() :
-            -1;
+            $this->user->getReleasedCount();
 
         $revenue = $this->user->isTreasurer() ?
             $this->journal->getTotalDebit() :
@@ -125,43 +127,24 @@ class TransactionController extends Controller
         $transaction->program_code = Course::find($transaction->course_id)->code;
 
         return view('transactions.show', ['transaction' => $transaction]);
-
     }
 
     /**
      * @param Request $request
-     * @return Application|RedirectResponse|Redirector
+     * @return Application|Factory|View
      */
     public
-    function store(Request $request)
+    function store(StoreTransactionRequest $request)
     {
-
-        request()->validate([
-            'user_id' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'year_level' => 'required',
-            'course_id' => 'required',
-            'section' => 'required',
-            'date_needed' => 'required',
-            'purpose_id' => 'required | gte:0',
-            'type_id' => 'required | gte:0',
-        ]);
-
-        Transaction::create([
-            'user_id' => request('user_id'),
-            'name' => request('first_name') . " " . request('last_name'),
-            'year_level' => request('year_level'),
-            'course_id' => request('course_id'),
-            'section' => request('section'),
-            'date_requested' => Carbon::now('Asia/Manila'),
-            'date_needed' => request('date_needed'),
+        $transaction = Transaction::create([
+            'student_id' => request('student_id'),
+            'requested_date' => Carbon::now('Asia/Manila'),
+            'needed_date' => request('needed_date'),
             'purpose_id' => request('purpose_id'),
-            'type_id' => request('type_id'),
+            'document_id' => request('document_id'),
         ]);
 
-        return redirect('/');
-
+    return view('receipt', ['transaction' => $transaction]);
     }
 
     /**

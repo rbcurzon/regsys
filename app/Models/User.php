@@ -38,6 +38,16 @@ class User extends Authenticatable
      * Get the total number of transactions for the current user
      * @return int
      */
+
+    public function getReleasedCount()
+    {
+        return $this->transactions->where('status', 'released')->count();
+    }
+    public function getOnProcessCount()
+    {
+        $status = ['processing', 'releasing', 'paid'];
+        return $this->transactions->wherein('status', $status)->count();
+    }
     public function getPendingCount(): int
     {
         return $this->transactions()
@@ -45,12 +55,12 @@ class User extends Authenticatable
     }
 
     /**
-     * @return LengthAwarePaginator|null
+     * @return LengthAwarePaginator
      */
-    public function getUnreleasedTransactions(): ?LengthAwarePaginator
+    public function getTransactions(): LengthAwarePaginator
     {
-        return $this->transactions()
-            ->whereNotLike('status', 'released')
+        return $this->transactions()->whereNotLike('status', '%released%')
+            ->orderBy('needed_date', 'asc')
             ->paginate(5);
     }
 

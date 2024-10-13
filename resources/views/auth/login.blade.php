@@ -4,7 +4,7 @@
 @section('user_id', '')
 
 @section('content')
-    <div class="max-w-md mx-auto bg-blue-900 rounded-3xl py-3 shadow-md">
+    <div class="max-w-md mx-auto mt-36 bg-blue-900 rounded-3xl py-3 shadow-md">
         <div class="px-6 py-4">
             <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">
                 Login</h2>
@@ -19,7 +19,8 @@
                         <x-form-error name="email"/>
                     </x-form-field>
                     <x-form-field>
-                        <x-form-input type="password" id="password" name="password" placeholder="Password" required/>
+                        <x-form-input type="password" id="password" name="password" placeholder="Password"
+                                      required/>
                         <x-form-error name="password"></x-form-error>
                     </x-form-field>
                     <x-form-field class="text-center ">

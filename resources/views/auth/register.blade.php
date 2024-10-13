@@ -4,7 +4,7 @@
 @section('user_id', '')
 
 @section('content')
-    <div class="max-w-md mx-auto bg-blue-900 rounded-3xl py-3 shadow-md">
+    <div class="max-w-md mx-auto mt-14 bg-blue-900 rounded-3xl py-3 shadow-md">
         <div class="px-6 py-4">
             <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Create a
                 new account</h2>

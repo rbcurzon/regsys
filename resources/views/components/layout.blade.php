@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use App\Models\Transaction; @endphp
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,7 +13,8 @@
 
 <body class="font-sans relative">
 <header class="static grid grid-cols-3 w-full mb-3 bg-blue-900 items-center min-h-20 px-3 py-2">
-    <div class="col-start-2 flex justify-center">
+    <div class="col-start-2 flex justify-center items-center flex-nowrap">
+        <img class="col-start-1 ml-0 rounded-full h-24 w-24 bg-blue-200 text-center" alt="brand logo" src="..."></img>
         <div class="text-white text-2xl font-bold ml-2 uppercase">city college of calamba</div>
     </div>
     <div class="col-start-3 flex justify-end">
@@ -44,7 +46,7 @@
                     <span
                         class='flex flex-col justify-center items-center h-full text-black font-bold text-base '>Home</span>
                 </x-nav-link>
-                @can('create-transaction')
+                @can('create', Transaction::class)
                     <x-nav-link href="/transactions/create" :active="request()->is('transactions/create')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="black" class="size-6">

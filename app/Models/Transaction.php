@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,13 +31,15 @@ class Transaction extends Model
         $status = ['processing', 'releasing', 'paid'];
         return $this->wherein('status', $status)->count();
     }
-    public function getPendingCount()
+    public function getPendingCount(): int
     {
         return $this->with('user')->where('status', 'pending')->count();
     }
-    public function getUnreleasedTransactions()
+    public function getTransactions(): LengthAwarePaginator
     {
-        return $this->with('user')->whereNotLike('status', '%released%')->orderBy('requested_date', 'asc')->paginate(5);
+        return $this->with('user')
+            ->whereNotLike('status', '%released%')
+            ->orderBy('needed_date', 'asc')->paginate(5);
     }
 
     public function purpose()
