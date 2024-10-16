@@ -91,7 +91,6 @@ class TransactionController extends Controller
             : ($this->user->isTreasurer() ? 'treasury dashboard'
                 : 'Student Dashboard');
 
-//        dd();
         return view('transactions.index', [
             'transactions' => $transactions,
             'title' => strtoupper($title),
@@ -158,7 +157,7 @@ class TransactionController extends Controller
     {
         $purposes = Purpose::all();
         $documents = Document::all();
-        $status = ['processing', 'releasing', 'released'];
+        $status = ['processing', 'releasing', 'released', 'cancelled'];
 
         return view('transactions.edit', [
             'transaction' => $transaction,
@@ -172,13 +171,12 @@ class TransactionController extends Controller
 
     /**
      * @param Transaction $transaction
-     * @param Request $request
+     * @param StoreTransactionRequest $request
      * @return Application|RedirectResponse|Redirector
      */
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
-        dd($request->all());
         $transaction->update([
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),

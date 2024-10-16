@@ -68,7 +68,7 @@
                         >
                             <option style="display: none" value="-1">Course</option>
                             @foreach($courses as $course)
-                                <option value="{{ $course->course_id }}">{{ $course->code }}</option>
+                                <option value="{{ $course->course_id }}">{{ $course->course_name }}</option>
                             @endforeach
                         </x-form-select>
                         <x-form-error name="course_id"/>
@@ -94,6 +94,7 @@
                                       :value="old('email')"
                                       required
                         />
+                        <x-form-error name="first_name"/>
                     </x-form-field>
                     {{--forth row end--}}
 
@@ -133,14 +134,5 @@
                 </div>
             </form>
         </div>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     </div>
 @endsection

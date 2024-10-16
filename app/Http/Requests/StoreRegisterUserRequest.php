@@ -30,7 +30,7 @@ class StoreRegisterUserRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'year_level' => ['required'],
-            'course_id' => ['required'],
+            'course_id' => ['required', 'gte:0'], //gte = greater that or equal
             'section' => ['required'],
             'password' => [Password::min(8), "confirmed"],
         ];

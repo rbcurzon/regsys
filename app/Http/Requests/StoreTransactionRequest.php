@@ -25,8 +25,9 @@ class StoreTransactionRequest extends FormRequest
         return [
             'student_id' => 'required',
             'needed_date' => 'required|after:today',
-            'purpose_id' => 'required',
-            'document_id' => 'required',
+            'purpose_id' => 'required | gte:0',
+            'document_id' => 'required | gte:0',
+            'status' => ,
         ];
     }
 }

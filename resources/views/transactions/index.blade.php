@@ -133,9 +133,9 @@
                                     @if(!$transaction->is_paid)
                                         <form action="/journals" method="post">
                                             @csrf
-                                            <input type="submit"
-                                                   class="bg-white text-black border border-green-400 py-0 hover:bg-green-200"
-                                                   value="Mark as paid">
+                                            <x-form-input type="submit"
+                                                   class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1"
+                                                   value="Mark as paid"/>
                                             <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
                                             <input type="hidden" name="student_id"
                                                    value="{{ $transaction->student_id }}">

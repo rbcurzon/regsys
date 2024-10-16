@@ -147,7 +147,7 @@ use Illuminate\Support\Facades\URL; @endphp
                             {{--Date needed end--}}
                             {{--Status start--}}
                             <div class="sm:col-span-3">
-                                @if(Auth::user()->isNormalUser())
+                                @if(Auth::user()->isAdmin())
                                     <label for="status"
                                            class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                                     <div class="mt-2">
@@ -168,37 +168,12 @@ use Illuminate\Support\Facades\URL; @endphp
                                 @endif
                             </div>
                             {{--Status end--}}
-                            @if(Auth::user()->isTreasurer())
-                                {{--Paid start--}}
-                                <div class="sm:col-span-3">
-                                    <label for="paid"
-                                           class="block text-sm font-medium leading-6 text-gray-900">Paid</label>
-                                    <div class="mt-2">
-                                        <select id="paid" name="paid" autocomplete="paid"
-                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                                autocomplete="paid">
-                                            <option class="hidden"
-                                                    value="{{ $transaction->is_paid }}">{{ $bool_map[$transaction->is_paid] }}
-                                            @foreach($bool_map as $key => $value)
-                                                <option
-                                                    value="{{ $key }}">{{ $value }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('purpose_id')
-                                        <p class="text-red-900 italic">Select your option.</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                {{--Paid end--}}
-                            @endif
                         </div>
                     </div>
                     {{--Transaction Information End--}}
                 </div>
                 <input type="hidden" name="student_id" value="{{ $user->student_id }}">
                 <input type="hidden" name="course_id" value="{{ $user->course_id }}">
-                <input type="hidden" name="status" value="{{ $transaction->status }}">
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a
                         class="text-sm font-semibold leading-6 text-gray-900"

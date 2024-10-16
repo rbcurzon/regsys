@@ -23,7 +23,6 @@ class RegisterUserController extends Controller
     public function store(StoreRegisterUserRequest $request)
     {
         $attributes = $request->validated();
-
         $user = User::create($attributes);
 
         Auth::login($user);

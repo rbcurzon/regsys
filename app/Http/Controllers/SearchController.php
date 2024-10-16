@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,13 +11,22 @@ class SearchController extends Controller
 {
     public function __invoke()
     {
-        $transactions = Transaction::where("id", "LIKE", "%".request('q')."%")
-        ->orWhere("user_id", "LIKE", "%".request('q')."%")
-        ->orWhere("status", "LIKE", "%".request('q')."%")
-        ->paginate(5);
+        if (Auth::user()->isNormalUser()) {
+            $transactions = Auth::user()->transactions()->where(function (Builder $query) {
+                return $query->where('status', 'LIKE', request('q') . '%')
+                    ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("status", "LIKE", "%" . request('q') . "%");
+            })
+                ->get();
+        } else {
+            $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
+                ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
+                ->orWhere("status", "LIKE", "%" . request('q') . "%")
+                ->get();
+        }
+//        dd($transactions->count());
 
-        return view('results', ['transactions' => $transactions, 'q' => request('q'), 'user'=>Auth::user()]);
-
+        return view('results', ['transactions' => $transactions, 'q' => request('q'), 'user' => Auth::user()]);
     }
 
 //    TODO: Search function for admin

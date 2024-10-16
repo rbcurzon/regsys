@@ -123,7 +123,7 @@
                         </tr>
                     @endforeach
                 </x-slot:table_body>
-                <x-slot:table_links>{{ $transactions->links() }}</x-slot:table_links>
+{{--                <x-slot:table_links>{{ $transactions->links() }}</x-slot:table_links>--}}
             </x-table>
         @endcan
         {{--admin dashboard end--}}
