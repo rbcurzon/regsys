@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JournalController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransactionController;
@@ -15,7 +16,6 @@ Route::get('/test', function () {
 
 Route::get('/search', SearchController::class)->middleware('auth');
 
-//Route::resource("transactions", TransactionController::class);
 Route::get('/', [TransactionController::class, 'index'])
     ->middleware('auth');
 Route::get('/transactions/create', [TransactionController::class, 'create'])
@@ -35,9 +35,8 @@ Route::patch('/transactions/{transaction}', [TransactionController::class, 'upda
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
     ->middleware('auth')
     ->can("delete",['transaction']);
-Route::get('/transactions/{transaction}/receipt', function ($transaction) {
-    return view('receipt', ['transaction' => $transaction]);
-})->name('receipt');
+
+Route::post('/journals', [JournalController::class, 'store']);
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create']);

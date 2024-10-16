@@ -147,9 +147,9 @@ use Illuminate\Support\Facades\URL; @endphp
                             {{--Date needed end--}}
                             {{--Status start--}}
                             <div class="sm:col-span-3">
+                                @if(Auth::user()->isNormalUser())
                                     <label for="status"
                                            class="block text-sm font-medium leading-6 text-gray-900">Status</label>
-                                @cannot('view-treasury')
                                     <div class="mt-2">
                                         <select id="status" name="status"
                                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -165,57 +165,40 @@ use Illuminate\Support\Facades\URL; @endphp
                                         <p class="text-red-900 italic">Select your option.</p>
                                         @enderror
                                     </div>
-                                @endcannot
-                                @can('view-treasury')
-                                    <div class="sm:col-span-3">
-                                        <div class="mt-2">
-                                            <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
-                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                                    autocomplete="purpose_id">
-                                                <option class="hidden"
-                                                        value="{{ $transaction->purpose->purpose_id }}">{{ $transaction->purpose->purpose_name }}
-                                                @foreach($purposes as $purpose)
-                                                    <option
-                                                        value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('purpose_id')
-                                            <p class="text-red-900 italic">Select your option.</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                @endcan
+                                @endif
                             </div>
                             {{--Status end--}}
-                            <div class="sm:col-span-3">
-                                <label for="paid"
-                                       class="block text-sm font-medium leading-6 text-gray-900">Paid</label>
-                                <div class="mt-2">
-                                    <select id="paid" name="paid" autocomplete="paid"
-                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                            autocomplete="paid">
-                                        <option class="hidden"
-                                                value="{{ $transaction->is_paid }}">{{ $bool_map[$transaction->is_paid] }}
-                                        @foreach($bool_map as $key => $value)
-                                            <option
-                                                value="{{ $key }}">{{ $value }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('purpose_id')
-                                    <p class="text-red-900 italic">Select your option.</p>
-                                    @enderror
+                            @if(Auth::user()->isTreasurer())
+                                {{--Paid start--}}
+                                <div class="sm:col-span-3">
+                                    <label for="paid"
+                                           class="block text-sm font-medium leading-6 text-gray-900">Paid</label>
+                                    <div class="mt-2">
+                                        <select id="paid" name="paid" autocomplete="paid"
+                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                                autocomplete="paid">
+                                            <option class="hidden"
+                                                    value="{{ $transaction->is_paid }}">{{ $bool_map[$transaction->is_paid] }}
+                                            @foreach($bool_map as $key => $value)
+                                                <option
+                                                    value="{{ $key }}">{{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('purpose_id')
+                                        <p class="text-red-900 italic">Select your option.</p>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-
+                                {{--Paid end--}}
+                            @endif
                         </div>
                     </div>
                     {{--Transaction Information End--}}
                 </div>
                 <input type="hidden" name="student_id" value="{{ $user->student_id }}">
                 <input type="hidden" name="course_id" value="{{ $user->course_id }}">
+                <input type="hidden" name="status" value="{{ $transaction->status }}">
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a
                         class="text-sm font-semibold leading-6 text-gray-900"

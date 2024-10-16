@@ -120,12 +120,13 @@ class TransactionController extends Controller
      * @param Transaction $transaction
      * @return Factory|View|Application
      */
-    public
     function show(Transaction $transaction)
     {
+        $user = Auth::user()->isNormalUser() ? $this->user : $transaction->user;
+
         return view('transactions.show', [
             'transaction' => $transaction,
-            'user' => $this->user,
+            'user' => $user,
             'title' => "view",
         ]);
     }
@@ -177,6 +178,7 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
+        dd($request->all());
         $transaction->update([
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),
@@ -185,7 +187,6 @@ class TransactionController extends Controller
         ]);
 
         return redirect("/");
-
     }
 
     /**

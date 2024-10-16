@@ -28,22 +28,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'student_id' => '2022-30305',
-            'first_name' => 'John',
-            'last_name' => 'Zoe',
-            'email' => 'jz@example.com',
-            'role' => 'treasurer'
-        ]);
-
-        User::factory()->create([
-            'student_id' => '2022-20301',
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'jd@example.com',
-            'role' => 'admin'
-        ]);
-
-        User::factory()->create([
             'student_id' => '2022-10302',
             'email' => 'jv@example.com',
         ]);
@@ -54,24 +38,24 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $document_lists = [
-            ['document_name' => 'copy_diploma', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_enrollment', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_gwa', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_graduation', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_latin', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_units', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_auth', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'cert_copy', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'completion_grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'computerized_card', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'course_description', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'endorsement_letter', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'english_medium', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'honorable_dismissal', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'form137a_tor', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'spes_certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'transcript_records', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()]
+            ['document_name' => 'copy of diploma', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'enrollment certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'gwa certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'grades certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'graduation certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'latin certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'units certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'auth certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'copy certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'completion of grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'computerized card', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'course description', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'endorsement letter', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'english medium', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'honorable dismissal', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'form137', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'spes certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
+            ['document_name' => 'transcript records', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()]
         ];
 
         Document::insert($document_lists);
@@ -107,7 +91,21 @@ class DatabaseSeeder extends Seeder
 
         Transaction::factory(10)->create();
 
-        Transaction::with('user')->where('student_id', '=','2022-10301')->delete();
+        User::factory()->create([
+            'student_id' => '2022-30305',
+            'first_name' => 'John',
+            'last_name' => 'Zoe',
+            'email' => 'jz@example.com',
+            'role' => 'treasurer'
+        ]);
+
+        User::factory()->create([
+            'student_id' => '2022-20301',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'jd@example.com',
+            'role' => 'admin'
+        ]);
     }
 }
 

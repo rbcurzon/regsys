@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+
     public function isNormalUser()
     {
         return $this->role == null;

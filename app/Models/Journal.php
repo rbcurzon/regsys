@@ -15,12 +15,12 @@ class Journal extends Model
 
     public function getTotalDebit()
     {
-        return $this->isBalance() ? $this->where('is_credit',0)->sum('amount') : 0;
+        return $this->isBalance() ? $this->where('is_credit',0)->sum('cost') : 0;
     }
     public function isBalance()
     {
         $difference = $this
-            ->selectRaw('sum(case when is_credit = 1 then amount else 0 end) as credit_total, sum(case when is_credit = 0 then amount else 0 end) as debit_total')
+            ->selectRaw('sum(case when is_credit = 1 then cost else 0 end) as credit_total, sum(case when is_credit = 0 then cost else 0 end) as debit_total')
             ->first();
 
         return ($difference->credit_total - $difference->debit_total) == 0;

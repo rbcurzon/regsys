@@ -16,12 +16,11 @@
                                       :value="old('email')"
                                       required
                         />
-                        <x-form-error name="email"/>
                     </x-form-field>
                     <x-form-field>
                         <x-form-input type="password" id="password" name="password" placeholder="Password"
                                       required/>
-                        <x-form-error name="password"></x-form-error>
+                        <x-form-error name="email"/>
                     </x-form-field>
                     <x-form-field class="text-center ">
                         <div class="flex flex-col">

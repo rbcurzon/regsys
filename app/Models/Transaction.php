@@ -6,7 +6,6 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -22,6 +21,16 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function isPending()
+    {
+        return $this->status === 'pending';
+    }
+
+    public function setPaid(bool $paid)
+    {
+        $this->is_paid = $paid;
+        $this->save();
+    }
     public function getReleasedCount()
     {
         return $this->where('status', 'released')->count();

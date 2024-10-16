@@ -29,7 +29,7 @@ class TransactionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isNormalUser() || $user->isAdmin();
+        return $user->isNormalUser();
     }
 
     /**
@@ -37,7 +37,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user) || $user->isAdmin() || $user->isTreasurer();
+        return $transaction->user()->is($user) && $transaction->isPending() || ($user->isAdmin() || $user->isTreasurer());
     }
 
     /**

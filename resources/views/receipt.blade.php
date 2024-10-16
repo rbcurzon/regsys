@@ -2,6 +2,7 @@
 
 @extends('components.layout')
 
+
 @section('content')
     <div class="flex items-center justify-center mt-36">
         <x-layout-main class="mx-auto">

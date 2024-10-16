@@ -13,20 +13,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('accounts', function (Blueprint $table) {
-            $table->id('account_id');
+            $table->id('account_id')->autoIncrement();
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::create('journals', function (Blueprint $table) {
             $table->id('journal_id');
             $table->foreignId('financial_transaction_id');
             $table->foreignId("account_id");
-            $table->float("amount");
+            $table->float("cost");
             $table->boolean('is_credit')->nullable(false);
+            $table->timestamps();
         });
 
         Schema::create('financial_transactions', function (Blueprint $table) {
-            $table->id('financial_transaction_id');
+            $table->id('financial_transaction_id')->autoIncrement();
             $table->string('description');
             $table->timestamps();
         });
