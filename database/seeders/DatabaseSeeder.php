@@ -10,6 +10,7 @@ use App\Models\User;
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -20,10 +21,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        DB::table('accounts')->insert([
-//            ['name' => 'Cash', 'account_id' => '1'],
-//            ['name' => 'Services Revenues', 'account_id' => '2']
-//        ]);
+
+        DB::table('accounts')->insert([
+            ['name' => 'Cash'],
+            ['name' => 'Services Revenues']
+        ]);
 
         User::factory(5)->create();
 
