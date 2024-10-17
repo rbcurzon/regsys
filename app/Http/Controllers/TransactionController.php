@@ -177,6 +177,9 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
+
+//        dd($request->all());
+
         $transaction->update([
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),

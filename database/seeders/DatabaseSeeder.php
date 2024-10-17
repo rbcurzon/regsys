@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -19,23 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        User::factory()->create([
-            'student_id' => '2022-10304',
-            'first_name' => 'John',
-            'last_name' => 'Xoe',
-            'email' => 'jx@example.com',
-        ]);
+//        DB::table('accounts')->insert([
+//            ['name' => 'Cash', 'account_id' => '1'],
+//            ['name' => 'Services Revenues', 'account_id' => '2']
+//        ]);
 
-        User::factory()->create([
-            'student_id' => '2022-10302',
-            'email' => 'jv@example.com',
-        ]);
-
-        User::factory()->create([
-            'student_id' => '2022-10303',
-            'email' => 'jc@example.com',
-        ]);
+        User::factory(5)->create();
 
         $document_lists = [
             ['document_name' => 'copy of diploma', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
@@ -91,21 +81,17 @@ class DatabaseSeeder extends Seeder
 
         Transaction::factory(10)->create();
 
-        User::factory()->create([
-            'student_id' => '2022-30305',
-            'first_name' => 'John',
-            'last_name' => 'Zoe',
-            'email' => 'jz@example.com',
-            'role' => 'treasurer'
-        ]);
+        User::factory()->create(
+            ['student_id' => '2022-30304', 'first_name' => 'John', 'last_name' => 'Zoe', 'email' => 'jz@example.com', 'role' => 'treasurer'],
+        );
 
-        User::factory()->create([
-            'student_id' => '2022-20301',
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'jd@example.com',
-            'role' => 'admin'
-        ]);
+        User::factory()->create(
+            ['student_id' => '2022-20305', 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'jd@example.com', 'role' => 'admin']
+        );
+
+        User::factory()->create(
+            ['student_id' => '2022-20306', 'first_name' => 'John', 'last_name' => 'Boe', 'email' => 'jb@example.com', 'role' => null]
+        );
     }
 }
 

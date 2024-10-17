@@ -21,6 +21,11 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function isPaid()
+    {
+        return !($this->is_paid === '0');
+    }
+
     public function isPending()
     {
         return $this->status === 'pending';

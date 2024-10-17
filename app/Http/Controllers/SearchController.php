@@ -17,11 +17,13 @@ class SearchController extends Controller
                     ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
                     ->orWhere("status", "LIKE", "%" . request('q') . "%");
             })
+                ->orderBy("needed_date")
                 ->get();
         } else {
             $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
                 ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
                 ->orWhere("status", "LIKE", "%" . request('q') . "%")
+                ->orderBy("needed_date")
                 ->get();
         }
 //        dd($transactions->count());

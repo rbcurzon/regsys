@@ -20,8 +20,12 @@ return new class extends Migration
 
         Schema::create('journals', function (Blueprint $table) {
             $table->id('journal_id');
-            $table->foreignId('financial_transaction_id');
-            $table->foreignId("account_id");
+            $table->foreignId('financial_transaction_id')->constrained(
+                table: 'transactions', indexName: 'id'
+            );
+            $table->foreignId("account_id")->constrained(
+                table: 'accounts', indexName: 'account_id'
+            );
             $table->float("cost");
             $table->boolean('is_credit')->nullable(false);
             $table->timestamps();

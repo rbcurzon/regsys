@@ -7,6 +7,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
 {
+    public function messages()
+{
+    return [
+        'status.declined_if' => 'Status cannot be released when is not paid'
+    ];
+}
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -27,7 +34,7 @@ class StoreTransactionRequest extends FormRequest
             'needed_date' => 'required|after:today',
             'purpose_id' => 'required | gte:0',
             'document_id' => 'required | gte:0',
-            'status' => ,
+            'status' => $this->status === 'released' ? 'declined_if:is_paid,0' : '',
         ];
     }
 }
