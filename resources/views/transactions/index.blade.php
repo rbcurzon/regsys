@@ -1,4 +1,4 @@
-@php use App\Models\Transaction; @endphp
+@php use App\Models\Transaction;use Illuminate\Support\Facades\Auth; @endphp
 @php
     //remove this
 @endphp
@@ -12,7 +12,7 @@
 @section('content')
     <x-layout-main>
         <div class="mb-2 flex justify-end">
-            <form action="/search">
+            <form action="/search" id>
                 <label class="relative block">
                     <input
                         class="w-full bg-white placeholder:font-italic border border-slate-400 drop-shadow-md py-2 pl-3 pr-10 focus:outline-none rounded-full"
@@ -37,10 +37,12 @@
             {{--admin dashboard start--}}
             <x-card-group>
                 @cannot('view-treasury')
-                    <x-card>
-                        <x-slot:card_title>Pending</x-slot:card_title>
-                        {{ $pending_count }}
-                    </x-card>
+                    <a href="/search?q=pending">
+                        <x-card>
+                            <x-slot:card_title>Pending</x-slot:card_title>
+                            {{ $pending_count }}
+                        </x-card>
+                    </a>
                 @endcannot
                 <x-card>
                     <x-slot:card_title>On Process</x-slot:card_title>
@@ -54,6 +56,10 @@
                 @endcannot
                 @can('view-treasury')
                     <x-card>
+                        <x-card>
+                            <x-slot:card_title>Paid</x-slot:card_title>
+                            TODO
+                        </x-card>
                         <x-slot:card_title>Revenue</x-slot:card_title>
                         {{ $revenue }}
                     </x-card>
@@ -62,16 +68,17 @@
             <x-table>
                 <x-slot:table_headers>
                     <x-table-header>Transaction ID</x-table-header>
-                    <x-table-header>Student ID</x-table-header>
-                    <x-table-header>First name</x-table-header>
-                    <x-table-header>Last name</x-table-header>
+                    @if(!Auth::user()->isNormalUser())
+
+                        <x-table-header>Student ID</x-table-header>
+                        <x-table-header>First name</x-table-header>
+                        <x-table-header>Last name</x-table-header>
+                    @endif
                     @cannot('view-treasury')
                         <x-table-header>Date of need</x-table-header>
                         <x-table-header>Type</x-table-header>
                     @endcannot
-                    @can('view-treasury')
-                        <x-table-header>Cost</x-table-header>
-                    @endcan
+                    <x-table-header>Cost</x-table-header>
                     <x-table-header>Paid</x-table-header>
                     <x-table-header>Status</x-table-header>
                     <x-table-header>Action</x-table-header>
@@ -81,17 +88,17 @@
                     @foreach ($transactions as $transaction)
                         <tr class="hover:bg-blue-200">
                             <x-table-data class="text-center">{{ $transaction->id }}</x-table-data>
-                            <x-table-data>{{ $transaction->student_id }}</x-table-data>
-                            <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
-                            <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
+                            @if(!Auth::user()->isNormalUser())
+                                <x-table-data>{{ $transaction->student_id }}</x-table-data>
+                                <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
+                                <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
+                            @endif
                             @cannot('view-treasury')
                                 <x-table-data>{{ $transaction->needed_date }}</x-table-data>
                                 <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
                             @endcannot
-                            @can('view-treasury')
-                                <x-table-data>{{ $transaction->document->cost }}</x-table-data>
-                            @endcan
-                            <x-table-data>{{ $transaction->is_paid  == "0" ? "false" : "true" }}</x-table-data>
+                            <x-table-data>{{ $transaction->document->cost }}</x-table-data>
+                            <x-table-data>{{ $transaction->is_paid  == "0" ? "no" : "yes" }}</x-table-data>
                             <x-table-data>{{ $transaction->status }}</x-table-data>
                             <x-table-data class="flex space-x-2">
                                 @can("delete", $transaction)
@@ -134,8 +141,8 @@
                                         <form action="/journals" method="post">
                                             @csrf
                                             <x-form-input type="submit"
-                                                   class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1"
-                                                   value="Mark as paid"/>
+                                                          class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1"
+                                                          value="Mark as paid"/>
                                             <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
                                             <input type="hidden" name="student_id"
                                                    value="{{ $transaction->student_id }}">

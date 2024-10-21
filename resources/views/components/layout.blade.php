@@ -34,7 +34,7 @@
         <div class="container mt-5 px-3 py-2">
             <nav class="flex flex-col space-y-4 pb-5 border-b border-white">
                 <a href="#" class="flex flex-col justify-center items-center m-auto text-white hover:text-blue-600">
-                    <img src="https://github.com/mdo.png" alt="" class="rounded-full w-16 h-16">
+                    <img src="{{ asset('/images/profile-icon-design-free-vector.jpg') }}" alt="" class="rounded-full w-16 h-16">
                     <span class="text-base font-bold text-center"> @yield('student_id')</span>
                 </a>
                 <x-nav-link href="/" :active="request()->is('/')">
