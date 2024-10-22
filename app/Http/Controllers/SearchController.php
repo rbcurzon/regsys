@@ -20,11 +20,19 @@ class SearchController extends Controller
                 ->orderBy("needed_date")
                 ->get();
         } else {
-            $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
-                ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
-                ->orWhere("status", "LIKE", "%" . request('q') . "%")
-                ->orderBy("needed_date")
-                ->get();
+            if (request('q') === 'on process') {
+                $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("status", "LIKE", "%processing%")
+                    ->orWhere("status", "LIKE", "%releasing%")
+                    ->orderBy("needed_date")
+                    ->get();
+            } else {
+                $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("status", "LIKE", "%" . request('q') . "%")
+                    ->orderBy("needed_date")
+                    ->get();
+            }
         }
 //        dd($transactions->count());
 

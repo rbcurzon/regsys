@@ -157,7 +157,7 @@ class TransactionController extends Controller
     {
         $purposes = Purpose::all();
         $documents = Document::all();
-        $status = ['processing', 'releasing', 'released', 'cancelled'];
+        $status = ['processing', 'releasing', 'released', 'rejected'];
 
         return view('transactions.edit', [
             'transaction' => $transaction,

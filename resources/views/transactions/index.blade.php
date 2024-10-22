@@ -44,15 +44,19 @@
                         </x-card>
                     </a>
                 @endcannot
-                <x-card>
-                    <x-slot:card_title>On Process</x-slot:card_title>
-                    {{ $on_process_count }}
-                </x-card>
-                @cannot('view-treasury')
+                <a href="/search?q=on process">
                     <x-card>
-                        <x-slot:card_title>Released</x-slot:card_title>
-                        {{ $released_count }}
+                        <x-slot:card_title>On Process</x-slot:card_title>
+                        {{ $on_process_count }}
                     </x-card>
+                </a>
+                @cannot('view-treasury')
+                    <a href="/search?q=released">
+                        <x-card>
+                            <x-slot:card_title>Released</x-slot:card_title>
+                            {{ $released_count }}
+                        </x-card>
+                    </a>
                 @endcannot
                 @can('view-treasury')
                     <x-card>
@@ -94,7 +98,7 @@
                                 <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
                             @endif
                             @cannot('view-treasury')
-                                <x-table-data>{{ $transaction->needed_date }}</x-table-data>
+                                <x-table-data>{{ date('m-d-Y', strtotime( $transaction->needed_date )) }}</x-table-data>
                                 <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
                             @endcannot
                             <x-table-data>{{ $transaction->document->cost }}</x-table-data>

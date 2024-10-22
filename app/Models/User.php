@@ -47,7 +47,7 @@ class User extends Authenticatable
     }
     public function getOnProcessCount()
     {
-        $status = ['processing', 'releasing', 'paid'];
+        $status = ['processing', 'releasing'];
         return $this->transactions->wherein('status', $status)->count();
     }
     public function getPendingCount(): int
@@ -61,7 +61,9 @@ class User extends Authenticatable
      */
     public function getTransactions(): LengthAwarePaginator
     {
-        return $this->transactions()->whereNotLike('status', '%released%')
+
+        $status = ['released', 'rejected'];
+        return $this->transactions()->whereNotIn('status',$status )
             ->orderBy('needed_date', 'asc')
             ->paginate(5);
     }

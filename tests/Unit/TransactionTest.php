@@ -4,9 +4,10 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-test('belongs to a user', function () {
+test('belongs to a user', function ()
+{
+    $user = User::factory()->create();
 
-    $user = User::where('student_id', '=', '2022-30503')->firstOrFail();
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
     ]);
@@ -15,7 +16,7 @@ test('belongs to a user', function () {
 });
 
 test('user can delete', function () {
-    $user = User::where('student_id', '=', '2022-30503')->firstOrFail();
+    $user = User::factory()->create();
 
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
@@ -29,8 +30,9 @@ test('user can delete', function () {
 });
 
 
-test('user has many', function () {
-    $user = User::where('student_id', '=', '2022-30503')->firstOrFail();
+test('user has many', function ()
+{
+    $user = User::factory()->create();
 
     Transaction::truncate();
 
@@ -39,4 +41,12 @@ test('user has many', function () {
     ]);
 
     expect($user->transactions->count())->toBe(5);
+});
+
+test('pending count is right', function () {
+    $count = Transaction::where('status', '=', 'pending')->count();
+
+    $transaction = new Transaction();
+
+    expect($transaction->getPendingCount())->toBe($count);
 });
