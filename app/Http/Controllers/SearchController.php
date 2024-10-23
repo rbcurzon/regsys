@@ -20,10 +20,14 @@ class SearchController extends Controller
                 ->orderBy("needed_date")
                 ->get();
         } else {
-            if (request('q') === 'on process') {
+            if (request('q') === 'on process' || request('q') === 'processing') {
                 $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
                     ->orWhere("status", "LIKE", "%processing%")
                     ->orWhere("status", "LIKE", "%releasing%")
+                    ->orderBy("needed_date")
+                    ->get();
+            } elseif (request('q') === 'paid') {
+                $transactions = Transaction::where("is_paid", '=', '1')
                     ->orderBy("needed_date")
                     ->get();
             } else {
@@ -36,10 +40,11 @@ class SearchController extends Controller
         }
 //        dd($transactions->count());
 
-        return view('results', ['transactions' => $transactions, 'q' => request('q'), 'user' => Auth::user()]);
+        return view('results', [
+            'transactions' => $transactions,
+            'q' => request('q'),
+            'user' => Auth::user(),
+            'title' => 'Search Results',
+            ]);
     }
-
-//    TODO: Search function for admin
-//    TODO: Search function for admin
-//    TODO: Search function for student
 }

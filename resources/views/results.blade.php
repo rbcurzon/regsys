@@ -38,17 +38,18 @@
             <x-table>
                 <x-slot:table_headers>
                     <x-table-header>Transaction ID</x-table-header>
-                    <x-table-header>Student ID</x-table-header>
-                    <x-table-header>First name</x-table-header>
-                    <x-table-header>Last name</x-table-header>
+                    @if(!Auth::user()->isNormalUser())
+
+                        <x-table-header>Student ID</x-table-header>
+                        <x-table-header>First name</x-table-header>
+                        <x-table-header>Last name</x-table-header>
+                    @endif
                     @cannot('view-treasury')
                         <x-table-header>Date of need</x-table-header>
                         <x-table-header>Type</x-table-header>
                     @endcannot
-                    @can('view-treasury')
-                        <x-table-header>Cost</x-table-header>
-                        <x-table-header>Paid</x-table-header>
-                    @endcan
+                    <x-table-header>Cost</x-table-header>
+                    <x-table-header>Paid</x-table-header>
                     <x-table-header>Status</x-table-header>
                     <x-table-header>Action</x-table-header>
 
@@ -57,17 +58,17 @@
                     @foreach ($transactions as $transaction)
                         <tr class="hover:bg-blue-200">
                             <x-table-data class="text-center">{{ $transaction->id }}</x-table-data>
-                            <x-table-data>{{ $transaction->student_id }}</x-table-data>
-                            <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
-                            <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
+                            @if(!Auth::user()->isNormalUser())
+                                <x-table-data>{{ $transaction->student_id }}</x-table-data>
+                                <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
+                                <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
+                            @endif
                             @cannot('view-treasury')
-                                <x-table-data>{{ $transaction->needed_date }}</x-table-data>
+                                <x-table-data>{{ date('m-d-Y', strtotime( $transaction->needed_date )) }}</x-table-data>
                                 <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
                             @endcannot
-                            @can('view-treasury')
-                                <x-table-data>{{ $transaction->document->cost }}</x-table-data>
-                                <x-table-data>{{ $transaction->is_paid }}</x-table-data>
-                            @endcan
+                            <x-table-data>{{ $transaction->document->cost }}</x-table-data>
+                            <x-table-data>{{ $transaction->is_paid  == "0" ? "no" : "yes" }}</x-table-data>
                             <x-table-data>{{ $transaction->status }}</x-table-data>
                             <x-table-data class="flex space-x-2">
                                 @can("delete", $transaction)
@@ -85,14 +86,16 @@
                                         </button>
                                     </form>
                                 @endcan
-                                <a href="/transactions/{{ $transaction->id }}/edit"
-                                   class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                         stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                                    </svg>
-                                </a>
+                                @can('update', $transaction)
+                                    <a href="/transactions/{{ $transaction->id }}/edit"
+                                       class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
+                                        </svg>
+                                    </a>
+                                @endcan
                                 <a href="/transactions/{{ $transaction->id }}/show"
                                    class=" text-white bg-green-600 hover:bg-green-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -107,11 +110,12 @@
                                     @if(!$transaction->is_paid)
                                         <form action="/journals" method="post">
                                             @csrf
-                                            <input type="submit"
-                                                   class="bg-white text-black border border-green-400 py-0 hover:bg-green-200"
-                                                   value="Mark as paid">
+                                            <x-form-input type="submit"
+                                                          class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1"
+                                                          value="Mark as paid"/>
                                             <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
-                                            <input type="hidden" name="student_id" value="{{ $transaction->student_id }}">
+                                            <input type="hidden" name="student_id"
+                                                   value="{{ $transaction->student_id }}">
                                             <input type="hidden" name="cost" value="{{ $transaction->document->cost }}">
                                         </form>
                                     @else

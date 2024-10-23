@@ -28,13 +28,14 @@ Route::get('/transactions/{transaction}/show', [TransactionController::class, 's
     ->middleware('auth')
     ->can("view", "transaction");
 Route::get('/transactions/{transaction}/edit', [TransactionController::class, 'edit'])
-    ->middleware('auth');
-Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])
     ->middleware('auth')
     ->can("update", ["transaction"]);
+Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])
+    ->middleware('auth')
+    ->can("update", ['transaction']);
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
     ->middleware('auth')
-    ->can("delete",['transaction']);
+    ->can("delete", ['transaction']);
 
 Route::post('/journals', [JournalController::class, 'store']);
 

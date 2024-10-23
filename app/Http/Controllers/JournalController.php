@@ -7,8 +7,6 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-;
-
 class JournalController extends Controller
 {
     public function create()

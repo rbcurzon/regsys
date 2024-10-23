@@ -21,6 +21,10 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function isRejected()
+    {
+        return $this->status == 'rejected';
+    }
     public function isPaid()
     {
         return !($this->is_paid === '0');
@@ -29,6 +33,11 @@ class Transaction extends Model
     public function isPending()
     {
         return $this->status === 'pending';
+    }
+
+    public function getPaidTransactionsCount()
+    {
+      return $this->with('user')->where('is_paid', '=', '1')->count();
     }
 
     public function setPaid(bool $paid)
@@ -42,25 +51,31 @@ class Transaction extends Model
         $status = ['processing', 'releasing'];
         return $this->wherein('status', $status)->get();
     }
+
     public function getReleasedCount()
     {
         return $this->where('status', 'released')->count();
     }
+
     public function getOnProcessCount()
     {
         $status = ['processing', 'releasing'];
         return $this->wherein('status', $status)->count();
     }
+
     public function getPendingCount(): int
     {
         return $this->with('user')->where('status', 'pending')->count();
     }
+
     public function getTransactions(): LengthAwarePaginator
     {
-        $status = ['released', 'rejected'];
+        $status = ['processing', 'releasing', 'pending', 'rejected'];
         return $this->with('user')
-            ->whereNotIn('status', $status)
-            ->orderBy('needed_date', 'asc')->paginate(5);
+            ->whereIn('status', $status)
+            ->orderBy('needed_date', 'asc')
+            ->orderBy('requested_date', 'asc')
+            ->paginate(5);
     }
 
     public function purpose()

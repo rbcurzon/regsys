@@ -29,7 +29,6 @@ test('user can delete', function () {
     expect($transaction->find($transaction_id))->toBeNull();
 });
 
-
 test('user has many', function ()
 {
     $user = User::factory()->create();

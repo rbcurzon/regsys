@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use phpDocumentor\Reflection\Types\True_;
 
 class TransactionPolicy
 {
@@ -37,7 +38,15 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user) && $transaction->isPending() || $user->isAdmin();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        if ($transaction->user()->is($user) && $transaction->isPending()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

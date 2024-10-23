@@ -60,13 +60,15 @@
                 @endcannot
                 @can('view-treasury')
                     <x-card>
-                        <x-card>
-                            <x-slot:card_title>Paid</x-slot:card_title>
-                            TODO
-                        </x-card>
                         <x-slot:card_title>Revenue</x-slot:card_title>
                         {{ $revenue }}
                     </x-card>
+                    <a href="/search?q=paid_transactions">
+                        <x-card>
+                            <x-slot:card_title>Paid</x-slot:card_title>
+                            {{ $paid_transactions_count }}
+                        </x-card>
+                    </a>
                 @endcan
             </x-card-group>
             <x-table>
@@ -147,10 +149,12 @@
                                             <x-form-input type="submit"
                                                           class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1"
                                                           value="Mark as paid"/>
-                                            <input type="hidden" name="transaction_id" value="{{ $transaction->id }}">
+                                            <input type="hidden" name="transaction_id"
+                                                   value="{{ $transaction->id }}">
                                             <input type="hidden" name="student_id"
                                                    value="{{ $transaction->student_id }}">
-                                            <input type="hidden" name="cost" value="{{ $transaction->document->cost }}">
+                                            <input type="hidden" name="cost"
+                                                   value="{{ $transaction->document->cost }}">
                                         </form>
                                     @else
                                         <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1">

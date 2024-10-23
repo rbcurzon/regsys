@@ -62,8 +62,8 @@ class User extends Authenticatable
     public function getTransactions(): LengthAwarePaginator
     {
 
-        $status = ['released', 'rejected'];
-        return $this->transactions()->whereNotIn('status',$status )
+        $status = ['processing', 'releasing', 'pending', 'rejected'];
+        return $this->transactions()->whereIn('status',$status )
             ->orderBy('needed_date', 'asc')
             ->paginate(5);
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\URL; @endphp
 
 @section('title', $title)
 
-@section('user_id', $user->id)
+@section('student_id', $user->student_id)
 
 @section('content')
     <div class="flex items-center justify-center">

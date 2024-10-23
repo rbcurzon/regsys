@@ -87,6 +87,10 @@ class TransactionController extends Controller
             $this->journal->getTotalDebit() :
             -1;
 
+        $paid_transactions_count = $this->user->isTreasurer() ?
+            $this->transaction->getPaidTransactionsCount() :
+            -1;
+
         $title = $this->user->isAdmin() ? 'admin dashboard'
             : ($this->user->isTreasurer() ? 'treasury dashboard'
                 : 'Student Dashboard');
@@ -99,6 +103,7 @@ class TransactionController extends Controller
             'on_process_count' => $on_process_count,
             'released_count' => $released_count,
             'revenue' => $revenue,
+            'paid_transactions_count' => $paid_transactions_count,
         ]);
     }
 
