@@ -15,7 +15,7 @@ class Journal extends Model
 
     public function getTotalDebit()
     {
-        return $this->isBalance() ? $this->where('is_credit',0)->sum('cost') : 0;
+        return $this->isBalance() ? $this->where('is_credit',0)->sum('cost') : -1;
     }
     public function isBalance()
     {

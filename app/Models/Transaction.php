@@ -21,6 +21,18 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function getRevenue()
+    {
+        $paid_transactions = $this->with('user')->where('is_paid', '=', '1')->get();
+        $sum = 0;
+
+        foreach ($paid_transactions as $transaction) {
+            $sum += $transaction->document->cost;
+        }
+
+        return $sum;
+    }
+
     public function isRejected()
     {
         return $this->status == 'rejected';

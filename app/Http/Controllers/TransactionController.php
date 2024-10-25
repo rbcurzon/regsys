@@ -62,41 +62,41 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        /**
-         * If current user is admin get all transaction, else
-         * get transactions of current user.
-         */
+        $transactions = null;
+        $title = 'student dashboard';
+        $on_process_count = -1;
+        $released_count = -1;
+        $revenue = -1;
+        $paid_transactions_count = -1;
+        $pending_count = -1;
 
-        $transactions = $this->user->isAdmin() || $this->user->isTreasurer() ?
-            $this->transaction->getTransactions() :
-            $this->user->getTransactions();
+        if ($this->user->isNormalUser()) {
+            $transactions = $this->user->getTransactions();
+            $pending_count = $this->user->getPendingCount();
+            $released_count = $this->user->getReleasedCount();
+            $on_process_count = $this->user->getOnProcessCount();
+        }
 
-        $pending_count = $this->user->isAdmin() ?
-            $this->transaction->getPendingCount() :
-            $this->user->getPendingCount();
+        if ($this->user->isAdmin() || $this->user->isTreasurer()) {
+            $transactions = $this->transaction->getTransactions();
+            $on_process_count = $this->transaction->getOnProcessCount();
 
-        $on_process_count = $this->user->isAdmin() || $this->user->isTreasurer() ?
-            $this->transaction->getOnProcessCount() :
-            $this->user->getOnProcessCount();
+            if ($this->user->isAdmin()) {
+                $pending_count = $this->transaction->getPendingCount();
+                $released_count = $this->transaction->getReleasedCount();
+                $title = 'admin dashboard';
+            } elseif ($this->user->isTreasurer()) {
+                $revenue = $this->journal->getTotalDebit() == 0 ?
+                    $this->transaction->getRevenue() :
+                    $this->journal->getTotalDebit();
 
-        $released_count = $this->user->isAdmin() ?
-            $this->transaction->getReleasedCount() :
-            $this->user->getReleasedCount();
-
-        $revenue = $this->user->isTreasurer() ?
-            $this->journal->getTotalDebit() :
-            -1;
-
-        $paid_transactions_count = $this->user->isTreasurer() ?
-            $this->transaction->getPaidTransactionsCount() :
-            -1;
-
-        $title = $this->user->isAdmin() ? 'admin dashboard'
-            : ($this->user->isTreasurer() ? 'treasury dashboard'
-                : 'Student Dashboard');
+                $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
+                $title = 'treasury dashboard';
+            }
+        }
 
         return view('transactions.index', [
-            'transactions' => $transactions,
+            'transactions' => $transactions ?? null,
             'title' => strtoupper($title),
             'user' => $this->user,
             'pending_count' => $pending_count,
@@ -116,8 +116,8 @@ class TransactionController extends Controller
             'purposes' => $this->purpose->getPurposes(),
             'documents' => $this->document->getDocuments(),
             'user' => $this->user,
-            'title' => 'CREATE A TRANSACTION'
-            ]);
+            'title' => 'CREATE A TRANSACTION',
+        ]);
     }
 
     /**
@@ -150,7 +150,7 @@ class TransactionController extends Controller
             'document_id' => request('document_id'),
         ]);
 
-    return view('receipt', ['transaction' => $transaction]);
+        return view('receipt', ['transaction' => $transaction]);
     }
 
     /**
@@ -170,7 +170,7 @@ class TransactionController extends Controller
             'documents' => $documents,
             'user' => $this->user,
             'status' => $status,
-            'bool_map' => ['0'=>'false', '1'=>'true',],
+            'bool_map' => ['0' => 'false', '1' => 'true',],
         ]);
     }
 
