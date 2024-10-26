@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JournalController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TransactionController;
@@ -38,6 +39,8 @@ Route::delete('/transactions/{transaction}', [TransactionController::class, 'des
     ->can("delete", ['transaction']);
 
 Route::post('/journals', [JournalController::class, 'store']);
+
+Route::singleton('/profile', ProfileController::class);
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create']);

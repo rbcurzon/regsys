@@ -38,13 +38,12 @@ class SearchController extends Controller
                     ->get();
             }
         }
-//        dd($transactions->count());
 
         return view('results', [
             'transactions' => $transactions,
             'q' => request('q'),
             'user' => Auth::user(),
             'title' => 'Search Results',
-            ]);
+        ]);
     }
 }

@@ -94,7 +94,6 @@ class TransactionController extends Controller
                 $title = 'treasury dashboard';
             }
         }
-
         return view('transactions.index', [
             'transactions' => $transactions ?? null,
             'title' => strtoupper($title),

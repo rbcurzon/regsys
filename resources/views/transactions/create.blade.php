@@ -147,8 +147,7 @@ use Illuminate\Support\Facades\URL; @endphp
 
                 </div>
                 <input type="hidden" name="student_id" value="{{ $user->student_id }}">
-                <input type="hidden" name="course_id" value="{{ $user->course_id }}">
-                <div class="mt-6 flex items-center justify-end gap-x-6">
+                <input type="hidden" name="course_id" value="{{ $user->course_id }}">                <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a
                         class="text-sm font-semibold leading-6 text-gray-900"
                         href="{{ URL::previous() }}">Back</a>
