@@ -19,6 +19,7 @@ use App\Models\Transaction;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /**
  *
@@ -86,9 +87,7 @@ class TransactionController extends Controller
                 $released_count = $this->transaction->getReleasedCount();
                 $title = 'admin dashboard';
             } elseif ($this->user->isTreasurer()) {
-                $revenue = $this->journal->getTotalDebit() == 0 ?
-                    $this->transaction->getRevenue() :
-                    $this->journal->getTotalDebit();
+                $revenue = $this->journal->getTotalDebit();
 
                 $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
                 $title = 'treasury dashboard';
@@ -203,6 +202,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        return redirect('/');
+        return redirect(URL::previous());
     }
 }

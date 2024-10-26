@@ -63,7 +63,7 @@
                         <x-slot:card_title>Revenue</x-slot:card_title>
                         {{ $revenue }}
                     </x-card>
-                    <a href="/search?q=paid_transactions">
+                    <a href="/search?q=paid">
                         <x-card>
                             <x-slot:card_title>Paid</x-slot:card_title>
                             {{ $paid_transactions_count }}
@@ -155,6 +155,7 @@
                                                    value="{{ $transaction->student_id }}">
                                             <input type="hidden" name="cost"
                                                    value="{{ $transaction->document->cost }}">
+                                            <input type="hidden" name="page" value="{{ request()->input('page') }}">
                                         </form>
                                     @else
                                         <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1">

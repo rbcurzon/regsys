@@ -6,6 +6,7 @@ use App\Models\Journal;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class JournalController extends Controller
 {
@@ -21,6 +22,8 @@ class JournalController extends Controller
         $transaction->update([
             'is_paid' => true,
         ]);
+
+        $transaction->save();
 
         $description = "Provide service for student " . $request->get('student_id');
 
@@ -46,6 +49,6 @@ class JournalController extends Controller
             'is_credit' => true,
         ]);
 
-        return redirect('/');
+        return redirect(URL::previous());
     }
 }
