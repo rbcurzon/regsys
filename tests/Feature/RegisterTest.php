@@ -1,19 +1,23 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-test('example', function () {
-    $response = $this->get('/');
+uses(RefreshDatabase::class);
 
-    $response->assertStatus(200);
-});
+test('user can login', function () {
 
-test('can register', function () {
-    $user = User::factory()->create();
+    $userData = [
+        'student_id' => "2022-10302",
+        'email' => 'ronaldcurzon@gmail.com',
+        'password' => 'passwordko',
+    ];
 
-    $response = $this->actingAs($user)
-        ->withSession(['banned' => false])
-        ->get('/');
+    $user = User::factory()->create($userData);
 
+    $response = $this->post('/login', $userData);
+
+    $response->assertStatus(302);
+    $response->assertRedirect('/');
 
 });
