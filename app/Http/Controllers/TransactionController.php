@@ -88,7 +88,7 @@ class TransactionController extends Controller
                 $title = 'admin dashboard';
             } elseif ($this->user->isTreasurer()) {
                 $revenue = $this->journal->getTotalDebit();
-
+//                $pending_count
                 $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
                 $title = 'treasury dashboard';
             }

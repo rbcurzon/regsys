@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('user can login', function () {
+test('user can register', function () {
 
     $userData = [
         'student_id' => "2022-10302",
@@ -15,7 +15,7 @@ test('user can login', function () {
 
     $user = User::factory()->create($userData);
 
-    $response = $this->post('/login', $userData);
+    $response = $this->post('/register', $userData);
 
     $response->assertStatus(302);
     $response->assertRedirect('/');

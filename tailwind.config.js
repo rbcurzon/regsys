@@ -12,7 +12,7 @@ export default {
             },
             colors: {
                 blue: {
-                    900: '#221c66'
+                    900: '#000055'
                 }
             },
         },

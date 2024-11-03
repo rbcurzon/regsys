@@ -1,138 +1,209 @@
 @extends('components.layout')
 
 @section('title', 'Register')
-@section('user_id', '')
 
 @section('content')
-    <div class="max-w-md mx-auto mt-14 bg-blue-900 rounded-3xl py-3 shadow-md">
-        <div class="px-6 py-4">
-            <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2">Create a
-                new account</h2>
-            <form action="/register" method="POST">
-                @csrf
-                <div class="grid grid-cols-6 gap-4 mb-3 ">
-                    {{--first row start--}}
-                    <x-form-field class="col-span-6">
-                        <x-form-input class="w-full"
-                                      id="student_id"
-                                      name="student_id"
-                                      placeholder="Student ID"
-                                      :value="old('student_id')"
-                                      pattern="^\d{4}-\d{5,}$"
-                                      title="2022-10322"
-                                      required
-                        />
-                        <x-form-error name="student_id"/>
-                    </x-form-field>
-                    {{--first row end--}}
+    <!-- Include the Montserrat font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
 
-                    {{--second row start--}}
-                    <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-2  gap-x-3">
-                        <x-form-input type="text"
-                                      id="first_name"
-                                      name="first_name"
-                                      placeholder="First name"
-                                      :value="old('first_name')"
-                                      required
-                        />
-                        <x-form-error name="first_name"/>
+    <style>
+        /* Custom Font Classes */
+        .montserrat-light {
+            font-family: 'Montserrat', serif;
+            font-weight: 300;
+        }
 
-                        <x-form-input type="text"
-                                      id="last_name"
-                                      name="last_name"
-                                      placeholder="Last name"
-                                      :value="old('last_name')"
-                                      required
-                        />
-                        <x-form-error name="last_name"/>
-                    </x-form-field>
-                    {{--second row end--}}
+        .montserrat-regular {
+            font-family: 'Montserrat', serif;
+            font-weight: 400;
+        }
 
-                    {{--third row start--}}
-                    <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-x-3 gap-y-6">
-                        <x-form-select id="year_level"
-                                       name="year_level"
-                                       required
-                        >
-                            <option style="display: none" value="-1">Year level</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </x-form-select>
-                        <x-form-error name="year_level"/>
+        .montserrat-medium {
+            font-family: 'Montserrat', serif;
+            font-weight: 500;
+        }
 
-                        <x-form-select id="course_id"
-                                       name="course_id"
-                                       required
-                        >
-                            <option style="display: none" value="-1">Course</option>
-                            @foreach($courses as $course)
-                                <option value="{{ $course->course_id }}">{{ $course->course_name }}</option>
-                            @endforeach
-                        </x-form-select>
-                        <x-form-error name="course_id"/>
+        .montserrat-semibold {
+            font-family: 'Montserrat', serif;
+            font-weight: 600;
+        }
 
-                        <x-form-input type="text"
-                                      id="section"
-                                      name="section"
-                                      placeholder="Section"
-                                      :value="old('section')"
-                        >
-                        </x-form-input>
-                        <x-form-error name="section"/>
-                    </x-form-field>
-                    {{--third row end--}}
+        .montserrat-bold {
+            font-family: 'Montserrat', serif;
+            font-weight: 700;
+        }
 
-                    {{--forth row start--}}
-                    <x-form-field class="col-span-6">
-                        <x-form-input class="w-full"
-                                      type="email"
-                                      id="email"
-                                      name="email"
-                                      placeholder="Email"
-                                      :value="old('email')"
-                                      required
-                        />
-                        <x-form-error name="first_name"/>
-                    </x-form-field>
-                    {{--forth row end--}}
+        /* Section Titles */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #BBBBBB;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #BBBBBB;
+            padding-bottom: 0.5rem;
+        }
 
-                    {{--fifth row start--}}
-                    <x-form-field class="col-span-6">
-                        <x-form-input class="w-full"
-                                      type="password"
-                                      id="password"
-                                      name="password"
-                                      placeholder="Password"
-                                      required
-                        />
-                    </x-form-field>
-                    {{--fifth row end--}}
+        .form-container {
+            background-color: rgb(0, 0, 85); /* Dark blue background */
+        }
 
-                    {{--sixth row start--}}
-                    <x-form-field class="col-span-6">
-                        <x-form-input class="w-full"
-                                      type="password"
-                                      id="confirm-password"
-                                      name="password_confirmation"
-                                      placeholder="Confirm password"
-                                      required
-                        />
-                    </x-form-field>
+        /* Style the register button */
+        .register-button {
+            background-color: white; /* Change button background to white */
+            color: rgb(0, 0, 85); /* Change button text color to dark blue */
+        }
 
-                    {{--sixth row end--}}
+        /* Style for login link */
+        .login-link {
+            color: white;
+            font-size: 0.9rem;
+        }
+    </style>
+    <div class="min-h-screen flex items-center justify-center"
+         style="background-image: url('https://raw.githubusercontent.com/Hanzcy/Pictures/632b30a7afc4c0e1c6385a8b051b17b861ed192a/images/CCC%20BG.jpg'); background-size: cover; background-position: center;">
+        <div class="max-w-md mx-auto mt-14 form-container rounded-3xl py-3 shadow-md">
+            <div class="px-6 py-4">
+                <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2 montserrat-bold">
+                    CREATE NEW ACCOUNT</h2>
 
-                    {{--seventh row start--}}
-                    <x-form-field class="col-span-6 text-center">
-                        <div class="flex justify-center">
-                            <x-form-button value="Register"/>
+                <form action="/register" method="POST">
+                    @csrf
+                    <div class="space-y-6">
+
+                        <!-- Personal Information Section -->
+                        <div>
+                            <h3 class="section-title montserrat-semibold">Personal Information</h3>
+                            <div class="grid grid-cols-6 gap-4">
+                                <x-form-field class="col-span-6">
+                                    <x-form-input class="w-full montserrat-regular"
+                                                  id="student_id"
+                                                  name="student_id"
+                                                  placeholder="Student ID"
+                                                  :value="old('student_id')"
+                                                  pattern="^\d{4}-\d{5,}$"
+                                                  title="2022-10322"
+                                                  required
+                                    />
+                                    <x-form-error name="student_id"/>
+                                </x-form-field>
+
+                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+                                    <x-form-input type="text"
+                                                  id="first_name"
+                                                  name="first_name"
+                                                  placeholder="First name"
+                                                  :value="old('first_name')"
+                                                  class="montserrat-regular"
+                                                  required
+                                    />
+                                    <x-form-error name="first_name"/>
+
+                                    <x-form-input type="text"
+                                                  id="last_name"
+                                                  name="last_name"
+                                                  placeholder="Last name"
+                                                  :value="old('last_name')"
+                                                  class="montserrat-regular"
+                                                  required
+                                    />
+                                    <x-form-error name="last_name"/>
+                                </x-form-field>
+                            </div>
                         </div>
-                        <a class="text-white text-sm hover:underline decoration-{white}" href="/login">Log in</a>
-                    </x-form-field>
-                    {{--seventh row end--}}
-                </div>
-            </form>
+
+                        <!-- Academic Information Section -->
+                        <div>
+                            <h3 class="section-title montserrat-semibold">Academic Information</h3>
+                            <div class="grid grid-cols-6 gap-4">
+                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-x-3">
+                                    <x-form-select id="year_level"
+                                                   name="year_level"
+                                                   class="montserrat-regular"
+                                                   required
+                                    >
+                                        <option style="display: none" value="-1">Year level</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </x-form-select>
+                                    <x-form-error name="year_level"/>
+
+                                    <x-form-select id="course_id"
+                                                   name="course_id"
+                                                   class="montserrat-regular"
+                                                   required
+                                    >
+                                        <option style="display: none" value="-1">Course</option>
+                                        @foreach($courses as $course)
+                                            <option value="{{ $course->course_id }}">{{ $course->course_name }}</option>
+                                        @endforeach
+                                    </x-form-select>
+                                    <x-form-error name="course_id"/>
+
+                                    <x-form-input type="text"
+                                                  id="section"
+                                                  name="section"
+                                                  placeholder="Section"
+                                                  :value="old('section')"
+                                                  class="montserrat-regular"
+                                    />
+                                    <x-form-error name="section"/>
+                                </x-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Account Information Section -->
+                        <div>
+                            <h3 class="section-title montserrat-semibold">Account Information</h3>
+                            <div class="grid grid-cols-6 gap-4">
+                                <x-form-field class="col-span-6">
+                                    <x-form-input class="w-full montserrat-regular"
+                                                  type="email"
+                                                  id="email"
+                                                  name="email"
+                                                  placeholder="Email"
+                                                  :value="old('email')"
+                                                  required
+                                    />
+                                    <x-form-error name="email"/>
+                                </x-form-field>
+
+                                <x-form-field class="col-span-6">
+                                    <x-form-input class="w-full montserrat-regular"
+                                                  type="password"
+                                                  id="password"
+                                                  name="password"
+                                                  placeholder="Password"
+                                                  required
+                                    />
+                                </x-form-field>
+
+                                <x-form-field class="col-span-6">
+                                    <x-form-input class="w-full montserrat-regular"
+                                                  type="password"
+                                                  id="confirm-password"
+                                                  name="password_confirmation"
+                                                  placeholder="Confirm password"
+                                                  required
+                                    />
+                                </x-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Register Button -->
+                        <x-form-field class="col-span-6 text-center">
+                            <div class="flex justify-center">
+                                <x-form-button class="register-button montserrat-semibold" value="Register"/>
+                            </div>
+                            <a class="login-link montserrat-light hover:underline" href="/login">Log in</a>
+                        </x-form-field>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

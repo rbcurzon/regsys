@@ -1,3 +1,556 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.montserrat-light {
+    font-family: 'Montserrat', serif;
+    font-weight: 300;
+}
+
+.montserrat-regular {
+    font-family: 'Montserrat', serif;
+    font-weight: 400;
+}
+
+.montserrat-medium {
+    font-family: 'Montserrat', serif;
+    font-weight: 500;
+}
+
+.montserrat-semibold {
+    font-family: 'Montserrat', serif;
+    font-weight: 600;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', serif;
+    font-weight: 700;
+}
+
+/* Custom input styles with icons */
+.input-icon {
+    position: relative;
+}
+
+.input-icon input {
+    padding-left: 3rem; /* Increase padding for the icon and line */
+}
+
+.input-icon i {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+/* Separator between icon and input */
+.input-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 2.5rem; /* Position the separator after the icon */
+    transform: translateY(-50%);
+    height: 60%; /* Length of the line */
+    width: 1px;
+    background-color: #999;
+}
+
+/* Style the form container with the specified background color */
+.form-container {
+    background-color: rgb(0, 0, 85); /* Dark blue background */
+    width: 90%; /* Set the width to 90% of its parent container */
+    max-width: 500px; /* Set a max-width for larger screens */
+    padding: 2rem; /* Increase padding for the container */
+}
+
+.heading-size-adjustable {
+    font-weight: 650;
+    font-size: 1.5rem; /* Adjust this to change the size of CCC COLLEGE REGISTRAR */
+    color: white; /* Change the color of the h2 */
+}
+
+.signin-spacing {
+    margin-top: 30px; /* Adjust this value as needed */
+}
+
+/* Align "SIGN IN" to the left and bold */
+.signin-header {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px; /* Add left padding to move it away from the edge */
+    font-size: 1.2rem; /* Make it a bit larger */
+    color: white; /* Change the color of the h3 */
+}
+
+/* Style for the login button */
+.login-button {
+    background-color: white; /* Change button background to white */
+    color: rgb(0, 0, 85); /* Change button text color to dark blue */
+}
+
+/* Hover effect for the button */
+.login-button:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent on hover */
+}
+
+/* Add spacing between CCC College Registrar and Sign In */
+.title-spacing {
+    margin-bottom: 10px; /* Add space between title and sign in */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+
+header {
+    z-index: 10;
+    position: relative;
+    background-color: rgb(0, 0, 85);
+}
+
+/* Show sidebar when 'open' class is added */
+aside.open {
+    transform: translateX(0); /* Visible when 'open' */
+}
+
+/* Style for the toggle button */
+.burger {
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    display: none; /* Hidden by default */
+}
+
+/* Sidebar Label Styles */
+.sidebar-label {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 205px; /* Keep this width for larger screens */
+        transform: translateX(-100%); /* Hidden by default */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+    }
+
+    aside.open {
+        transform: translateX(0); /* Show sidebar when 'open' */
+        position: fixed;
+        top: 160px; /* Maintain the position below the header */
+        left: 0;
+        width: 205px; /* Fixed width on mobile */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+        z-index: 10; /* Ensure it's on top */
+    }
+
+    .sidebar-label {
+        opacity: 0; /* Hide labels but keep space */
+        visibility: hidden; /* Ensure it doesn't interfere with layout */
+    }
+
+    aside.open .sidebar-label {
+        opacity: 1; /* Show labels when the sidebar is open */
+        visibility: visible; /* Ensure they are visible */
+    }
+
+    .sidebar-icon {
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+
+    .burger {
+        display: block; /* Show burger icon on smaller screens */
+    }
+}
+
+/* Optional: If you want the sidebar to be less wide on very small screens */
+@media (max-width: 480px) {
+    aside.open {
+        width: 180px; /* Adjust width further for very small screens */
+    }
+}
+
+/* Completely hide sidebar below 480px */
+@media (max-width: 480px) {
+    aside {
+        transform: translateX(-100%); /* Hide sidebar fully on mobile */
+    }
+}
+
+/* Apply Montserrat font styles */
+.montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.text-shadow-white {
+    position: relative;
+    z-index: 50;
+    color: white !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+
+header {
+    z-index: 10;
+    position: relative;
+    background-color: rgb(0, 0, 85);
+}
+
+/* Sidebar - hidden by default in mobile view */
+aside {
+    position: absolute;
+    top: 110px; /* Adjust this if necessary to match your header height */
+    left: 0;
+    width: 205px; /* Fixed width for larger screens */
+    height: calc(100vh - 110px); /* Use the header height here */
+    border: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    padding-top: 1rem;
+    transition: transform 0.3s ease;
+    transform: translateX(0); /* Visible by default on larger screens */
+    z-index: 9;
+}
+
+/* Show sidebar when 'open' class is added */
+aside.open {
+    transform: translateX(0); /* Visible when 'open' */
+}
+
+/* Style for the toggle button */
+.burger {
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    display: none; /* Hidden by default */
+}
+
+/* Sidebar Label Styles */
+.sidebar-label {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 205px; /* Keep this width for larger screens */
+        transform: translateX(-100%); /* Hidden by default */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+    }
+
+    aside.open {
+        transform: translateX(0); /* Show sidebar when 'open' */
+        position: fixed;
+        top: 160px; /* Maintain the position below the header */
+        left: 0;
+        width: 205px; /* Fixed width on mobile */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+        z-index: 10; /* Ensure it's on top */
+    }
+
+    .sidebar-label {
+        opacity: 0; /* Hide labels but keep space */
+        visibility: hidden; /* Ensure it doesn't interfere with layout */
+    }
+
+    aside.open .sidebar-label {
+        opacity: 1; /* Show labels when the sidebar is open */
+        visibility: visible; /* Ensure they are visible */
+    }
+
+    .sidebar-icon {
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+
+    .burger {
+        display: block; /* Show burger icon on smaller screens */
+    }
+}
+
+/* Optional: If you want the sidebar to be less wide on very small screens */
+@media (max-width: 480px) {
+    aside.open {
+        width: 180px; /* Adjust width further for very small screens */
+    }
+}
+
+/* Completely hide sidebar below 480px */
+@media (max-width: 480px) {
+    aside {
+        transform: translateX(-100%); /* Hide sidebar fully on mobile */
+    }
+}
+
+/* Apply Montserrat font styles */
+.montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.text-shadow-white {
+    position: relative;
+    z-index: 50;
+    color: white !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+
+header {
+    z-index: 10;
+    position: relative;
+    background-color: rgb(0, 0, 85);
+}
+
+/* Sidebar - hidden by default in mobile view */
+aside {
+    position: absolute;
+    top: 110px; /* Adjust this if necessary to match your header height */
+    left: 0;
+    width: 205px; /* Fixed width for larger screens */
+    height: calc(100vh - 110px); /* Use the header height here */
+    border: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    padding-top: 1rem;
+    transition: transform 0.3s ease;
+    transform: translateX(0); /* Visible by default on larger screens */
+    z-index: 9;
+}
+
+/* Show sidebar when 'open' class is added */
+aside.open {
+    transform: translateX(0); /* Visible when 'open' */
+}
+
+/* Style for the toggle button */
+.burger {
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    display: none; /* Hidden by default */
+}
+
+/* Sidebar Label Styles */
+.sidebar-label {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 205px; /* Keep this width for larger screens */
+        transform: translateX(-100%); /* Hidden by default */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+    }
+
+    aside.open {
+        transform: translateX(0); /* Show sidebar when 'open' */
+        position: fixed;
+        top: 160px; /* Maintain the position below the header */
+        left: 0;
+        width: 205px; /* Fixed width on mobile */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+        z-index: 10; /* Ensure it's on top */
+    }
+
+    .sidebar-label {
+        opacity: 0; /* Hide labels but keep space */
+        visibility: hidden; /* Ensure it doesn't interfere with layout */
+    }
+
+    aside.open .sidebar-label {
+        opacity: 1; /* Show labels when the sidebar is open */
+        visibility: visible; /* Ensure they are visible */
+    }
+
+    .sidebar-icon {
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+
+    .burger {
+        display: block; /* Show burger icon on smaller screens */
+    }
+}
+
+/* Optional: If you want the sidebar to be less wide on very small screens */
+@media (max-width: 480px) {
+    aside.open {
+        width: 180px; /* Adjust width further for very small screens */
+    }
+}
+
+/* Completely hide sidebar below 480px */
+@media (max-width: 480px) {
+    aside {
+        transform: translateX(-100%); /* Hide sidebar fully on mobile */
+    }
+}
+
+/* Apply Montserrat font styles */
+.montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.text-shadow-white {
+    position: relative;
+    z-index: 50;
+    color: white !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+
+header {
+    z-index: 10;
+    position: relative;
+    background-color: rgb(0, 0, 85);
+}
+
+/* Sidebar - hidden by default in mobile view */
+aside {
+    position: absolute;
+    top: 110px; /* Adjust this if necessary to match your header height */
+    left: 0;
+    width: 205px; /* Fixed width for larger screens */
+    height: calc(100vh - 110px); /* Use the header height here */
+    border: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    padding-top: 1rem;
+    transition: transform 0.3s ease;
+    transform: translateX(0); /* Visible by default on larger screens */
+    z-index: 9;
+}
+
+/* Show sidebar when 'open' class is added */
+aside.open {
+    transform: translateX(0); /* Visible when 'open' */
+}
+
+/* Style for the toggle button */
+.burger {
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    display: none; /* Hidden by default */
+}
+
+/* Sidebar Label Styles */
+.sidebar-label {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 205px; /* Keep this width for larger screens */
+        transform: translateX(-100%); /* Hidden by default */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+    }
+
+    aside.open {
+        transform: translateX(0); /* Show sidebar when 'open' */
+        position: fixed;
+        top: 160px; /* Maintain the position below the header */
+        left: 0;
+        width: 205px; /* Fixed width on mobile */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+        z-index: 10; /* Ensure it's on top */
+    }
+
+    .sidebar-label {
+        opacity: 0; /* Hide labels but keep space */
+        visibility: hidden; /* Ensure it doesn't interfere with layout */
+    }
+
+    aside.open .sidebar-label {
+        opacity: 1; /* Show labels when the sidebar is open */
+        visibility: visible; /* Ensure they are visible */
+    }
+
+    .sidebar-icon {
+        display: block;
+        width: 24px;
+        height: 24px;
+    }
+
+    .burger {
+        display: block; /* Show burger icon on smaller screens */
+    }
+}
+
+/* Optional: If you want the sidebar to be less wide on very small screens */
+@media (max-width: 480px) {
+    aside.open {
+        width: 180px; /* Adjust width further for very small screens */
+    }
+}
+
+/* Completely hide sidebar below 480px */
+@media (max-width: 480px) {
+    aside {
+        transform: translateX(-100%); /* Hide sidebar fully on mobile */
+    }
+}
+
+/* Apply Montserrat font styles */
+.montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.text-shadow-white {
+    position: relative;
+    z-index: 50;
+    color: white !important;
+}
+
+
+
