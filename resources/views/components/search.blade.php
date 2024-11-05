@@ -1,4 +1,4 @@
-<div class="flex justify-end border-b border-gray-200 p-3 shadow-md">
+<div class="flex justify-end p-3">
     <form action="/search">
         <label class="relative block">
             <input

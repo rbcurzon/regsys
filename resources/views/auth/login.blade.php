@@ -140,6 +140,8 @@
                         <input id="password" type="password" name="password" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500 montserrat-regular" placeholder="Password" required />
                     </div>
 
+                    <x-form-error name="email"></x-form-error>
+
                     <!-- Login Button -->
                     <div class="text-center">
                         <button type="submit" class="w-full login-button py-2 rounded-lg transition duration-200 montserrat-semibold">
@@ -150,6 +152,10 @@
                     <!-- Forgot Password -->
                     <div class="text-center mt-4">
                         <a href="/forgot-password" class="text-sm text-white hover:underline montserrat-light">Forgot Password / Reset Password</a>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="register" class="text-sm text-white hover:underline montserrat-light">Register here</a>
                     </div>
                 </div>
             </form>

@@ -43,7 +43,7 @@ Route::post('/journals', [JournalController::class, 'store']);
 Route::singleton('/profile', ProfileController::class);
 
 //Auth
-Route::get('/register', [RegisterUserController::class, 'create']);
+Route::get('/register', [RegisterUserController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisterUserController::class, 'store']);
 
 Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');

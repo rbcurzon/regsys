@@ -9,6 +9,7 @@
     <x-layout-main>
         <x-search>
         </x-search>
+        <hr class="border-gray-900/10 shadow-md">
         <div class="flex justify-center mt-5">
             <div class="max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto p-4"
                  style="background-color: rgba(0, 0, 85, 0.9); box-shadow: 0px 10px 20px rgba(0, 0, 0, .7); border-radius: 15px;">

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js/'])
+    @vite(["resources/css/app.css"])
     <title>@yield('title', '')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,13 +188,6 @@
                         <span class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Create</span>
                     </x-nav-link>
                 @endcan
-                <hr class="border-white my-3">
-                <x-nav-link href="#" :active="request()->is('transactions/create')">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="size-6 sidebar-icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
-                    </svg>
-                    <span class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Notifications</span>
-                </x-nav-link>
                 <form method="POST" action="/logout">
                     <div class="w-full flex text-black text-base h-10 bg-white cursor-pointer select-none active:translate-y-2 active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841] active:border-b-[0px] transition-all duration-150 [box-shadow:0_5px_0_0_#1b6ff8,0_10px_0_0_#1b70f841] rounded-[15px] border-[1px] border-blue-400 py-2 font-medium space-x-3 montserrat-regular">
                         @csrf

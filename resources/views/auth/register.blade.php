@@ -185,7 +185,7 @@
                                 <x-form-field class="col-span-6">
                                     <x-form-input class="w-full montserrat-regular"
                                                   type="password"
-                                                  id="confirm-password"
+                                                  id="password_confirmation"
                                                   name="password_confirmation"
                                                   placeholder="Confirm password"
                                                   required

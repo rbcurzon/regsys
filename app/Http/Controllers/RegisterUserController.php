@@ -16,7 +16,6 @@ class RegisterUserController extends Controller
 {
     public function create()
     {
-//        dd(request());
         return view('auth.register', ['courses' => Course::with('users')->get()]);
     }
 
