@@ -3,7 +3,7 @@
 
 @section('title', $title)
 
-@section('user_id', $user->student_id)
+@section('student_id', $user->student_id)
 
 @section('content')
     <div class="flex justify-center">

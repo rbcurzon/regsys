@@ -30,7 +30,6 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => 'required',
             'needed_date' => 'required|after:today',
             'purpose_id' => 'required | gte:0',
             'document_id' => 'required | gte:0',

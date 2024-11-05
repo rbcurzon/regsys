@@ -130,6 +130,7 @@
             <div class="flex justify-end gap-x-6">
                 <a href="{{ URL::previous() }}" class="text-sm font-semibold text-gray-900 montserrat-regular">Back</a>
                 <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600">Submit</button>
+                <input type="hidden" name="is_paid" value="{{ $transaction->is_paid }}">
             </div>
         </form>
     </div>

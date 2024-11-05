@@ -124,6 +124,8 @@ class TransactionController extends Controller
      */
     function show(Transaction $transaction)
     {
+
+
         $user = Auth::user()->isNormalUser() ? $this->user : $transaction->user;
 
         return view('transactions.show', [
@@ -140,6 +142,7 @@ class TransactionController extends Controller
     public
     function store(StoreTransactionRequest $request)
     {
+
         $transaction = Transaction::create([
             'student_id' => request('student_id'),
             'requested_date' => Carbon::now('Asia/Manila'),
@@ -180,10 +183,8 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
-
-//        dd($request->all());
-
         $transaction->update([
+            'student_id' => Auth::user()->student_id,
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),
             'document_id' => $request->get('document_id'),
@@ -202,6 +203,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        return redirect(URL::previous());
+        return redirect('/');
     }
 }
