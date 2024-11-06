@@ -3,30 +3,39 @@
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
 test('user can create transaction', function () {
-
     $this->seed();
 
-    $userData = [
-        'student_id' => "2022-10302",
-        'email' => 'ronaldcurzon@gmail.com',
-        'password' => 'passwordko',
-    ];
+    $user = User::factory()->create();
 
     $transactionData = [
-        'student_id' => "2022-10302",
+        'student_id' => $user->student_id,
         'purpose_id' => 1,
         'document_id' => 1,
-        'needed_date' => \Illuminate\Support\Carbon::tomorrow(),
+        'needed_date' => Carbon::tomorrow(),
     ];
 
-    $user = User::factory()->create($userData);
+    $response = $this->actingAs($user)->post('/transactions', $transactionData);
+    $this->assertDatabaseHas('transactions',$transactionData);
+    //Napping provides answers.
+});
+
+test('user cannot create transaction with needed date of today or that is passed', function () {
+    $this->seed();
+
+    $user = User::factory()->create();
+
+    $transactionData = [
+        'student_id' => $user->student_id,
+        'purpose_id' => 1,
+        'document_id' => 1,
+        'needed_date' => Carbon::yesterday(),
+    ];
 
     $response = $this->actingAs($user)->post('/transactions', $transactionData);
-    $response->assertSee('Bring the following:');
-    $response->assertStatus(200);
-    //Napping provides answers.
+    $this->assertDatabaseMissing('transactions',$transactionData);
 });

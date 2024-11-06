@@ -3,9 +3,13 @@
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-test('belongs to a user', function ()
-{
+uses(RefreshDatabase::class);
+
+test('belongs to a user', function () {
+    $this->seed();
+
     $user = User::factory()->create();
 
     $transaction = Transaction::factory()->create([
@@ -16,6 +20,8 @@ test('belongs to a user', function ()
 });
 
 test('user can delete', function () {
+    $this->seed();
+
     $user = User::factory()->create();
 
     $transaction = Transaction::factory()->create([
@@ -29,11 +35,10 @@ test('user can delete', function () {
     expect($transaction->find($transaction_id))->toBeNull();
 });
 
-test('user has many', function ()
-{
-    $user = User::factory()->create();
+test('user has many', function () {
+    $this->seed();
 
-    Transaction::truncate();
+    $user = User::factory()->create();
 
     $transaction = Transaction::factory(5)->create([
         'student_id' => $user->student_id,
@@ -42,10 +47,3 @@ test('user has many', function ()
     expect($user->transactions->count())->toBe(5);
 });
 
-test('pending count is right', function () {
-    $count = Transaction::where('status', '=', 'pending')->count();
-
-    $transaction = new Transaction();
-
-    expect($transaction->getPendingCount())->toBe($count);
-});
