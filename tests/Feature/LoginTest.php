@@ -35,5 +35,7 @@ test('user cannot authenticate with wrong password', function () {
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
+
+    $this->assertGuest();
 });
 
