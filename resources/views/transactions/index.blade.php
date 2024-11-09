@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <x-layout-main>
+    <x-layout-main xmlns:x-slot="http://www.w3.org/1999/xlink">
         <x-search>
         </x-search>
         <hr class="border-gray-900/10 shadow-md">
@@ -15,36 +15,56 @@
                  style="background-color: rgba(0, 0, 85, 0.9); box-shadow: 0px 10px 20px rgba(0, 0, 0, .7); border-radius: 15px;">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <a href="/search?q=on process">
-                        <x-card class="text-black" style="background-color: white;">
-                            <x-slot:card_title>On Process</x-slot:card_title>
-                            {{ $on_process_count }}
+                        <x-card class="text-black">
+                            <x-card-body bg_color="red">
+                                <x-slot:title>
+                                    On Process
+                                </x-slot:title>
+                                {{ $on_process_count }}
+                            </x-card-body>
                         </x-card>
                     </a>
                     @cannot('view-treasury')
                         <a href="/search?q=pending">
-                            <x-card class="text-black" style="background-color: white;">
-                                <x-slot:card_title>Pending</x-slot:card_title>
-                                {{ $pending_count }}
+                            <x-card>
+                                <x-card-body bg_color="blue">
+                                    <x-slot:title>
+                                        Pending
+                                    </x-slot:title>
+                                    {{ $pending_count }}
+                                </x-card-body>
                             </x-card>
                         </a>
                         <a href="/search?q=released">
-                            <x-card class="text-black" style="background-color: white;">
-                                <x-slot:card_title>Released</x-slot:card_title>
-                                {{ $released_count }}
+                            <x-card>
+                                <x-card-body bg_color="green">
+                                    <x-slot:title>
+                                        Released
+                                    </x-slot>
+                                    {{ $released_count }}
+                                </x-card-body>
                             </x-card>
                         </a>
                     @endcannot
                     @can('view-treasury')
                         <a href="/search?q=paid">
                             <x-card class="text-black" style="background-color: white;">
-                                <x-slot:card_title>Released</x-slot:card_title>
-                                {{ $revenue }}
+                                <x-card-body>
+                                    <x-slot:title>
+                                        Released
+                                    </x-slot>
+                                    {{ $revenue }}
+                                </x-card-body>
                             </x-card>
                         </a>
                         <a href="/search?q=paid">
                             <x-card class="text-black" style="background-color: white;">
-                                <x-slot:card_title>Paid</x-slot:card_titleu>
-                                {{ $paid_transactions_count }}
+                                <x-card-body bg_color="green">
+                                    <x-slot:title>
+                                        Paid
+                                    </x-slot>
+                                    {{ $paid_transactions_count }}
+                                </x-card-body>
                             </x-card>
                         </a>
 

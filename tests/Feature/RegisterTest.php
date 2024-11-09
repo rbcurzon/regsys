@@ -36,7 +36,7 @@ test('user can register', function () {
     ]);
 });
 
-test('user cannot register with existent email', function () {
+test('user cannot register using existent email', function () {
     $this->seed();
 
     $user = User::factory()->create();
