@@ -14,7 +14,7 @@
         <form action="/transactions" method="post">
             @csrf
 
-            <div class="bg-white shadow-lg rounded-lg max-w-4xl w-full p-6 space-y-8 transform translate-x-2">
+            <div class="bg-white shadow-lg rounded-lg max-w-4xl w-auto p-4 space-y-6 transform translate-x-2">
                 <!-- Header Rectangle -->
                 <div class="bg-[rgb(0,0,85)] p-4 rounded-t-lg">
                     <!-- Header Section with Logos and Title -->
@@ -34,7 +34,7 @@
                 </div>
 
                 <!-- User Information Section -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-lg space-y-4">
                     <h2 class="text-lg font-semibold text-black montserrat-bold">User Information</h2>
                     <p class="text-sm text-gray-600">Your user information as used when you created your account.</p>
 
@@ -85,7 +85,7 @@
                 </div>
 
                 <!-- Transaction Information Section -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-lg space-y-4">
                     <h2 class="text-lg font-semibold text-black montserrat-bold">Transaction Information</h2>
                     <p class="text-sm text-gray-600">Use real information for your document request.</p>
 
@@ -134,7 +134,6 @@
                 <input type="hidden" name="student_id" value="{{ $user->student_id }}">
                 <input type="hidden" name="course_id" value="{{ $user->course_id }}">
                 <div class="flex justify-end gap-x-6">
-                    <a href="{{ URL::previous() }}" class="text-sm font-semibold text-gray-900 montserrat-regular"></a>
                     <button type="submit"
                             class="bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600">
                         Submit
@@ -145,20 +144,20 @@
     </div>
 @endsection
 
-@section('head')
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <style>
-        /* Custom Font Classes */
-        .montserrat-regular {
-            font-family: "Montserrat", sans-serif;
-            font-weight: 400;
-        }
+{{--@section('head')--}}
+{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">--}}
+{{--    <style>--}}
+{{--        /* Custom Font Classes */--}}
+{{--        .montserrat-regular {--}}
+{{--            font-family: "Montserrat", sans-serif;--}}
+{{--            font-weight: 400;--}}
+{{--        }--}}
 
-        .montserrat-bold {
-            font-family: "Montserrat", sans-serif;
-            font-weight: 700;
-        }
-    </style>
-@endsection
+{{--        .montserrat-bold {--}}
+{{--            font-family: "Montserrat", sans-serif;--}}
+{{--            font-weight: 700;--}}
+{{--        }--}}
+{{--    </style>--}}
+{{--@endsection--}}

@@ -13,7 +13,7 @@ class SearchController extends Controller
     {
         if (Auth::user()->isNormalUser()) {
             $transactions = Auth::user()->transactions()->where(function (Builder $query) {
-                return $query->where('status', 'LIKE', request('q') . '%')
+                return $query->where('id', 'LIKE', request('q') . '%')
                     ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
                     ->orWhere("status", "LIKE", "%" . request('q') . "%");
             })

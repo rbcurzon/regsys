@@ -54,7 +54,7 @@ class TransactionPolicy
      */
     public function delete(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user) || $user->isAdmin();
+        return ($transaction->user()->is($user) || $user->isAdmin()) && $transaction->isPending();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Mail\TransactionCreated;
 use App\Models\Course;
 use App\Models\Document;
 use App\Models\Journal;
@@ -18,37 +19,18 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-/**
- *
- */
 class TransactionController extends Controller
 {
-    /**
-     * @var Authenticatable|User|null
-     */
     protected Authenticatable|null|User $user;
-    /**
-     * @var Document
-     */
     protected Document $document;
-    /**
-     * @var Purpose
-     */
     protected Purpose $purpose;
-    /**
-     * @var Transaction
-     */
     protected Transaction $transaction;
     protected Journal $journal;
 
-    /**
-     * @param Transaction $transaction
-     * @param Document $document
-     * @param Purpose $purpose
-     */
     public function __construct(Transaction $transaction, Document $document, Purpose $purpose, Journal $journal)
     {
         $this->user = Auth::user();
@@ -58,9 +40,6 @@ class TransactionController extends Controller
         $this->journal = $journal;
     }
 
-    /**
-     * @return Factory|View|Application
-     */
     public function index()
     {
         $transactions = null;
@@ -88,11 +67,11 @@ class TransactionController extends Controller
                 $title = 'admin dashboard';
             } elseif ($this->user->isTreasurer()) {
                 $revenue = $this->journal->getTotalDebit();
-//                $pending_count
                 $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
                 $title = 'treasury dashboard';
             }
         }
+
         return view('transactions.index', [
             'transactions' => $transactions ?? null,
             'title' => strtoupper($title),
@@ -105,9 +84,6 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * @return View|Factory|Application
-     */
     public function create(): View|Factory|Application
     {
         return view('transactions.create', [
@@ -118,10 +94,6 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * @param Transaction $transaction
-     * @return Factory|View|Application
-     */
     function show(Transaction $transaction)
     {
 
@@ -135,10 +107,6 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Application|Factory|View
-     */
     public
     function store(StoreTransactionRequest $request)
     {
@@ -151,13 +119,11 @@ class TransactionController extends Controller
             'document_id' => request('document_id'),
         ]);
 
-        return view('receipt', ['transaction' => $transaction]);
+        Mail::to($request->user())->queue(new TransactionCreated($transaction));
+//        dd(redirect('/receipt')->with(['transaction' => $transaction]));
+        return redirect('/receipt')->with(['transaction' => $transaction]);
     }
 
-    /**
-     * @param Transaction $transaction
-     * @return Factory|View|Application
-     */
     public
     function edit(Transaction $transaction)
     {
@@ -175,29 +141,20 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * @param Transaction $transaction
-     * @param StoreTransactionRequest $request
-     * @return Application|RedirectResponse|Redirector
-     */
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
         $transaction->update([
-            'student_id' => Auth::user()->student_id,
+            'student_id' => $transaction->student_id,
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),
             'document_id' => $request->get('document_id'),
-            'status' => $request->get('status'),
+            'status' => $request->get('status') ?? $transaction->status,
         ]);
 
         return redirect("/");
     }
 
-    /**
-     * @param Transaction $transaction
-     * @return Application|RedirectResponse|Redirector
-     */
     public
     function destroy(Transaction $transaction): Application|Redirector|RedirectResponse
     {

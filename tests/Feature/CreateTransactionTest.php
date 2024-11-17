@@ -39,3 +39,4 @@ test('user cannot create transaction with needed date of today or that is passed
     $response = $this->actingAs($user)->post('/transactions', $transactionData);
     $this->assertDatabaseMissing('transactions',$transactionData);
 });
+

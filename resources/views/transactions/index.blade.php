@@ -14,20 +14,10 @@
             <div class="max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto p-4"
                  style="background-color: rgba(0, 0, 85, 0.9); box-shadow: 0px 10px 20px rgba(0, 0, 0, .7); border-radius: 15px;">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <a href="/search?q=on process">
-                        <x-card class="text-black">
-                            <x-card-body bg_color="red">
-                                <x-slot:title>
-                                    On Process
-                                </x-slot:title>
-                                {{ $on_process_count }}
-                            </x-card-body>
-                        </x-card>
-                    </a>
                     @cannot('view-treasury')
                         <a href="/search?q=pending">
                             <x-card>
-                                <x-card-body bg_color="blue">
+                                <x-card-body class="bg-red-400">
                                     <x-slot:title>
                                         Pending
                                     </x-slot:title>
@@ -35,9 +25,22 @@
                                 </x-card-body>
                             </x-card>
                         </a>
+                    @endcannot
+                    <a href="/search?q=processing">
+                        <x-card class="text-black">
+                            <x-card-body class="bg-blue-400">
+                                <x-slot:title>
+                                    On Process
+                                </x-slot:title>
+                                {{ $on_process_count }}
+                            </x-card-body>
+                        </x-card>
+                    </a>
+
+                    @cannot('view-treasury')
                         <a href="/search?q=released">
                             <x-card>
-                                <x-card-body bg_color="green">
+                                <x-card-body bg_color="green" class="bg-green-400">
                                     <x-slot:title>
                                         Released
                                     </x-slot>
@@ -49,17 +52,7 @@
                     @can('view-treasury')
                         <a href="/search?q=paid">
                             <x-card class="text-black" style="background-color: white;">
-                                <x-card-body>
-                                    <x-slot:title>
-                                        Released
-                                    </x-slot>
-                                    {{ $revenue }}
-                                </x-card-body>
-                            </x-card>
-                        </a>
-                        <a href="/search?q=paid">
-                            <x-card class="text-black" style="background-color: white;">
-                                <x-card-body bg_color="green">
+                                <x-card-body class="bg-green-400">
                                     <x-slot:title>
                                         Paid
                                     </x-slot>
@@ -67,7 +60,16 @@
                                 </x-card-body>
                             </x-card>
                         </a>
-
+                        <a href="/search?q=paid">
+                            <x-card class="text-black" style="background-color: white;">
+                                <x-card-body class="bg-gray-400">
+                                    <x-slot:title>
+                                        Revenue
+                                    </x-slot>
+                                    {{ $revenue }}
+                                </x-card-body>
+                            </x-card>
+                        </a>
                     @endcan
                 </div>
             </div>

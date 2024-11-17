@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    return view('receipt');
 });
 
 Route::get('/search', SearchController::class)->middleware('auth');
@@ -41,6 +40,12 @@ Route::delete('/transactions/{transaction}', [TransactionController::class, 'des
 Route::post('/journals', [JournalController::class, 'store']);
 
 Route::singleton('/profile', ProfileController::class);
+
+Route::get('/receipt', function () {
+    return request()->session()->get('transaction') ?
+        view('receipt',['transaction' => request()->session()->get('transaction')]):
+    redirect('/');
+});
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create'])->middleware('guest');
