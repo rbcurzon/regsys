@@ -138,7 +138,7 @@
     <header class="static grid grid-cols-3 w-full mb-3 items-center min-h-20 px-3 py-2">
         <div class="burger" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
         <div class="col-start-2 flex justify-center items-center flex-nowrap">
-            <img class="col-start-1 ml-0 rounded-full h-20 w-20 bg-blue-200 text-center" alt="brand logo" src="{{ asset('/images/REGISTRAR LOGO.png') }}">
+            <img class="col-start-1 ml-0 rounded-full h-20 w-20 bg-blue-200 text-center" alt="brand logo" src="{{ asset('/images/registrar-logo.png') }}">
             <div class="text-white text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
                 city college of calamba
             </div>

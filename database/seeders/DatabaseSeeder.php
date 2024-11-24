@@ -30,54 +30,54 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         $document_lists = [
-            ['document_name' => 'copy of diploma', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'enrollment certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'gwa certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'grades certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'graduation certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'latin certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'units certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'auth certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'copy certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'completion of grades', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'computerized card', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'course description', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'endorsement letter', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'english medium', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'honorable dismissal', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'form137', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'spes certification', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()],
-            ['document_name' => 'transcript records', 'cost' => rand(50, 100), 'created_at' => now(), 'updated_at' => now()]
+            ['document_name' => 'Issuance of Copy of Grades', 'cost' => 30],
+            ['document_name' => 'Issuance of Transcript of Records', 'cost' => 50],
+            ['document_name' => 'Issuance of Certificates of Enrollment', 'cost' => 50],
+            ['document_name' => 'Issuance of Certificates of GWA', 'cost' => 50],
+            ['document_name' => 'Issuance of Certificates of Medium of Certification', 'cost' => 50],
+            ['document_name' => 'Issuance of Certificates of Graduation', 'cost' => 50],
+            ['document_name' => 'Dropping of Subjects', 'cost' => 25],
+            ['document_name' => 'Filling of Student Leave of Absence (LOA)', 'cost' => 25],
+            ['document_name' => 'Exit Clearance or Returning Clearance', 'cost' => 0],
+            ['document_name' => 'Petition of Opening of Subject', 'cost' => 0],
+            ['document_name' => 'Authentication of Documents', 'cost' => 30],
+            ['document_name' => 'Request for Second Copy of Registration Form', 'cost' => 100],
+            ['document_name' => 'Request for Second Copy of Comp Card', 'cost' => 50],
+            ['document_name' => 'Request for Second Copy of Diploma', 'cost' => 300],
+            ['document_name' => 'Request for Completion Form', 'cost' => 50],
+            ['document_name' => 'Application for Late Enrollment', 'cost' => 50],
+            ['document_name' => 'Application for Re-admission', 'cost' => 50],
+            ['document_name' => 'Application for Shifting', 'cost' => 50],
+            ['document_name' => 'Application for Clearance for Graduating Students', 'cost' => 0],
         ];
 
         Document::insert($document_lists);
 
         $purpose_lists = [
-            ['purpose_name' => 'board exam', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'birth certificate', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'employment abroad', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'education assistance', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'evaluation', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'local employment', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'reference', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'spes application', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'visa application', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'further studies', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'transferee', 'created_at' => now(), 'updated_at' => now()],
-            ['purpose_name' => 'inc', 'created_at' => now(), 'updated_at' => now()]
+            ['purpose_name' => 'Board Exam'],
+            ['purpose_name' => 'Birth Certificate'],
+            ['purpose_name' => 'Employment Abroad'],
+            ['purpose_name' => 'Education Assistance'],
+            ['purpose_name' => 'Evaluation'],
+            ['purpose_name' => 'Local Employment'],
+            ['purpose_name' => 'Reference'],
+            ['purpose_name' => 'Spes Application'],
+            ['purpose_name' => 'Visa Application'],
+            ['purpose_name' => 'Further Studies'],
+            ['purpose_name' => 'Transferee'],
+            ['purpose_name' => 'Inc'],
         ];
-
         Purpose::insert($purpose_lists);
 
         $programs = [
-            ['course_name' => 'Bachelor of Science in Elementary Education', 'code' => 'BEED', 'created_at' => now(), 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Secondary Education in English', 'code' => 'BSEDE', 'created_at' => now(), 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Secondary Education in Filipino', 'code' => 'BSEDF', 'created_at' => now(), 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Secondary Education in Mathematics', 'code' => 'BSEDM', 'created_at' => now(), 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Computer Science', 'created_at' => now(), 'code' => 'BSCS', 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Information Technology', 'created_at' => now(), 'code' => 'BSIT', 'updated_at' => now()],
-            ['course_name' => 'Bachelor of Science in Accountancy', 'created_at' => now(), 'code' => 'BSA', 'updated_at' => now()],
-        ];
+            ['course_name' => 'Bachelor of Science in Elementary Education', 'code' => 'BEED'],
+            ['course_name' => 'Bachelor of Science in Secondary Education in English', 'code' => 'BSEDE'],
+            ['course_name' => 'Bachelor of Science in Secondary Education in Filipino', 'code' => 'BSEDF'],
+            ['course_name' => 'Bachelor of Science in Secondary Education in Mathematics', 'code' => 'BSEDM'],
+            ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS'],
+            ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT'],
+            ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA'],
+        ];;
 
         Course::insert($programs);
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('requested_date')->default(Carbon::now()->setTimezone('UTC'));
             $table->date('needed_date');
             $table->foreignIdFor(Purpose::class,'purpose_id');
-            $table->foreignIdFor(Document::class,'document_id');
+            $table->integer("cost");
             $table->boolean('is_paid')->default(false);
             $table->string('status')->default('pending')->nullable(false);
             $table->timestamps();

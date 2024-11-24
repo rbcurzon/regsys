@@ -89,16 +89,28 @@
                     </div>
 
                     <div class="sm:col-span-3">
-                        <label for="document_id" class="block text-sm font-medium text-gray-900">Document</label>
-                        <select id="document_id" name="document_id" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
-                            <option class="hidden" value="{{ $transaction->document->document_id }}">{{ $transaction->document->document_name }}</option>
-                            @foreach($documents as $document)
-                                <option value="{{ $document->document_id }}">{{ $document->document_name }}</option>
-                            @endforeach
-                        </select>
-                        @error('document_id')
-                        <p class="text-red-900 italic">Select your option.</p>
-                        @enderror
+                        <fieldset>
+                            <legend>
+                                Documents
+                            </legend>
+                            <ul>
+                                @foreach($documents as $document)
+                                    <li>
+                                        <input type="checkbox"
+                                               name="documents[]"
+                                               value="{{ $document->document_id }}"
+                                               id="document{{ $document->document_name }}"
+                                                {{ in_array($document->document_id, $transaction_document_ids) ? "checked" : "" }}
+                                        >
+                                        <label
+                                            for="document{{ $document->document_name }}">{{ $document->document_name }}</label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            @error('documents')
+                            <p class="text-red-900 italic">{{ $message }}</p>
+                            @enderror
+                        </fieldset>
                     </div>
 
                     <div class="sm:col-span-3 sm:col-start-1">

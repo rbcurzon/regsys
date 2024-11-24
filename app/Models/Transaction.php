@@ -91,6 +91,30 @@ class Transaction extends Model
             ->paginate(5);
     }
 
+    public function getTotalCost()
+    {
+        $cost = 0;
+        $requests = $this->transactionDocument;
+
+        foreach ($requests as $request) {
+            $cost += $request->document->cost;
+        }
+
+        return $cost;
+    }
+
+    public function getDocumentIds()
+    {
+        $transaction_document = $this->transactionDocument()->get();
+        $document_ids = [];
+
+        foreach ($transaction_document as $document) {
+            $document_ids[] = $document->document_id;
+        }
+
+        return $document_ids;
+    }
+
     public function purpose()
     {
         return $this->hasOne(Purpose::class, 'purpose_id', 'purpose_id');
@@ -112,7 +136,7 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'student_id', 'student_id');
     }
 
-    public function transaction_document(): HasMany
+    public function transactionDocument(): HasMany
     {
         return $this->hasMany(TransactionDocument::class, 'transaction_id', 'id');
     }

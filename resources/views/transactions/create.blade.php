@@ -20,7 +20,8 @@
                     <!-- Header Section with Logos and Title -->
                     <div class="flex justify-between items-center">
                         <!-- Left Logo -->
-                        <img src="https://github.com/Hanzcy/Pictures/raw/main/images/CCC%20LOGO.png" alt="CCC Logo" class="h-16 w-16 object-contain">
+                        <img src="{{asset('/images/ccc-logo.png')}}" alt="CCC Logo"
+                             class="h-16 w-16 object-contain">
 
                         <!-- Center Header Title and Subtitle -->
                         <div class="text-center">
@@ -29,7 +30,8 @@
                         </div>
 
                         <!-- Right Logo -->
-                        <img src="https://github.com/Hanzcy/Pictures/raw/main/images/REGISTRAR%20LOGO%20UPDATED.png" alt="Registrar Logo" class="h-16 w-16 object-contain">
+                        <img src="{{ asset("images/registrar-logo.png")  }}"
+                             alt="Registrar Logo" class="h-16 w-16 object-contain">
                     </div>
                 </div>
 
@@ -100,22 +102,32 @@
                                 @endforeach
                             </select>
                             @error('purpose_id')
-                            <p class="text-red-900 italic">Select your option.</p>
+                            <p class="text-red-900 italic">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div class="sm:col-span-3">
-                            <label for="document_id" class="block text-sm font-medium text-gray-900">Document</label>
-                            <select id="document_id" name="document_id"
-                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
-                                <option style="display: none" value="-1">--select an option--</option>
-                                @foreach($documents as $document)
-                                    <option value="{{$document->document_id}}">{{ $document->document_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('document_id')
-                            <p class="text-red-900 italic">Select your option.</p>
-                            @enderror
+                            <fieldset>
+                                <legend>
+                                    Documents
+                                </legend>
+                                <ul>
+                                    @foreach($documents as $document)
+                                        <li>
+                                            <input type="checkbox"
+                                                   name="documents[]"
+                                                   value="{{ $document->document_id }}"
+                                                   id="document{{ $document->document_name }}"
+                                            >
+                                            <label
+                                                for="document{{ $document->document_name }}">{{ $document->document_name }}</label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                @error('documents')
+                                <p class="text-red-900 italic">{{ $message }}</p>
+                                @enderror
+                            </fieldset>
                         </div>
 
                         <div class="sm:col-span-3 sm:col-start-1">

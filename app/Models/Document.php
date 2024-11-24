@@ -15,12 +15,13 @@ class Document extends Model
 
     protected $primaryKey = 'document_id';
 
-    public function getDocuments()
-    {
-        return $this->with('transactions')->get();
-    }
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'document_id', 'document_id');
+    }
+
+    public function transaction_document()
+    {
+        return $this->belongsTo(TransactionDocument::class, 'document_id', 'document_id');
     }
 }

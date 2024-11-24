@@ -26,8 +26,8 @@ class TransactionFactory extends Factory
             'requested_date' => fake()->dateTimeBetween('-1 years', 'now')->format('Y-m-d'),
             'needed_date' => fake()->dateTimeBetween('now', '+1  years')->format('Y-m-d'),
             'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,
-            'document_id' => Document::inRandomOrder()->first()->document_id,
             'is_paid' => fake()->boolean(0),
+            'cost' => 0,
             'status' => $status[array_rand($status)],
             ];
     }

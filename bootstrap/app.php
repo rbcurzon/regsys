@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             append: [
                 UpgradeToHttpsUnderNgrok::class
             ]);
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

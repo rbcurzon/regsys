@@ -5,7 +5,6 @@
 @section('student_id', $user->student_id)
 
 @section('content')
-
     <x-layout-main xmlns:x-slot="http://www.w3.org/1999/xlink">
         <x-search>
         </x-search>
@@ -90,7 +89,6 @@
                             @endif
                             @cannot('view-treasury')
                                 <x-table-header>Date of need</x-table-header>
-                                <x-table-header>Type</x-table-header>
                             @endcannot
                             <x-table-header>Cost</x-table-header>
                             <x-table-header>Paid</x-table-header>
@@ -110,9 +108,8 @@
                                 @endif
                                 @cannot('view-treasury')
                                     <x-table-data>{{ date('m-d-Y', strtotime($transaction->needed_date)) }}</x-table-data>
-                                    <x-table-data>{{ $transaction->document->document_name }}</x-table-data>
                                 @endcannot
-                                <x-table-data>{{ $transaction->document->cost }}</x-table-data>
+                                <x-table-data>{{ $transaction->getTotalCost() }}</x-table-data>
                                 <x-table-data>{{ $transaction->is_paid == "0" ? "No" : "Yes" }}</x-table-data>
                                 <x-table-data>{{ $transaction->status }}</x-table-data>
                                 <x-table-data class="flex space-x-2 justify-center">
@@ -161,7 +158,7 @@
                                                 <input type="hidden" name="student_id"
                                                        value="{{ $transaction->student_id }}">
                                                 <input type="hidden" name="cost"
-                                                       value="{{ $transaction->document->cost }}">
+                                                       value="{{ $transaction->cost }}">
                                             </form>
                                         @else
                                             <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black">

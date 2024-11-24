@@ -112,13 +112,13 @@
     </style>
 
     <!-- Fullscreen Background with the provided image -->
-    <div class="min-h-screen flex items-center justify-center" style="background-image: url('https://raw.githubusercontent.com/Hanzcy/Pictures/632b30a7afc4c0e1c6385a8b051b17b861ed192a/images/CCC%20BG.jpg'); background-size: cover; background-position: center;">
+    <div class="min-h-screen flex items-center justify-center" style="background-image: url({{ asset('/images/ccc-bg.jpg') }}); background-size: cover; background-position: center;">
 
         <!-- Login Form Container with dark blue background -->
         <div class="form-container shadow-lg rounded-3xl w-full p-8 relative">
             <!-- Logo and Title Section -->
             <div class="text-center mb-6">
-                <img src="https://github.com/Hanzcy/Pictures/blob/main/images/REGISTRAR%20LOGO%20UPDATED.png?raw=true" alt="Registrar Logo" class="mx-auto mb-4" style="max-width: 100px;">
+                <img src="{{ asset("/images/registrar-logo.png") }}" alt="Registrar Logo" class="mx-auto mb-4" style="max-width: 100px;">
                 <!-- Make the CCC COLLEGE REGISTRAR bold and add spacing class -->
                 <h2 class="heading-size-adjustable text-gray-700 montserrat-bold">CCC COLLEGE REGISTRAR</h2>
                 <h3 class="signin-header signin-spacing montserrat-bold text-gray-600">SIGN IN</h3>

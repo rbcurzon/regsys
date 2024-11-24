@@ -63,7 +63,7 @@
         }
     </style>
     <div class="min-h-screen flex items-center justify-center"
-         style="background-image: url('https://raw.githubusercontent.com/Hanzcy/Pictures/632b30a7afc4c0e1c6385a8b051b17b861ed192a/images/CCC%20BG.jpg'); background-size: cover; background-position: center;">
+         style="background-image: url({{ asset('/images/ccc-bg.jpg') }}); background-size: cover; background-position: center;">
         <div class="max-w-md mx-auto mt-14 form-container rounded-3xl py-3 shadow-md">
             <div class="px-6 py-4">
                 <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2 montserrat-bold">

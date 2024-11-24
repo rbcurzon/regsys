@@ -14,7 +14,6 @@ class Purpose extends Model
     use HasFactory;
 
     protected $primaryKey = 'purpose_id';
-
     public function getPurposes()
     {
         return $this->with('transactions')->get();

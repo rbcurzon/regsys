@@ -13,7 +13,7 @@
             <div
                 class="bg-blue-900 text-white p-4 rounded-t-lg flex flex-col sm:flex-row items-center sm:justify-between">
                 <!-- Left Logo -->
-                <img src="https://github.com/Hanzcy/Pictures/raw/main/images/CCC%20LOGO.png" alt="CCC Logo"
+                <img src="{{ asset('/images/ccc-logo.png') }}" alt="CCC Logo"
                      class="h-12 w-12 sm:h-16 sm:w-16 object-contain mb-2 sm:mb-0">
 
                 <!-- Right Title and Subtitle -->

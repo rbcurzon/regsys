@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Document;
 use App\Models\Journal;
 use App\Models\Purpose;
+use App\Models\TransactionDocument;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use function PHPUnit\Framework\returnArgument;
 
 class TransactionController extends Controller
 {
@@ -88,7 +90,7 @@ class TransactionController extends Controller
     {
         return view('transactions.create', [
             'purposes' => $this->purpose->getPurposes(),
-            'documents' => $this->document->getDocuments(),
+            'documents' => Document::all(),
             'user' => $this->user,
             'title' => 'CREATE A TRANSACTION',
         ]);
@@ -96,7 +98,7 @@ class TransactionController extends Controller
 
     function show(Transaction $transaction)
     {
-
+//        dd($transaction->transaction_document->document);
 
         $user = Auth::user()->isNormalUser() ? $this->user : $transaction->user;
 
@@ -110,17 +112,26 @@ class TransactionController extends Controller
     public
     function store(StoreTransactionRequest $request)
     {
-
         $transaction = Transaction::create([
             'student_id' => request('student_id'),
             'requested_date' => Carbon::now('Asia/Manila'),
             'needed_date' => request('needed_date'),
             'purpose_id' => request('purpose_id'),
-            'document_id' => request('document_id'),
+            'cost' => -1,
         ]);
 
+        foreach ($request->get('documents') as $document) {
+            TransactionDocument::create([
+                'transaction_id' => $transaction->id,
+                'document_id' => $document,
+            ]);
+        }
+
+        $transaction->cost = $transaction->getTotalCost();
+        $transaction->save();
+
         Mail::to($request->user())->queue(new TransactionCreated($transaction));
-//        dd(redirect('/receipt')->with(['transaction' => $transaction]));
+
         return redirect('/receipt')->with(['transaction' => $transaction]);
     }
 
@@ -137,6 +148,7 @@ class TransactionController extends Controller
             'documents' => $documents,
             'user' => $this->user,
             'status' => $status,
+            'transaction_document_ids' => $transaction->getDocumentIds(),
             'bool_map' => ['0' => 'false', '1' => 'true',],
         ]);
     }
@@ -144,13 +156,25 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, StoreTransactionRequest $request)
     {
+//        dd(request()->all());
         $transaction->update([
             'student_id' => $transaction->student_id,
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),
-            'document_id' => $request->get('document_id'),
             'status' => $request->get('status') ?? $transaction->status,
         ]);
+
+        TransactionDocument::where('transaction_id', $transaction->id)->delete();
+
+        foreach ($request->get('documents') as $document) {
+            $td = $transaction->transactionDocument()->create([
+                'transaction_id' => $transaction->id,
+                'document_id' => $document,
+            ]);
+        }
+
+        $transaction->cost = $transaction->getTotalCost();
+        $transaction->save();
 
         return redirect("/");
     }

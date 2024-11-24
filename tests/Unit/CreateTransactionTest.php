@@ -28,7 +28,7 @@ test('user can create many transaction', function () {
     }
 
     $this->assertDatabaseCount('transaction_document', count($doc_requests));
-    expect($transaction->transaction_document->count())->toBe(3);
+    expect($transaction->transactionDocument->count())->toBe(3);
 });
 
 it('has document request', function (int $document_id) {
@@ -40,10 +40,10 @@ it('has document request', function (int $document_id) {
         'student_id' => $user->student_id,
     ]);
 
-        TransactionDocument::create([
-            'transaction_id' => $transaction->id,
-            'document_id' => $document_id,
-        ]);
+    TransactionDocument::create([
+        'transaction_id' => $transaction->id,
+        'document_id' => $document_id,
+    ]);
 
-    expect($transaction->transaction_document)->not->toBeEmpty();
+    expect($transaction->transactionDocument)->not->toBeEmpty();
 })->with([1, 2]);
