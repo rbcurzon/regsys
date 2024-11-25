@@ -22,35 +22,40 @@
             <div class="space-y-12">
                 {{-- User Information Start --}}
                 <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                    <h2 class="text-lg leading-7 text-black montserrat-bold">User Information</h2>
-
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3 px-3">
-                        <div class="sm:col-span-1 ">
-                            <div class="flex justify-between text-gray-900 ml-">
-                                Name:
-                                <span class="">
-                            {{ $user->first_name }}
-                                    {{ $user->last_name }}
-                            </span>
+                    <h2 class="text-2xl leading-tight text-black montserrat-bold">
+                        User Information</h2>
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-3">
+                        <div class="grid grid-cols-2 text-gray-900">
+                            <span class="font-semibold">Name:</span>
+                            <div>
+                                {{ $user->first_name }}
+                                {{ $user->last_name }}
                             </div>
                         </div>
 
                         <div class="sm:col-span-1 sm:col-start-1 ">
-                            <div class="flex justify-between text-gray-900 ">
-                                Year level: <span class="">{{ $user->year_level }}</span>
+                            <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class=" font-semibold">
+                                Year level:
+                                </span>
+                                {{ $user->year_level }}
                             </div>
                         </div>
                         <div class="sm:col-span-1 sm:col-start-1">
-                            <div class="flex justify-between text-gray-900 ">
-                                Course: <span class=" "> {{ $user->course->code }}</span>
+                            <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class="font-semibold">
+                                Course:
+                                </span>
+                                {{ $user->course->code }}
                             </div>
                         </div>
 
                         <div class="sm:col-span-1 sm:col-start-1">
-                            <div class="flex justify-between text-gray-900 ">
-                                Section: <span class=" ">
-                                   {{ $user->section }}
+                            <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class="font-semibold">
+                                    Section:
                                    </span>
+                                {{ $user->section }}
                             </div>
                         </div>
                     </div>
@@ -59,56 +64,44 @@
 
                 {{-- Transaction Information Start --}}
                 <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                    <h2 class="text-lg leading-7 text-black montserrat-bold">Transaction Information</h2>
+                    <h2 class="text-2xl leading-tight text-black montserrat-bold">Transaction Information</h2>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 px-2">
-                        <div class="sm:col-span-3">
-                            <h2 class="font-bold text-gray-900">
-                                Purpose
-                            </h2>
-                            <ul class="list-disc mx-4 font-light">
-                                <li>{{ $transaction->purpose->purpose_name }}</li>
-                            </ul>
-                        </div>
-
-
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-2">
                         {{-- Documenet start--}}
-                        <div class="sm:col-span-3">
-                            <h2 class="text font-bold text-gray-900">
-                                Documents
-                            </h2>
-                            <ul class="list-disc mx-4 font-light">
+                        <div class="sm:col-span-1 sm:col-start-1 bg-">
+                            <span class="font-bold text-gray-900">
+                                Documents:
+                            </span>
+                            <ul class="list-decimal pl-12">
                                 @foreach($transaction->transactionDocument as $document)
                                     <li>{{ $document->document->document_name }}</li>
                                 @endforeach
                             </ul>
                         </div>
-                        {{-- Document end--}}
 
-                        {{-- Date requested start --}}
-                        <div class="sm:col-span-3 sm:col-start-1">
-                            <p>
+                        {{-- Date of request--}}
+                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
-                                    class="font-semibold">Date of request:</span> {{ $transaction->created_at->format('F j, Y') }}
-                            </p>
+                                    class="font-semibold text-gray-900">Date of request:</span> {{ $transaction->created_at->format('F j, Y') }}
                         </div>
-                        {{-- Date requested end --}}
 
-                        {{-- Date needed start --}}
-                        <div class="sm:col-span-3">
-                            <p>
-                                <span
-                                    class="font-bold">Date of need:</span> {{ date('F j, Y', strtotime($transaction->needed_date)) }}
-                            </p>
+                        {{-- Purpose --}}
+                        <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2">
+                            <span class="font-bold text-gray-900">
+                                Purpose:
+                            </span>{{ $transaction->purpose->purpose_name }}
                         </div>
-                        {{-- Date needed end --}}
+
+                        {{-- Date of need --}}
+                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
+                                <span
+                                    class="font-semibold text-gray-900">Date of need:</span> {{ date('F j, Y', strtotime($transaction->needed_date)) }}
+                        </div>
 
                         {{-- amount --}}
-                        <div class="sm:col-span-3">
-                            <p>
+                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
-                                    class="font-bold">Amount:</span> {{ $transaction->cost . " Php" }}
-                            </p>
+                                    class="font-semibold text-gray-900">Amount:</span> {{ $transaction->cost . " Php" }}
                         </div>
                     </div>
                 </div>

@@ -106,7 +106,8 @@
         }
 
         /* Completely hide sidebar below 480px */
-        @media (max-width: 480px) {
+        /* Default max-width: 480px */
+        @media (max-width: 1200px) {
             aside {
                 transform: translateX(-100%); /* Hide sidebar fully on mobile */
             }

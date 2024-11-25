@@ -152,7 +152,8 @@
                                                 @csrf
                                                 <x-form-input type="submit"
                                                               class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black"
-                                                              value="Mark as paid"/>
+                                                              value="Mark as paid"
+                                                />
                                                 <input type="hidden" name="transaction_id"
                                                        value="{{ $transaction->id }}">
                                                 <input type="hidden" name="student_id"

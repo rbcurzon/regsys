@@ -36,7 +36,7 @@
 
             <!-- User Information Section -->
             <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                <h2 class="text-lg font-semibold text-black montserrat-bold">User Information</h2>
+                <h2 class="text-2xl font-semibold text-gray-900 montserrat-bold">User Information</h2>
                 <p class="text-sm text-gray-600">User information cannot be updated here.</p>
 
                 <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -71,12 +71,12 @@
 
             <!-- Transaction Information Section -->
             <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                <h2 class="text-lg font-semibold text-black montserrat-bold">Transaction Information</h2>
+                <h2 class="text-2xl font-semibold text-gray-900 montserrat-bold">Transaction Information</h2>
                 <p class="text-sm text-gray-600">Update transaction information.</p>
 
                 <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-3">
-                        <label for="purpose_id" class="block text-sm font-medium text-gray-900">Purpose</label>
+                        <label for="purpose_id" class="block font-semibold text-gray-900">Purpose</label>
                         <select id="purpose_id" name="purpose_id" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
                             <option class="hidden" value="{{ $transaction->purpose->purpose_id }}">{{ $transaction->purpose->purpose_name }}</option>
                             @foreach($purposes as $purpose)
@@ -90,7 +90,7 @@
 
                     <div class="sm:col-span-3">
                         <fieldset>
-                            <legend>
+                            <legend class="font-semibold text-gray-900">
                                 Documents
                             </legend>
                             <ul>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="sm:col-span-3 sm:col-start-1">
-                        <label for="needed_date" class="block text-sm font-medium text-gray-900">Date of need</label>
+                        <label for="needed_date" class="block font-semibold text-gray-900">Date of need</label>
                         <input type="date" name="needed_date" id="needed_date" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm" value="{{ DateTime::createFromFormat('Y-m-d', $transaction->needed_date)->format('Y-m-d') }}">
                         @error('needed_date')
                         <p class="text-red-900 italic">{{ $message }}</p>
@@ -123,7 +123,7 @@
 
                     @if(Auth::user()->isAdmin())
                         <div class="sm:col-span-3">
-                            <label for="status" class="block text-sm font-medium text-gray-900">Status</label>
+                            <label for="status" class="block font-semibold text-gray-900">Status</label>
                             <select id="status" name="status" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
                                 <option class="hidden" value="{{ $transaction->status }}">{{ $transaction->status }}</option>
                                 @foreach($status as $s)

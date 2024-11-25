@@ -70,7 +70,7 @@ class TransactionController extends Controller
             } elseif ($this->user->isTreasurer()) {
                 $revenue = $this->journal->getTotalDebit();
                 $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
-                $title = 'treasury dashboard';
+                $title = 'cashier dashboard';
             }
         }
 
