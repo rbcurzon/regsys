@@ -22,6 +22,17 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function getTransactions()
+    {
+        $status = ['processing', 'releasing', 'pending', 'rejected'];
+        return collect(
+            $this::with('user')
+                ->whereIn('status', $status)
+                ->get())
+            ->sortBy('needed_date')
+            ->paginate(5);
+    }
+
     public function getRevenue()
     {
         $paid_transactions = $this->with('user')->where('is_paid', '=', '1')->get();
@@ -38,6 +49,7 @@ class Transaction extends Model
     {
         return $this->status == 'rejected';
     }
+
     public function isPaid()
     {
         return !($this->is_paid === '0');
@@ -50,7 +62,7 @@ class Transaction extends Model
 
     public function getPaidTransactionsCount()
     {
-      return $this->with('user')->where('is_paid', '=', '1')->count();
+        return $this->with('user')->where('is_paid', '=', '1')->count();
     }
 
     public function setPaid(bool $paid)
@@ -81,15 +93,15 @@ class Transaction extends Model
         return $this->with('user')->where('status', 'pending')->count();
     }
 
-    public function getTransactions(): LengthAwarePaginator
-    {
-        $status = ['processing', 'releasing', 'pending', 'rejected'];
-        return $this->with('user')
-            ->whereIn('status', $status)
-            ->orderBy('needed_date', 'asc')
-            ->orderBy('requested_date', 'asc')
-            ->paginate(5);
-    }
+//    public function getTransactions(): LengthAwarePaginator
+//    {
+//        $status = ['processing', 'releasing', 'pending', 'rejected'];
+//        return $this->with('user')
+//            ->whereIn('status', $status)
+//            ->orderBy('needed_date', 'asc')
+//            ->orderBy('requested_date', 'asc')
+//            ->paginate(5);
+//    }
 
     public function getTotalCost()
     {

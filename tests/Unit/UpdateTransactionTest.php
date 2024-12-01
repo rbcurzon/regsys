@@ -40,7 +40,7 @@ test('user can update documents', function () {
     $doc_requests = [5, 6];
 
     foreach ($doc_requests as $doc_request) {
-    $td = $transaction->transactionDocument()->create([
+    $td[] = $transaction->transactionDocument()->create([
             'transaction_id' => $transaction->id,
             'document_id' => $doc_request,
         ]);

@@ -7,6 +7,16 @@ use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
+test('create transaction can be rendered', function () {
+    $this->seed();
+
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get("/transactions/create");
+
+    $response->assertSuccessful();
+});
+
 test('user can create transaction', function () {
     $this->seed();
 

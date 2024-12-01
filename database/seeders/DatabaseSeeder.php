@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Document;
 use App\Models\Purpose;
 use App\Models\Transaction;
+use App\Models\TransactionDocument;
 use App\Models\User;
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Seeder;
@@ -81,18 +82,16 @@ class DatabaseSeeder extends Seeder
 
         Course::insert($programs);
 
-        Transaction::factory(10)->create();
-
         User::factory()->create(
-            ['student_id' => '2022-30304', 'first_name' => 'John', 'last_name' => 'Zoe', 'email' => 'jz@example.com', 'role' => 'treasurer'],
+            ['student_id' => '2022-30304', 'first_name' => 'John', 'last_name' => 'Zoe', 'email' => 'cashier@example.com', 'role' => 'treasurer'],
         );
 
         User::factory()->create(
-            ['student_id' => '2022-20305', 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'jd@example.com', 'role' => 'admin']
+            ['student_id' => '2022-20305', 'first_name' => 'John', 'last_name' => 'Doe', 'email' => 'registrar@example.com', 'role' => 'admin']
         );
 
         User::factory()->create(
-            ['student_id' => '2022-20306', 'first_name' => 'John', 'last_name' => 'Boe', 'email' => 'jb@example.com', 'role' => null]
+            ['student_id' => '2022-20306', 'first_name' => 'John', 'last_name' => 'Boe', 'email' => 'student@example.com', 'role' => null]
         );
     }
 }

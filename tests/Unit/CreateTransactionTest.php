@@ -26,7 +26,6 @@ test('user can create many transaction', function () {
             'document_id' => $doc_request,
         ]);
     }
-
     $this->assertDatabaseCount('transaction_document', count($doc_requests));
     expect($transaction->transactionDocument->count())->toBe(3);
 });

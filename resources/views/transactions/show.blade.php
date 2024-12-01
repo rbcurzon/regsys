@@ -22,88 +22,94 @@
             <div class="space-y-12">
                 {{-- User Information Start --}}
                 <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                    <h2 class="text-2xl leading-tight text-black montserrat-bold">
-                        User Information</h2>
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-3">
-                        <div class="grid grid-cols-2 text-gray-900">
-                            <span class="font-semibold">Name:</span>
-                            <div>
-                                {{ $user->first_name }}
-                                {{ $user->last_name }}
+                    <fieldset class="border border-solid border-gray-300 p-3">
+                        <legend class="text-2xl leading-tight text-black montserrat-bold">
+                            User Information
+                        </legend>
+                        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-3">
+                            <div class="grid grid-cols-2 text-gray-900">
+                                <span class="font-semibold">Name:</span>
+                                <div>
+                                    {{ $user->first_name }}
+                                    {{ $user->last_name }}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="sm:col-span-1 sm:col-start-1 ">
-                            <div class="grid grid-cols-2 text-gray-900 ">
+                            <div class="sm:col-span-1 sm:col-start-1 ">
+                                <div class="grid grid-cols-2 text-gray-900 ">
                                 <span class=" font-semibold">
                                 Year level:
                                 </span>
-                                {{ $user->year_level }}
+                                    {{ $user->year_level }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="sm:col-span-1 sm:col-start-1">
-                            <div class="grid grid-cols-2 text-gray-900 ">
+                            <div class="sm:col-span-1 sm:col-start-1">
+                                <div class="grid grid-cols-2 text-gray-900 ">
                                 <span class="font-semibold">
                                 Course:
                                 </span>
-                                {{ $user->course->code }}
+                                    {{ $user->course->code }}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="sm:col-span-1 sm:col-start-1">
-                            <div class="grid grid-cols-2 text-gray-900 ">
+                            <div class="sm:col-span-1 sm:col-start-1">
+                                <div class="grid grid-cols-2 text-gray-900 ">
                                 <span class="font-semibold">
                                     Section:
                                    </span>
-                                {{ $user->section }}
+                                    {{ $user->section }}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
                 {{-- User Information End --}}
 
                 {{-- Transaction Information Start --}}
                 <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
-                    <h2 class="text-2xl leading-tight text-black montserrat-bold">Transaction Information</h2>
+                    <fieldset class="border border-solid border-gray-300 p-3">
+                        <legend class="text-2xl leading-tight text-black montserrat-bold">Transaction Information
+                        </legend>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-2">
-                        {{-- Documenet start--}}
-                        <div class="sm:col-span-1 sm:col-start-1 bg-">
+                        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-2">
+                            {{-- Documenet start--}}
+                            <div class="sm:col-span-1 sm:col-start-1 bg-">
                             <span class="font-bold text-gray-900">
                                 Documents:
                             </span>
-                            <ul class="list-decimal pl-12">
-                                @foreach($transaction->transactionDocument as $document)
-                                    <li>{{ $document->document->document_name }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                                <ul class="list-decimal pl-12">
+                                    @foreach($transaction->transactionDocument as $document)
+                                        <li>{{ $document->document->document_name }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
 
-                        {{-- Date of request--}}
-                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
+                            {{-- Date of request--}}
+                            <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
                                     class="font-semibold text-gray-900">Date of request:</span> {{ $transaction->created_at->format('F j, Y') }}
-                        </div>
+                            </div>
 
-                        {{-- Purpose --}}
-                        <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2">
+                            {{-- Purpose --}}
+                            <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2">
                             <span class="font-bold text-gray-900">
                                 Purpose:
                             </span>{{ $transaction->purpose->purpose_name }}
-                        </div>
+                            </div>
 
-                        {{-- Date of need --}}
-                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
+                            {{-- Date of need --}}
+                            <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
                                     class="font-semibold text-gray-900">Date of need:</span> {{ date('F j, Y', strtotime($transaction->needed_date)) }}
-                        </div>
+                            </div>
 
-                        {{-- amount --}}
-                        <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
+                            {{-- amount --}}
+                            <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
-                                    class="font-semibold text-gray-900">Amount:</span> {{ $transaction->cost . " Php" }}
+                                    class="font-semibold text-gray-900">Amount:</span> {{ $transaction->getTotalCost() . " Php" }}
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </div>
                 {{-- Transaction Information End --}}
             </div>

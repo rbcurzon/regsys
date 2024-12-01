@@ -9,6 +9,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "mailersend/laravel-driver": "^2.7",
+        "spatie/laravel-collection-macros": "^7.14",
         "twbs/bootstrap-icons": "^1.11"
     },
     "require-dev": {

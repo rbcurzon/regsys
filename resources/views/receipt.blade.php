@@ -25,7 +25,7 @@
 
             <!-- Transaction ID Container -->
             <div class="bg-white shadow-lg rounded-b-lg p-4 sm:p-6 space-y-4">
-                <div class="flex justify-center sm:justify-end">
+                <div class="flex justify-center">
                     <h2 class="text-indigo-900 text-base sm:text-lg font-bold">Transaction
                         ID: {{ $transaction->id }}</h2>
                 </div>

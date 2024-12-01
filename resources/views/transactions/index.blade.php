@@ -90,7 +90,7 @@
                             @cannot('view-treasury')
                                 <x-table-header>Date of need</x-table-header>
                             @endcannot
-                            <x-table-header>Cost</x-table-header>
+                            <x-table-header>Amount</x-table-header>
                             <x-table-header>Paid</x-table-header>
                             <x-table-header>Status</x-table-header>
                             <x-table-header>Action</x-table-header>
@@ -113,7 +113,6 @@
                                 <x-table-data>{{ $transaction->is_paid == "0" ? "No" : "Yes" }}</x-table-data>
                                 <x-table-data>{{ $transaction->status }}</x-table-data>
                                 <x-table-data class="flex space-x-2 justify-center">
-                                    @can("delete", $transaction)
                                         <form method="POST" action="/transactions/{{ $transaction->id }}">
                                             @csrf
                                             @method('DELETE')
@@ -125,7 +124,6 @@
                                                 </svg>
                                             </button>
                                         </form>
-                                    @endcan
                                     @can('update', $transaction)
                                         <a href="/transactions/{{ $transaction->id }}/edit"
                                            class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2">
@@ -159,7 +157,7 @@
                                                 <input type="hidden" name="student_id"
                                                        value="{{ $transaction->student_id }}">
                                                 <input type="hidden" name="cost"
-                                                       value="{{ $transaction->cost }}">
+                                                       value="{{ $transaction->getTotalCost()}}">
                                             </form>
                                         @else
                                             <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black">

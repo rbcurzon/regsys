@@ -91,9 +91,10 @@
                     <h2 class="text-lg font-semibold text-black montserrat-bold">Transaction Information</h2>
                     <p class="text-sm text-gray-600">Use real information for your document request.</p>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-3">
-                            <label for="purpose_id" class="block text-sm font-medium text-gray-900">Purpose</label>
+                    {{-- purposes --}}
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+                        <div class="sm:col-span-1 col-start-1">
+                            <label for="purpose_id" class="block text-sm font-semibold">Purpose</label>
                             <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
                                     class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
                                 <option style="display: none" value="-1">--select an option--</option>
@@ -106,7 +107,19 @@
                             @enderror
                         </div>
 
-                        <div class="sm:col-span-3">
+                        {{-- date needed --}}
+                        <div class="sm:col-start-2 sm:col-span-1">
+                            <label for="needed_date" class="block text-sm font-semibold">Date needed</label>
+                            <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
+                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                                   value="{{ old('needed_date') }}">
+                            @error('needed_date')
+                            <p class="text-red-900 italic">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- documents --}}
+                        <div class="sm:col-start-1 sm:col-span-1">
                             <fieldset>
                                 <legend>
                                     Documents
@@ -130,15 +143,6 @@
                             </fieldset>
                         </div>
 
-                        <div class="sm:col-span-3 sm:col-start-1">
-                            <label for="needed_date" class="block text-sm font-medium text-gray-900">Date needed</label>
-                            <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
-                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ old('needed_date') }}">
-                            @error('needed_date')
-                            <p class="text-red-900 italic">{{ $message }}</p>
-                            @enderror
-                        </div>
                     </div>
                 </div>
 
