@@ -17,6 +17,25 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    public function getFirstNameAndLastNameAbbreviation()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName()[0] . '.';
+    }
+
+    public function getStudentId()
+    {
+        return $this->student_id;
+    }
 
     public function isNormalUser()
     {
@@ -45,11 +64,13 @@ class User extends Authenticatable
     {
         return $this->transactions->where('status', 'released')->count();
     }
+
     public function getOnProcessCount()
     {
-        $status = ['processing', 'releasing'];
+        $status = ['on process', 'releasing'];
         return $this->transactions->wherein('status', $status)->count();
     }
+
     public function getPendingCount(): int
     {
         return $this->transactions()
@@ -62,8 +83,8 @@ class User extends Authenticatable
     public function getTransactions(): LengthAwarePaginator
     {
 
-        $status = ['processing', 'releasing', 'pending', 'rejected'];
-        return $this->transactions()->whereIn('status',$status )
+        $status = ['on process', 'releasing', 'pending', 'rejected'];
+        return $this->transactions()->whereIn('status', $status)
             ->orderBy('needed_date', 'asc')
             ->paginate(5);
     }

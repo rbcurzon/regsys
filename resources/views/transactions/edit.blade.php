@@ -141,20 +141,20 @@
                     </div>
 
                     @if(Auth::user()->isAdmin())
-                        <div class="sm:col-span-3">
-                            <label for="status" class="block font-semibold text-gray-900">Status</label>
-                            <select id="status" name="status"
-                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
-                                <option class="hidden"
-                                        value="{{ $transaction->status }}">{{ $transaction->status }}</option>
-                                @foreach($status as $s)
-                                    <option value="{{ $s }}">{{ $s }}</option>
-                                @endforeach
-                            </select>
-                            @error('status')
-                            <p class="text-red-900 italic">{{ $message }}.</p>
-                            @enderror
-                        </div>
+{{--                        <div class="sm:col-span-3">--}}
+{{--                            <label for="status" class="block font-semibold text-gray-900">Status</label>--}}
+{{--                            <select id="status" name="status"--}}
+{{--                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">--}}
+{{--                                <option class="hidden"--}}
+{{--                                        value="{{ $transaction->status }}">{{ $transaction->status }}</option>--}}
+{{--                                @foreach($status as $s)--}}
+{{--                                    <option value="{{ $s }}">{{ $s }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            @error('status')--}}
+{{--                            <p class="text-red-900 italic">{{ $message }}.</p>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
                     @endif
                 </div>
             </div>

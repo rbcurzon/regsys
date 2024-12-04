@@ -46,7 +46,7 @@
                     @cannot('view-treasury')
                         <x-table-header>Date of need</x-table-header>
                     @endcannot
-                    <x-table-header>Cost</x-table-header>
+                    <x-table-header>Amount</x-table-header>
                     <x-table-header>Paid</x-table-header>
                     <x-table-header>Status</x-table-header>
                     <x-table-header>Action</x-table-header>
@@ -64,7 +64,7 @@
                             @cannot('view-treasury')
                                 <x-table-data>{{ date('m-d-Y', strtotime( $transaction->needed_date )) }}</x-table-data>
                             @endcannot
-                            <x-table-data>{{ $transaction->cost }}</x-table-data>
+                            <x-table-data>{{ $transaction->getTotalCost() }}</x-table-data>
                             <x-table-data>{{ $transaction->is_paid  == "0" ? "no" : "yes" }}</x-table-data>
                             <x-table-data>{{ $transaction->status }}</x-table-data>
                             <x-table-data class="flex space-x-2">

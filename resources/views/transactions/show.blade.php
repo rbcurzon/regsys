@@ -63,7 +63,6 @@
                         </div>
                     </fieldset>
                 </div>
-                {{-- User Information End --}}
 
                 {{-- Transaction Information Start --}}
                 <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">

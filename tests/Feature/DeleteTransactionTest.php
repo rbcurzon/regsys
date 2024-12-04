@@ -28,14 +28,14 @@ test('user can delete a pending transaction', function () {
     $this->assertModelMissing($transaction);
 });
 
-test('user can not delete a processing transaction', function () {
+test('user can not delete a on process transaction', function () {
     $this->seed();
 
     $user = User::factory()->create();
 
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
-        'status' => array_rand(['processing', 'releasing'], 1),
+        'status' => array_rand(['on process', 'releasing'], 1),
     ]);
 
     $response = $this->actingAs($user)->delete("/transactions/{$transaction->id}");

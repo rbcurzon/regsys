@@ -6,7 +6,9 @@
 
 @section('title', $title)
 
-@section('student_id', $user->student_id)
+@section('student_id', $user->getStudentId())
+
+@section('student_name', $user->getFirstNameAndLastNameAbbreviation())
 
 @section('content')
     <div class="flex justify-center">
@@ -36,54 +38,47 @@
                 </div>
 
                 <!-- User Information Section -->
-                <div class="bg-gray-50 p-4 rounded-lg shadow-lg space-y-4">
-                    <h2 class="text-lg font-semibold text-black montserrat-bold">User Information</h2>
-                    <p class="text-sm text-gray-600">Your user information as used when you created your account.</p>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-6">
+                    <fieldset class="border border-solid border-gray-300 p-3">
+                        <legend class="text-2xl leading-tight text-black montserrat-bold">
+                            User Information
+                        </legend>
+                        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-3">
+                            <div class="grid grid-cols-2 text-gray-900">
+                                <span class="font-semibold">Name:</span>
+                                <div>
+                                    {{ $user->first_name }}
+                                    {{ $user->last_name }}
+                                </div>
+                            </div>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-3">
-                            <label for="first_name" class="block text-sm font-medium text-gray-900">First name</label>
-                            <input type="text" name="first_name" id="first_name" autocomplete="first_name"
-                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ $user->first_name }}">
-                            <p class="text-xs text-gray-500 mt-1 ml-1">Ex. Ronald</p>
-                        </div>
+                            <div class="sm:col-span-1 sm:col-start-1 ">
+                                <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class=" font-semibold">
+                                Year level:
+                                </span>
+                                    {{ $user->year_level }}
+                                </div>
+                            </div>
+                            <div class="sm:col-span-1 sm:col-start-1">
+                                <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class="font-semibold">
+                                Course:
+                                </span>
+                                    {{ $user->course->code }}
+                                </div>
+                            </div>
 
-                        <div class="sm:col-span-3">
-                            <label for="last_name" class="block text-sm font-medium text-gray-900">Last name</label>
-                            <input type="text" name="last_name" id="last_name" autocomplete="last_name"
-                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ $user->last_name }}">
-                            <p class="text-xs text-gray-500 mt-1 ml-1">Ex. Salcedo</p>
+                            <div class="sm:col-span-1 sm:col-start-1">
+                                <div class="grid grid-cols-2 text-gray-900 ">
+                                <span class="font-semibold">
+                                    Section:
+                                   </span>
+                                    {{ $user->section }}
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="year_level" class="block text-sm font-medium text-gray-900">Year level</label>
-                            <select id="year_level" name="year_level" autocomplete="year_level"
-                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="course" class="block text-sm font-medium text-gray-900">Course</label>
-                            <input type="text" name="course" id="course" autocomplete="course"
-                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ $user->course->code }}">
-                            <p class="text-xs text-gray-500 mt-1">Ex. BSCS, BSIT</p>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="section" class="block text-sm font-medium text-gray-900">Section</label>
-                            <input type="text" name="section" id="section" autocomplete="section"
-                                   class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ $user->section }}">
-                            <p class="text-xs text-gray-500 mt-1">Ex. CS3</p>
-                        </div>
-                    </div>
+                    </fieldset>
                 </div>
 
                 <!-- Transaction Information Section -->
@@ -94,7 +89,7 @@
                     {{-- purposes --}}
                     <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                         <div class="sm:col-span-1 col-start-1">
-                            <label for="purpose_id" class="block text-sm font-semibold">Purpose</label>
+                            <label for="purpose_id" class="block font-semibold">Purpose</label>
                             <select id="purpose_id" name="purpose_id" autocomplete="purpose_id"
                                     class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">
                                 <option style="display: none" value="-1">--select an option--</option>
@@ -109,7 +104,7 @@
 
                         {{-- date needed --}}
                         <div class="sm:col-start-2 sm:col-span-1">
-                            <label for="needed_date" class="block text-sm font-semibold">Date needed</label>
+                            <label for="needed_date" class="block font-semibold">Date needed</label>
                             <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
                                    value="{{ old('needed_date') }}">
@@ -121,7 +116,7 @@
                         {{-- documents --}}
                         <div class="sm:col-start-1 sm:col-span-1">
                             <fieldset>
-                                <legend>
+                                <legend class="font-semibold">
                                     Documents
                                 </legend>
                                 <ul>

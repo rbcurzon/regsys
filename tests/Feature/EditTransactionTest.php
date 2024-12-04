@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 
-test('user edit on-process transaction request is forbidden', function () {
+test('edit of on-process transaction is forbidden or cannot be rendered', function () {
     $this->seed();
 
     $user = User::factory()->create();
@@ -25,7 +25,7 @@ test('user edit on-process transaction request is forbidden', function () {
         'documents' => [1],
         'needed_date' => $transaction->needed_date,
         'purpose_id' => $transaction->purpose_id,
-        'status' => array_rand(['processing', 'releasing'], 1)
+        'status' => array_rand(['on process', 'releasing'], 1)
     ]);
 
     $response->assertForbidden();

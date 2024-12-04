@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Http\Requests\UpdateTransactionRequest;
 use App\Mail\TransactionCreated;
 use App\Models\Course;
 use App\Models\Document;
@@ -62,7 +63,7 @@ class TransactionController extends Controller
         if ($this->user->isAdmin() || $this->user->isTreasurer()) {
             $transactions = $this->transaction->getTransactions();
             $on_process_count = $this->transaction->getOnProcessCount();
-
+            $statuses = ['on process', 'releasing', 'released'];
             if ($this->user->isAdmin()) {
                 $pending_count = $this->transaction->getPendingCount();
                 $released_count = $this->transaction->getReleasedCount();
@@ -83,6 +84,7 @@ class TransactionController extends Controller
             'released_count' => $released_count,
             'revenue' => $revenue,
             'paid_transactions_count' => $paid_transactions_count,
+            'statuses' => $statuses ?? null,
         ]);
     }
 
@@ -140,7 +142,7 @@ class TransactionController extends Controller
     {
         $purposes = Purpose::all();
         $documents = Document::all();
-        $status = ['processing', 'releasing', 'released', 'rejected'];
+        $status = ['on process', 'releasing', 'released', 'rejected'];
 
         return view('transactions.edit', [
             'transaction' => $transaction,
@@ -154,9 +156,8 @@ class TransactionController extends Controller
     }
 
     public
-    function update(Transaction $transaction, StoreTransactionRequest $request)
+    function update(Transaction $transaction, UpdateTransactionRequest $request)
     {
-//        dd(request()->all());
         $transaction->update([
             'student_id' => $transaction->student_id,
             'needed_date' => $request->get('needed_date'),
@@ -164,9 +165,11 @@ class TransactionController extends Controller
             'status' => $request->get('status') ?? $transaction->status,
         ]);
 
+        $documents = $request->get('documents') ?? $transaction->getDocumentIds();
+
         TransactionDocument::where('transaction_id', $transaction->id)->delete();
 
-        foreach ($request->get('documents') as $document) {
+        foreach ( $documents as $document) {
             $td = $transaction->transactionDocument()->create([
                 'transaction_id' => $transaction->id,
                 'document_id' => $document,

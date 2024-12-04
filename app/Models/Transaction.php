@@ -24,7 +24,7 @@ class Transaction extends Model
 
     public function getTransactions()
     {
-        $status = ['processing', 'releasing', 'pending', 'rejected'];
+        $status = ['on process', 'releasing', 'pending'];
         return collect(
             $this::with('user')
                 ->whereIn('status', $status)
@@ -52,7 +52,7 @@ class Transaction extends Model
 
     public function isPaid()
     {
-        return !($this->is_paid === '0');
+        return !($this->is_paid == '0');
     }
 
     public function isPending()
@@ -73,7 +73,7 @@ class Transaction extends Model
 
     public function getOnProcessTransaction()
     {
-        $status = ['processing', 'releasing'];
+        $status = ['on process', 'releasing'];
         return $this->wherein('status', $status)->get();
     }
 
@@ -84,7 +84,7 @@ class Transaction extends Model
 
     public function getOnProcessCount()
     {
-        $status = ['processing', 'releasing'];
+        $status = ['on process', 'releasing'];
         return $this->wherein('status', $status)->count();
     }
 
@@ -95,7 +95,7 @@ class Transaction extends Model
 
 //    public function getTransactions(): LengthAwarePaginator
 //    {
-//        $status = ['processing', 'releasing', 'pending', 'rejected'];
+//        $status = ['on process', 'releasing', 'pending', 'rejected'];
 //        return $this->with('user')
 //            ->whereIn('status', $status)
 //            ->orderBy('needed_date', 'asc')

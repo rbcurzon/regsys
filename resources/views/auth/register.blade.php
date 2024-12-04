@@ -197,7 +197,10 @@
                         <!-- Register Button -->
                         <x-form-field class="col-span-6 text-center">
                             <div class="flex justify-center">
-                                <x-form-button class="register-button montserrat-semibold" value="Register"/>
+                                <x-form-button :action="route('register')" class="register-button montserrat-semibold">
+                                    Register
+                                </x-form-button>
+
                             </div>
                             <a class="login-link montserrat-light hover:underline" href="/login">Log in</a>
                         </x-form-field>

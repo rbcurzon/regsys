@@ -20,11 +20,11 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
-        $status = ['pending', 'processing', 'releasing', 'released', 'rejected'];
+        $status = ['pending', 'on process', 'releasing', 'released'];
         return [
             'student_id' => User::inRandomOrder()->first()->student_id,
             'requested_date' => fake()->dateTimeBetween('-1 years', 'now')->format('Y-m-d'),
-            'needed_date' => fake()->dateTimeBetween('now', '+1  years')->format('Y-m-d'),
+            'needed_date' => fake()->dateTimeBetween('tomorrow', '+5 days')->format('Y-m-d'),
             'purpose_id' => Purpose::inRandomOrder()->first()->purpose_id,
             'is_paid' => fake()->boolean(0),
             'cost' => 0,

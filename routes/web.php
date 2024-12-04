@@ -31,6 +31,7 @@ Route::get('/transactions/{transaction}/edit', [TransactionController::class, 'e
     ->middleware('auth')
     ->can("update", ["transaction"]);
 Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])
+    ->name('transactions.update')
     ->middleware('auth')
     ->can("update", ['transaction']);
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
@@ -48,7 +49,9 @@ Route::get('/receipt', function () {
 });
 
 //Auth
-Route::get('/register', [RegisterUserController::class, 'create'])->middleware('guest');
+Route::get('/register', [RegisterUserController::class, 'create'])
+    ->name('register')
+    ->middleware('guest');
 Route::post('/register', [RegisterUserController::class, 'store']);
 
 Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');

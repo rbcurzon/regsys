@@ -3,6 +3,7 @@
 use App\Models\Transaction;
 use App\Models\TransactionDocument;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\assertDatabaseHas;
@@ -22,7 +23,7 @@ test('user can update his document request', function () {
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
         'cost' => 0,
-        'needed_date' => \Carbon\Carbon::now()->addDays(3)->toDateString(),
+        'needed_date' => Carbon::now()->addDays(3)->toDateString(),
         'status' => 'pending',
     ]);
     $doc_requests = [1, 2];
@@ -40,9 +41,10 @@ test('user can update his document request', function () {
     $transaction->save();
 
     $doc_requests = [
-        0 => fake()->randomDigit(),
-        1 => fake()->randomDigit(),
-        2 => fake()->randomDigit()
+        fake()->randomDigit(),
+        fake()->randomDigit(),
+        fake()->randomDigit(),
+        fake()->randomDigit(),
     ];
     $response = $this->actingAs($user)->patch('/transactions/' . $transaction->id, [
         'documents' => $doc_requests,
@@ -50,8 +52,10 @@ test('user can update his document request', function () {
         'purpose_id' => $transaction->purpose_id,
         'status' => $transaction->status,
     ]);
+//    $response->dumpHeaders();
+//    $response->assertSuccessful();
 
-    $this->assertDatabaseCount('transaction_document', 3);
+    $this->assertDatabaseCount('transaction_document', count($doc_requests));
     $this->assertDatabaseHas('transaction_document', [
         'document_id' => $doc_requests[0],
     ]);
@@ -78,8 +82,8 @@ test('user cannot update on-process document request', function () {
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
         'cost' => 0,
-        'needed_date' => \Carbon\Carbon::now()->addDays(3)->toDateString(),
-        'status' => 'processing',
+        'needed_date' => Carbon::now()->addDays(3)->toDateString(),
+        'status' => 'on process',
     ]);
 
     $doc_requests = [1, 2];

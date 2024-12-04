@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
             ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS'],
             ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT'],
             ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA'],
-        ];;
+        ];
 
         Course::insert($programs);
 
