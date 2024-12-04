@@ -46,7 +46,7 @@ Route::get('/receipt', function () {
     return request()->session()->get('transaction') ?
         view('receipt',['transaction' => request()->session()->get('transaction')]):
     redirect('/');
-});
+})->name('receipt');
 
 //Auth
 Route::get('/register', [RegisterUserController::class, 'create'])

@@ -48,7 +48,7 @@
                                 <span class="font-semibold">
                                 Course:
                                 </span>
-                                    {{ $user->course->code }}
+                                    {{ $user->course->course_name }}
                                 </div>
                             </div>
 

@@ -23,7 +23,7 @@ class SearchController extends Controller
             if (request('q') === 'on process' || request('q') === 'processing') {
                 $transactions = Transaction::where("id", "LIKE", "%" . request('q') . "%")
                     ->orWhere("status", "LIKE", "%on process%")
-                    ->orWhere("status", "LIKE", "%releasing%")
+                    ->orWhere("status", "LIKE", "%for release%")
                     ->orderBy("needed_date")
                     ->get();
             } elseif (request('q') === 'paid') {

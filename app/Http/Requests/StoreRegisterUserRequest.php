@@ -9,6 +9,12 @@ use Illuminate\Validation\Rules\Password;
 
 class StoreRegisterUserRequest extends FormRequest
 {
+    public function messages(): array
+    {
+        return [
+            'course' => 'The :attribute field is required.',
+        ];
+    }
     /**
      * Determine if the user is authorized to make this request.
      */

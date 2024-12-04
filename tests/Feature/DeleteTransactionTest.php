@@ -35,7 +35,7 @@ test('user can not delete a on process transaction', function () {
 
     $transaction = Transaction::factory()->create([
         'student_id' => $user->student_id,
-        'status' => array_rand(['on process', 'releasing'], 1),
+        'status' => array_rand(['on process', 'for release'], 1),
     ]);
 
     $response = $this->actingAs($user)->delete("/transactions/{$transaction->id}");

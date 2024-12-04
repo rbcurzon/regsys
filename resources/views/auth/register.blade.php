@@ -66,8 +66,8 @@
          style="background-image: url({{ asset('/images/ccc-bg.jpg') }}); background-size: cover; background-position: center;">
         <div class="max-w-md mx-auto mt-14 form-container rounded-3xl py-3 shadow-md">
             <div class="px-6 py-4">
-                <h2 class="text-lg font-semibold leading-7 text-center text-white border-b border-white pb-3 mb-2 montserrat-bold">
-                    CREATE NEW ACCOUNT</h2>
+                <h2 class="text-lg font-semibold leading-7 text-center text-white pb-3 mb-2 montserrat-bold">
+                    CREATE A NEW ACCOUNT</h2>
 
                 <form action="/register" method="POST">
                     @csrf
@@ -197,7 +197,7 @@
                         <!-- Register Button -->
                         <x-form-field class="col-span-6 text-center">
                             <div class="flex justify-center">
-                                <x-form-button :action="route('register')" class="register-button montserrat-semibold">
+                                <x-form-button :action="route('register')" class="register-button montserrat-semibold rounded shadow-md w-full px-4 py-2">
                                     Register
                                 </x-form-button>
 

@@ -89,9 +89,8 @@
                                 <x-table-header>First name</x-table-header>
                                 <x-table-header>Last name</x-table-header>
                             @endif
-                            @cannot('view-treasury')
-                                <x-table-header>Date of need</x-table-header>
-                            @endcannot
+                            <x-table-header>Date created</x-table-header>
+                            <x-table-header>Date need</x-table-header>
                             <x-table-header>Amount</x-table-header>
                             <x-table-header>Paid</x-table-header>
                             <x-table-header>Status</x-table-header>
@@ -108,9 +107,8 @@
                                     <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
                                     <x-table-data>{{ $transaction->user->last_name }}</x-table-data>
                                 @endif
-                                @cannot('view-treasury')
-                                    <x-table-data>{{ date('m-d-Y', strtotime($transaction->needed_date)) }}</x-table-data>
-                                @endcannot
+                                <x-table-data>{{  $transaction->created_at->format('m-d-Y') }}</x-table-data>
+                                <x-table-data>{{ date('m-d-Y', strtotime($transaction->needed_date)) }}</x-table-data>
                                 <x-table-data>{{ $transaction->getTotalCost() }}</x-table-data>
                                 <x-table-data>{{ $transaction->is_paid == "0" ? "No" : "Yes" }}</x-table-data>
                                 <x-table-data>
@@ -118,16 +116,16 @@
                                         <x-dropdown class=" text-gray-900 relative text-left">
                                             <x-slot name="trigger">
                                                 <button
-                                                        class="w-full border border-gray-900 rounded p-2 shadow-md text-left bg-white">{{ $transaction->status }}</button>
+                                                    class="w-full border border-gray-900 rounded p-2 shadow-md text-left bg-white">{{ $transaction->status }}</button>
                                             </x-slot>
                                             <div class="bg-white shadow-md rounded">
                                                 @foreach($statuses as $status)
 
                                                     <div class=" hover:bg-gray-300 p-2">
                                                         <x-form-button
-                                                                :action="route('transactions.update', $transaction->id)"
-                                                                method="PATCH"
-                                                                class="block"
+                                                            :action="route('transactions.update', $transaction->id)"
+                                                            method="PATCH"
+                                                            class="block"
                                                         >
                                                             {{ $status }}
                                                             <input type="hidden" name="needed_date"

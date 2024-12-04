@@ -24,7 +24,7 @@ class Transaction extends Model
 
     public function getTransactions()
     {
-        $status = ['on process', 'releasing', 'pending'];
+        $status = ['on process', 'for release', 'pending'];
         return collect(
             $this::with('user')
                 ->whereIn('status', $status)
@@ -43,11 +43,6 @@ class Transaction extends Model
         }
 
         return $sum;
-    }
-
-    public function isRejected()
-    {
-        return $this->status == 'rejected';
     }
 
     public function isPaid()
@@ -73,7 +68,7 @@ class Transaction extends Model
 
     public function getOnProcessTransaction()
     {
-        $status = ['on process', 'releasing'];
+        $status = ['on process', 'for release'];
         return $this->wherein('status', $status)->get();
     }
 
@@ -84,7 +79,7 @@ class Transaction extends Model
 
     public function getOnProcessCount()
     {
-        $status = ['on process', 'releasing'];
+        $status = ['on process', 'for release'];
         return $this->wherein('status', $status)->count();
     }
 
@@ -95,7 +90,7 @@ class Transaction extends Model
 
 //    public function getTransactions(): LengthAwarePaginator
 //    {
-//        $status = ['on process', 'releasing', 'pending', 'rejected'];
+//        $status = ['on process', 'for release', 'pending', 'rejected'];
 //        return $this->with('user')
 //            ->whereIn('status', $status)
 //            ->orderBy('needed_date', 'asc')
@@ -125,6 +120,31 @@ class Transaction extends Model
         }
 
         return $document_ids;
+    }
+
+    public function window(): int
+    {
+        $department = $this->user->course->department;
+
+        if ($department == 'DTE') {
+            return 1;
+        } else if ($department == 'DCI') {
+
+            return 2;
+        } else if ($department == 'DBA') {
+
+            return 3;
+        } else if ($department == 'DAS') {
+
+            return 4;
+        }
+
+        return -1;
+    }
+
+    public function setIs_paid(bool $is_paid)
+    {
+        $this->is_paid = $is_paid;
     }
 
     public function purpose()

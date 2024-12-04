@@ -46,3 +46,28 @@ it('has document request', function (int $document_id) {
 
     expect($transaction->transactionDocument)->not->toBeEmpty();
 })->with([1, 2]);
+
+test('transaction associates to correct window', function () {
+    $this->seed();
+
+    $student_id = User::factory()->create()->student_id;
+
+    $transaction = Transaction::factory()->create([
+       'student_id' => $student_id,
+   ]);
+
+    $department = $transaction->user->course->department;
+
+    if ($department == 'DTE') {
+        expect($transaction->window())->toBe(1);
+    }
+    else if ($department == 'DCI') {
+        expect($transaction->window())->toBe(2);
+    }
+    else if ($department == 'DBA') {
+        expect($transaction->window())->toBe(3);
+    }
+    else if($department == 'DAS') {
+        expect($transaction->window())->toBe(4);
+    }
+});

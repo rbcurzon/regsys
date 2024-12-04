@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         $document_lists = [
-            ['document_name' => 'Issuance of Copy of Grades', 'cost' => 30],
-            ['document_name' => 'Issuance of Transcript of Records', 'cost' => 50],
-            ['document_name' => 'Issuance of Certificates of Enrollment', 'cost' => 50],
-            ['document_name' => 'Issuance of Certificates of GWA', 'cost' => 50],
-            ['document_name' => 'Issuance of Certificates of Medium of Certification', 'cost' => 50],
-            ['document_name' => 'Issuance of Certificates of Graduation', 'cost' => 50],
+            ['document_name' => 'Copy of Grades', 'cost' => 30],
+            ['document_name' => 'Transcript of Records', 'cost' => 50],
+            ['document_name' => 'Certificates of Enrollment', 'cost' => 50],
+            ['document_name' => 'Certificates of GWA', 'cost' => 50],
+            ['document_name' => 'Certificates of Medium of Certification', 'cost' => 50],
+            ['document_name' => 'Certificates of Graduation', 'cost' => 50],
             ['document_name' => 'Dropping of Subjects', 'cost' => 25],
             ['document_name' => 'Filling of Student Leave of Absence (LOA)', 'cost' => 25],
             ['document_name' => 'Exit Clearance or Returning Clearance', 'cost' => 0],
@@ -71,13 +71,16 @@ class DatabaseSeeder extends Seeder
         Purpose::insert($purpose_lists);
 
         $programs = [
-            ['course_name' => 'Bachelor of Science in Elementary Education', 'code' => 'BEED'],
-            ['course_name' => 'Bachelor of Science in Secondary Education in English', 'code' => 'BSEDE'],
-            ['course_name' => 'Bachelor of Science in Secondary Education in Filipino', 'code' => 'BSEDF'],
-            ['course_name' => 'Bachelor of Science in Secondary Education in Mathematics', 'code' => 'BSEDM'],
-            ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS'],
-            ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT'],
-            ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA'],
+            ['course_name' => 'Bachelor of Elementary Education', 'code' => 'BEE', 'department'=>'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in English', 'code' => 'BSEDE', 'department'=>'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Filipino', 'code' => 'BSEDF', 'department'=>'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Mathematics', 'code' => 'BSEDM', 'department'=>'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Science', 'code' => 'BSEDS', 'department'=>'DTE'],
+            ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT', 'department'=>'DCI'],
+            ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS', 'department'=>'DCI'],
+            ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA', 'department'=>'DBA'],
+            ['course_name' => 'Bachelor of Science in Accounting Information', 'code' => 'BSAI', 'department'=>'DBA'],
+            ['course_name' => 'Bachelor of Science of Arts in Psychology', 'code' => 'BSAP', 'department'=>'DAS'],
         ];
 
         Course::insert($programs);

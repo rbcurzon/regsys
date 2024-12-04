@@ -11,8 +11,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    @bukStyles(true)
-    @bukScripts(true)
     <style>
         body {
             margin: 0;
@@ -32,10 +30,10 @@
         /* Sidebar - hidden by default in mobile view */
         aside {
             /*position: absolute;*/
-            top: 110px; /* Adjust this if necessary to match your header height */
+            top: 130px; /* Adjust this if necessary to match your header height */
             left: 0;
             width: 205px; /* Fixed width for larger screens */
-            /*height: calc(100vh - 110px); !* Use the header height here *!*/
+            /*height: calc(100vh - 130px); !* Use the header height here *!*/
             /*border: 1px solid black;*/
             /*border-radius: 0 10px 10px 0;*/
             padding-top: 1rem;
@@ -66,16 +64,16 @@
             aside {
                 width: 205px; /* Keep this width for larger screens */
                 transform: translateX(-100%); /* Hidden by default */
-                height: calc(100vh - 110px); /* Adjust height for mobile */
+                height: calc(100vh - 130px); /* Adjust height for mobile */
             }
 
             aside.open {
                 transform: translateX(0); /* Show sidebar when 'open' */
                 position: fixed;
-                top: 110px; /* Maintain the position below the header */
+                top: 130px; /* Maintain the position below the header */
                 left: 0;
                 width: 205px; /* Fixed width on mobile */
-                /*height: calc(100vh - 110px); !* Adjust height for mobile *!*/
+                /*height: calc(100vh - 130px); !* Adjust height for mobile *!*/
                 z-index: 10; /* Ensure it's on top */
             }
 
@@ -133,6 +131,7 @@
         }
 
     </style>
+    @bukScripts(true)
 </head>
 
 <body class="font-sans montserrat-regular relative">
@@ -141,7 +140,7 @@
     <header class="grid grid-cols-3 w-full mb-3 items-center min-h-20 px-3 py-2 z-0">
         <div class="burger" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
         <div class="col-start-2 flex justify-center items-center flex-nowrap">
-            <img class="col-start-1 ml-0 rounded-full h-20 w-20 bg-blue-200 text-center" alt="brand logo"
+            <img class="col-start-1 ml-0 rounded-full h-24 w-24 bg-blue-200 text-center" alt="brand logo"
                  src="{{ asset('/images/registrar-logo.png') }}">
             <div class="text-white text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
                 city college of calamba
@@ -158,7 +157,7 @@
                     <div class="text-white text-xl font-bold ml-2 uppercase montserrat-bold text-shadow-white">
                         @yield('title', '')
                     </div>
-                    <div class="text-white text-base ml-2 uppercase montserrat-regular text-shadow-white">
+                    <div class="text-white ml-2 uppercase montserrat-regular text-shadow-white">
                         id: {{ Auth::user()->getStudentId() }}
                     </div>
                 @endauth
@@ -171,14 +170,14 @@
 
 @auth
     <!-- sidebar start -->
-    <aside id="sidebar z-10" class="bg-blue-900">
+    <aside id="sidebar" class="bg-blue-900">
         <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
             <a href="/profile"
-               class="flex flex-col justify-center items-center mb-6 text-white hover:text-blue-600">
+               class="flex flex-col justify-center items-center mb-3 text-white hover:text-blue-600">
                 <img src="{{ asset('/images/profile-icon-design-free-vector.jpg') }}" alt=""
                      class="rounded-full w-20 h-20 sidebar-icon">
                 <span
-                    class="text-base font-bold text-center sidebar-label montserrat-regular">{{ Auth::user()->getFirstNameAndLastNameAbbreviation() }}</span>
+                    class="text-lg font-bold text-center sidebar-label montserrat-regular">{{ Auth::user()->getFirstNameAndLastNameAbbreviation() }}</span>
             </a>
             <x-nav-link href="/" class="mb-2" :active="request()->is('/')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -197,7 +196,7 @@
                               d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
                     </svg>
                     <span
-                        class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Create</span>
+                        class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Request</span>
                 </x-nav-link>
             @endcan
             <form method="POST" action="/logout">
@@ -234,5 +233,6 @@
     @yield('content')
 </main>
 
+@bukStyles(true)
 </body>
 </html>

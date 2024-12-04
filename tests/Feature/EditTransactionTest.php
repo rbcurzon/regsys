@@ -25,7 +25,7 @@ test('edit of on-process transaction is forbidden or cannot be rendered', functi
         'documents' => [1],
         'needed_date' => $transaction->needed_date,
         'purpose_id' => $transaction->purpose_id,
-        'status' => array_rand(['on process', 'releasing'], 1)
+        'status' => array_rand(['on process', 'for release'], 1)
     ]);
 
     $response->assertForbidden();

@@ -67,7 +67,7 @@ class User extends Authenticatable
 
     public function getOnProcessCount()
     {
-        $status = ['on process', 'releasing'];
+        $status = ['on process', 'for release'];
         return $this->transactions->wherein('status', $status)->count();
     }
 
@@ -83,12 +83,16 @@ class User extends Authenticatable
     public function getTransactions(): LengthAwarePaginator
     {
 
-        $status = ['on process', 'releasing', 'pending', 'rejected'];
+        $status = ['on process', 'for release', 'pending', 'rejected'];
         return $this->transactions()->whereIn('status', $status)
             ->orderBy('needed_date', 'asc')
             ->paginate(5);
     }
 
+    public function department()
+    {
+        return $this->course->department;
+    }
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');

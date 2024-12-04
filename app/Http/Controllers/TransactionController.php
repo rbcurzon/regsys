@@ -63,7 +63,7 @@ class TransactionController extends Controller
         if ($this->user->isAdmin() || $this->user->isTreasurer()) {
             $transactions = $this->transaction->getTransactions();
             $on_process_count = $this->transaction->getOnProcessCount();
-            $statuses = ['on process', 'releasing', 'released'];
+            $statuses = ['on process', 'for release', 'released'];
             if ($this->user->isAdmin()) {
                 $pending_count = $this->transaction->getPendingCount();
                 $released_count = $this->transaction->getReleasedCount();
@@ -132,7 +132,9 @@ class TransactionController extends Controller
         $transaction->cost = $transaction->getTotalCost();
         $transaction->save();
 
-        Mail::to($request->user())->queue(new TransactionCreated($transaction));
+//        Mail::to($request->user())->queue(new TransactionCreated($transaction));
+
+        Auth::user()->course_name;
 
         return redirect('/receipt')->with(['transaction' => $transaction]);
     }
@@ -142,7 +144,7 @@ class TransactionController extends Controller
     {
         $purposes = Purpose::all();
         $documents = Document::all();
-        $status = ['on process', 'releasing', 'released', 'rejected'];
+        $status = ['on process', 'for release', 'released'];
 
         return view('transactions.edit', [
             'transaction' => $transaction,

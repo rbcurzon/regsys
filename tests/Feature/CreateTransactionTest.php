@@ -77,3 +77,25 @@ test('user cannot create transaction with a needed date of greater than seven da
     ]);
 });
 
+test('receipt can be rendered', function () {
+    $this->seed();
+
+    $user = User::factory()->create();
+
+    $document = [0 => 1, 1 => 2, 2 => 3];
+
+    $transactionData = [
+        'student_id' => $user->student_id,
+        'purpose_id' => 1,
+        'documents' => $document,
+        'needed_date' => Carbon::tomorrow(),
+    ];
+
+    $response = $this->actingAs($user)->post('/transactions', $transactionData);
+    $this->assertDatabaseHas('transactions', [
+        'student_id' => $user->student_id,
+        'needed_date' => Carbon::tomorrow(),
+    ]);
+
+    $response->assertRedirectToRoute('receipt');
+});

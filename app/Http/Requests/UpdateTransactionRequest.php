@@ -36,7 +36,7 @@ class UpdateTransactionRequest extends FormRequest
         return [
             'needed_date' => 'required|after:today | before:today + 7 days',
             'purpose_id' => 'required | gte:0',
-            'status' => $this->status !== 'pending' && $this->status !== 'rejected' ? 'declined_if:is_paid,0' : '',
+            'status' => $this->status !== 'pending' ? 'declined_if:is_paid,0' : '',
         ];
     }
 }

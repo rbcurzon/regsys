@@ -33,7 +33,7 @@
                 <!-- Main Content Section -->
                 <div class="text-center">
                     <p class="text-sm sm:text-lg text-gray-700">
-                        Proceed to <span class="font-semibold text-indigo-600">WINDOW 1</span> to claim your request on:
+                        Proceed to <span class="font-semibold text-indigo-600">WINDOW {{ strtoupper($transaction->window()) }}</span> to claim your request on:
                     </p>
                     <p class="text-indigo-600 font-semibold text-base sm:text-lg mt-1">{{ $transaction->needed_date }}</p>
                     <p class="text-xs sm:text-sm text-gray-600 mt-1">Available from 8:00 AM to 5:00 PM, Monday to

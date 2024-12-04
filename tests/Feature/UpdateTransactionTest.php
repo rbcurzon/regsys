@@ -115,3 +115,38 @@ test('user cannot update on-process document request', function () {
     $response->assertForbidden();
 });
 
+test('transaction can be released', function () {
+    $this->seed();
+
+    $user = User::factory()->create();
+
+    $admin = User::factory()->create([
+            'role' => 'admin',
+        ]
+    );
+
+    $transaction = Transaction::factory()->create([
+        'student_id' => $user->student_id,
+    ]);
+
+    TransactionDocument::factory()->create([
+        'transaction_id' => $transaction->id,
+    ]);
+
+    $transaction->setIs_paid(true);
+    $transaction->save();
+
+    $response = $this->actingAs($admin)->patch('/transactions/' . $transaction->id, [
+        'documents' => $transaction->getDocumentIds(),
+        'needed_date' => $transaction->needed_date,
+        'purpose_id' => $transaction->purpose_id,
+        'status' => 'released',
+    ]);
+
+    assertDatabaseHas('transactions', [
+        'id' => $transaction->id,
+        'status' => 'released',
+    ]);
+//    $response->assertSuccessful();
+
+});
