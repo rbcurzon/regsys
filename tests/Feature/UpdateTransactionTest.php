@@ -147,6 +147,4 @@ test('transaction can be released', function () {
         'id' => $transaction->id,
         'status' => 'released',
     ]);
-//    $response->assertSuccessful();
-
 });
