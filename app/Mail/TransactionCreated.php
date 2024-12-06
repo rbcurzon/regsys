@@ -47,7 +47,9 @@ class TransactionCreated extends Mailable
         return new Content(
             view: 'emails.transactions.created',
             with: ['id' => $this->transaction->id,
-                'student_id' => $this->transaction->student_id
+                'student_id' => $this->transaction->student_id,
+                'first_name' => $this->transaction->user->first_name,
+                'last_name' => $this->transaction->user->last_name,
             ],
         );
     }

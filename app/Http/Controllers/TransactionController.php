@@ -132,7 +132,7 @@ class TransactionController extends Controller
         $transaction->cost = $transaction->getTotalCost();
         $transaction->save();
 
-//        Mail::to($request->user())->queue(new TransactionCreated($transaction));
+        Mail::to($request->user())->queue(new TransactionCreated($transaction));
 
         Auth::user()->course_name;
 

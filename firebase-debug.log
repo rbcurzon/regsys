@@ -1,0 +1,52 @@
+[debug] [2024-12-06T09:25:33.668Z] ----------------------------------------------------------------------
+[debug] [2024-12-06T09:25:33.670Z] Command:       /home/rbcurzon/.nvm/versions/node/v22.11.0/bin/node /home/rbcurzon/.nvm/versions/node/v22.11.0/bin/firebase init hosting
+[debug] [2024-12-06T09:25:33.671Z] CLI Version:   13.28.0
+[debug] [2024-12-06T09:25:33.671Z] Platform:      linux
+[debug] [2024-12-06T09:25:33.671Z] Node Version:  v22.11.0
+[debug] [2024-12-06T09:25:33.671Z] Time:          Fri Dec 06 2024 17:25:33 GMT+0800 (Philippine Standard Time)
+[debug] [2024-12-06T09:25:33.671Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-06T09:25:33.726Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-06T09:25:33.727Z] > authorizing via signed-in user (rbcurzon@ccc.edu.ph)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /mnt/sda1/Documents/Projects/regsys
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-12-06T09:25:33.729Z] Using project from CLI flag: sample-firebase-ai-app-82f40
+[debug] [2024-12-06T09:25:33.730Z] Checked if tokens are valid: true, expires at: 1733480350768
+[debug] [2024-12-06T09:25:33.730Z] Checked if tokens are valid: true, expires at: 1733480350768
+[debug] [2024-12-06T09:25:33.731Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 [none]
+[debug] [2024-12-06T09:25:34.089Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 200
+[debug] [2024-12-06T09:25:34.090Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 {"projectId":"sample-firebase-ai-app-82f40","projectNumber":"1081850654916","displayName":"Sample Firebase AI App","name":"projects/sample-firebase-ai-app-82f40","resources":{"hostingSite":"sample-firebase-ai-app-82f40"},"state":"ACTIVE","etag":"1_8de50657-ff5d-4959-aec9-9fa19f8bda1a"}
+[info] i  Using project sample-firebase-ai-app-82f40 (Sample Firebase AI App) 
+[info] 
+=== Hosting Setup
+[debug] [2024-12-06T09:25:34.103Z] Checked if tokens are valid: true, expires at: 1733480350768
+[debug] [2024-12-06T09:25:34.103Z] Checked if tokens are valid: true, expires at: 1733480350768
+[debug] [2024-12-06T09:25:34.103Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 [none]
+[debug] [2024-12-06T09:25:34.391Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 200
+[debug] [2024-12-06T09:25:34.391Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sample-firebase-ai-app-82f40 {"projectId":"sample-firebase-ai-app-82f40","projectNumber":"1081850654916","displayName":"Sample Firebase AI App","name":"projects/sample-firebase-ai-app-82f40","resources":{"hostingSite":"sample-firebase-ai-app-82f40"},"state":"ACTIVE","etag":"1_8de50657-ff5d-4959-aec9-9fa19f8bda1a"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
