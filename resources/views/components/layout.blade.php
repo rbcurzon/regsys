@@ -94,7 +94,7 @@
             }
 
             .burger {
-                display: block; /* Show burger icon on smaller screens */
+                /*display: block; !* Show burger icon on smaller screens *!*/
             }
         }
 
@@ -142,10 +142,10 @@
             <img class="col-start-1 ml-0 rounded-full h-16 w-16 sm:h-24 sm:w-24 bg-blue-200 text-center"
                  alt="brand logo"
                  src="{{ asset('/images/registrar-logo.png') }}">
-                <div
-                    class="text-white text-sm sm:text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
-                    city college of calamba
-                </div>
+            <div
+                class="text-white text-sm sm:text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
+                city college of calamba
+            </div>
         </div>
         <div class="col-start-3 flex justify-end">
             <div>
@@ -166,16 +166,14 @@
                 @endauth
             </div>
         </div>
-
     </header>
 @endauth()
 <!-- header end -->
 
 @auth
+    <div class="block text-2xl text-blue-900" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
     <!-- sidebar start -->
-        <div class="sticky burger" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
-    <aside id="sidebar" class="bg-blue-900">
-
+    <aside id="sidebar" class="fixed bg-blue-900">
         <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
             <a href="/profile"
                class="flex flex-col justify-center items-center mb-3 text-white hover:text-blue-600">
