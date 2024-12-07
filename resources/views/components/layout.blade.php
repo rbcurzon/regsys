@@ -29,7 +29,7 @@
 
         /* Sidebar - hidden by default in mobile view */
         aside {
-            /*position: absolute;*/
+            position: absolute;
             top: 130px; /* Adjust this if necessary to match your header height */
             left: 0;
             width: 205px; /* Fixed width for larger screens */
@@ -50,7 +50,7 @@
         /* Style for the toggle button */
         .burger {
             cursor: pointer;
-            color: white;
+            color: darkblue;
             font-size: 2rem;
             display: none; /* Hidden by default */
         }
@@ -138,26 +138,29 @@
 @auth()
     <!-- header start -->
     <header class="grid grid-cols-3 w-full mb-3 items-center min-h-20 px-3 py-2 z-0">
-        <div class="burger" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
-        <div class="col-start-2 flex justify-center items-center flex-nowrap">
-            <img class="col-start-1 ml-0 rounded-full h-24 w-24 bg-blue-200 text-center" alt="brand logo"
+        <div class="col-start-1 col-span-2 sm:col-span-2 flex justify-end items-center flex-nowrap">
+            <img class="col-start-1 ml-0 rounded-full h-16 w-16 sm:h-24 sm:w-24 bg-blue-200 text-center"
+                 alt="brand logo"
                  src="{{ asset('/images/registrar-logo.png') }}">
-            <div class="text-white text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
-                city college of calamba
-            </div>
+                <div
+                    class="text-white text-sm sm:text-2xl font-bold ml-2 uppercase montserrat-bold z-50 text-shadow-white">
+                    city college of calamba
+                </div>
         </div>
         <div class="col-start-3 flex justify-end">
             <div>
                 @guest()
-                    <div class="text-white text-xl font-bold ml-2 uppercase montserrat-bold text-shadow-white">
+                    <div
+                        class="text-white text-base sm:text-xl font-bold ml-2 uppercase montserrat-bold text-shadow-white">
                         @yield('title', '')
                     </div>
                 @endguest
                 @auth()
-                    <div class="text-white text-xl font-bold ml-2 uppercase montserrat-bold text-shadow-white">
+                    <div
+                        class="text-white text-sm sm:text-xl font-bold ml-2 uppercase montserrat-bold text-shadow-white">
                         @yield('title', '')
                     </div>
-                    <div class="text-white ml-2 uppercase montserrat-regular text-shadow-white">
+                    <div class="text-sm sm:text-base text-white ml-2 uppercase montserrat-regular text-shadow-white">
                         id: {{ Auth::user()->getStudentId() }}
                     </div>
                 @endauth
@@ -170,12 +173,14 @@
 
 @auth
     <!-- sidebar start -->
+        <div class="sticky burger" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
     <aside id="sidebar" class="bg-blue-900">
+
         <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
             <a href="/profile"
                class="flex flex-col justify-center items-center mb-3 text-white hover:text-blue-600">
                 <img src="{{ asset('/images/profile-icon-design-free-vector.jpg') }}" alt=""
-                     class="rounded-full w-20 h-20 sidebar-icon">
+                     class="rounded-full w-20 h-20 ">
                 <span
                     class="text-lg font-bold text-center sidebar-label montserrat-regular">{{ Auth::user()->getFirstNameAndLastNameAbbreviation() }}</span>
             </a>
