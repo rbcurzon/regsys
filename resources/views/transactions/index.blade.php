@@ -83,7 +83,7 @@
                 <x-table class="w-full border-collapse border border-gray-300 rounded-lg text-black">
                     <x-slot:table_headers>
                         <tr class="bg-gray-700 text-black font-semibold">
-                            <x-table-header>Transaction ID</x-table-header>
+                            <x-table-header>Reference ID</x-table-header>
                             @if(!Auth::user()->isNormalUser())
                                 <x-table-header>Student ID</x-table-header>
                                 <x-table-header>First name</x-table-header>
