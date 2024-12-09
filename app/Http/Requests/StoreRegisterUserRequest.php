@@ -38,7 +38,7 @@ class StoreRegisterUserRequest extends FormRequest
             'year_level' => ['required'],
             'course_id' => ['required', 'gte:0'], //gte = greater that or equal
             'section' => ['required'],
-            'password' => [Password::min(8), "confirmed"],
+            'password' => [Password::min(8)->mixedCase()->numbers(), "confirmed", "required"],
         ];
     }
 }

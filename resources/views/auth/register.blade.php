@@ -141,8 +141,8 @@
                                         @foreach($courses as $course)
                                             <option value="{{ $course->course_id }}">{{ $course->course_name }}</option>
                                         @endforeach
+                                        <x-form-error name="course_id"/>
                                     </x-form-select>
-                                    <x-form-error name="course_id"/>
 
                                     <x-form-input type="text"
                                                   id="section"
@@ -180,6 +180,7 @@
                                                   placeholder="Password"
                                                   required
                                     />
+                                    <x-form-error name="password"></x-form-error>
                                 </x-form-field>
 
                                 <x-form-field class="col-span-6">
@@ -197,7 +198,8 @@
                         <!-- Register Button -->
                         <x-form-field class="col-span-6 text-center">
                             <div class="flex justify-center">
-                                <x-form-button :action="route('register')" class="register-button montserrat-semibold rounded shadow-md w-full px-4 py-2">
+                                <x-form-button :action="route('register')"
+                                               class="register-button montserrat-semibold rounded shadow-md w-full px-4 py-2">
                                     Register
                                 </x-form-button>
 
