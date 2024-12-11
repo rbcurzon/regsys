@@ -71,3 +71,19 @@ test('transaction associates to correct window', function () {
         expect($transaction->window())->toBe(4);
     }
 });
+
+test('transaction can be recorded on journal', function () {
+    $this->seed();
+
+    $user = User::factory()->create();
+
+    $transaction = Transaction::factory()->create([
+        'student_id' => User::factory()->create()->student_id,
+        'cost' => 50,
+        ]);
+
+    $response = $this->actingAs($user)
+        ->post(route('journals.store',['transaction_id'=>$transaction->id, 'student_id'=>$user->student_id, 'cost'=>$transaction->cost]));
+
+    $this->assertDatabaseCount('journals', 2);
+});

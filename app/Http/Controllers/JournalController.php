@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JournalController extends Controller
 {
@@ -49,6 +50,9 @@ class JournalController extends Controller
             'is_credit' => true,
         ]);
 
+//        session()->flash('success', 'Transaction marked as paid successfully.');
+//
+        toast('You marked a transaction as paid.','success');
         return redirect(URL::previous());
     }
 }

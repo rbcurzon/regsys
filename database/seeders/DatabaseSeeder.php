@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
         Course::insert($programs);
 
         User::factory()->create(
-            ['student_id' => '2022-30304', 'first_name' => 'John', 'last_name' => 'Zoe', 'email' => 'cashier@example.com', 'role' => 'treasurer'],
+            ['student_id' => '2022-30304', 'first_name' => 'Cashier', 'last_name' => 'Zoe', 'email' => 'cashier@example.com', 'role' => 'treasurer'],
         );
 
         User::factory()->create(

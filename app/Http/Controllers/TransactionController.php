@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use RealRashid\SweetAlert\Facades\Alert;
+use function Laravel\Prompts\confirm;
 use function PHPUnit\Framework\returnArgument;
 
 class TransactionController extends Controller
@@ -61,19 +63,24 @@ class TransactionController extends Controller
         }
 
         if ($this->user->isAdmin() || $this->user->isTreasurer()) {
-            $transactions = $this->transaction->getTransactions();
             $on_process_count = $this->transaction->getOnProcessCount();
             $statuses = ['on process', 'for release', 'released'];
             if ($this->user->isAdmin()) {
+            $transactions = $this->transaction->getTransactions();
                 $pending_count = $this->transaction->getPendingCount();
                 $released_count = $this->transaction->getReleasedCount();
                 $title = 'admin dashboard';
             } elseif ($this->user->isTreasurer()) {
+                $transactions = $this->transaction->cashierTransactions();
                 $revenue = $this->journal->getTotalDebit();
                 $paid_transactions_count = $this->transaction->getPaidTransactionsCount();
                 $title = 'cashier dashboard';
             }
         }
+
+        $title1 = 'Delete  Transaction!';
+        $text = 'Are you sure you want to delete this transaction?';
+        confirmDelete($title1, $text);
 
         return view('transactions.index', [
             'transactions' => $transactions ?? null,
@@ -90,6 +97,7 @@ class TransactionController extends Controller
 
     public function create(): View|Factory|Application
     {
+
         return view('transactions.create', [
             'purposes' => $this->purpose->getPurposes(),
             'documents' => Document::all(),
@@ -100,8 +108,6 @@ class TransactionController extends Controller
 
     function show(Transaction $transaction)
     {
-//        dd($transaction->transaction_document->document);
-
         $user = Auth::user()->isNormalUser() ? $this->user : $transaction->user;
 
         return view('transactions.show', [
@@ -135,6 +141,8 @@ class TransactionController extends Controller
         Mail::to($request->user())->queue(new TransactionCreated($transaction));
 
         Auth::user()->course_name;
+
+        toast('Your request has been submitted.','success');
 
         return redirect('/receipt')->with(['transaction' => $transaction]);
     }
@@ -181,6 +189,8 @@ class TransactionController extends Controller
         $transaction->cost = $transaction->getTotalCost();
         $transaction->save();
 
+        toast('Your request has been updated.','success');
+
         return redirect("/");
     }
 
@@ -188,6 +198,9 @@ class TransactionController extends Controller
     function destroy(Transaction $transaction): Application|Redirector|RedirectResponse
     {
         $transaction->delete();
+
+
+        toast('Your request has been deleted.','success');
 
         return redirect('/');
     }

@@ -7,6 +7,7 @@
 
 @section('content')
     <x-layout-main xmlns:x-slot="http://www.w3.org/1999/xlink">
+
         <x-search>
         </x-search>
         <hr class="border-gray-900/10 shadow-md">
@@ -152,27 +153,39 @@
                                     @enderror
                                 </x-table-data>
                                 <x-table-data class="flex space-x-2 justify-center">
-                                    <form method="POST" action="/transactions/{{ $transaction->id }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                                                        @cannot('view-treasury')
-                                    <a href="/transactions/{{ $transaction->id }}/edit"
-                                       class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2">
+                                    {{--                                    <form method="POST" action="/transactions/{{ $transaction->id }}" data-confirm-delete="true" id="delete-transaction">--}}
+                                    {{--                                        @csrf--}}
+                                    {{--                                        @method('DELETE')--}}
+                                    {{--                                        <button class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2" >--}}
+                                    {{--                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"--}}
+                                    {{--                                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">--}}
+                                    {{--                                                <path stroke-linecap="round" stroke-linejoin="round"--}}
+                                    {{--                                                      d="M6 18L18 6M6 6l12 12"/>--}}
+                                    {{--                                            </svg>--}}
+                                    {{--                                        </button>--}}
+                                    {{--                                    </form>--}}
+
+                                    <a href="{{ route('transactions.destroy', [$transaction->id]) }}"
+                                       class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2"
+                                       data-confirm-delete="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487ZM16.863 4.487L19.5 7.125"/>
+                                                  d="M6 18L18 6M6 6l12 12"/>
+
                                         </svg>
                                     </a>
-                                                                        @endcannot
+
+                                    @cannot('view-treasury')
+                                        <a href="/transactions/{{ $transaction->id }}/edit"
+                                           class="text-white bg-blue-600 hover:bg-blue-700 rounded-md px-3 py-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487ZM16.863 4.487L19.5 7.125"/>
+                                            </svg>
+                                        </a>
+                                    @endcannot
                                     <a href="/transactions/{{ $transaction->id }}/show"
                                        class="text-white bg-green-600 hover:bg-green-700 rounded-md px-3 py-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -188,8 +201,9 @@
                                             <form action="/journals" method="post">
                                                 @csrf
                                                 <x-form-input type="submit"
-                                                              class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black"
+                                                              class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black "
                                                               value="Mark as paid"
+                                                              data-confirm-="true"
                                                 />
                                                 <input type="hidden" name="transaction_id"
                                                        value="{{ $transaction->id }}">
@@ -198,6 +212,13 @@
                                                 <input type="hidden" name="cost"
                                                        value="{{ $transaction->getTotalCost()}}">
                                             </form>
+
+                                            {{--                                            <a methods="POST" href="{{ Form('journals.store',['transaction_id'=>$transaction->id,'student_id'=>$transaction->student_id, 'cost'=>$transaction->cost]) }}">--}}
+                                            {{--                                                <span--}}
+                                            {{--                                                    class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black ">--}}
+                                            {{--                                                    Mark as paid--}}
+                                            {{--                                                </span>--}}
+                                            {{--                                            </a>--}}
                                         @else
                                             <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black">
                                                 Paid</p>

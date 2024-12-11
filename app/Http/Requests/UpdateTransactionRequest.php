@@ -32,7 +32,6 @@ class UpdateTransactionRequest extends FormRequest
      */
     public function rules(): array
     {
-//        dd($this->request->all());
         return [
             'needed_date' => 'required|after:today | before:today + 7 days',
             'purpose_id' => 'required | gte:0',

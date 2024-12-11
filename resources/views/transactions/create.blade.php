@@ -97,9 +97,7 @@
                                     <option value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}</option>
                                 @endforeach
                             </select>
-                            @error('purpose_id')
-                            <p class="text-red-900 italic">{{ $message }}</p>
-                            @enderror
+                            <x-error field="purpose_id" class="text-red-900 italic" />
                         </div>
 
                         {{-- date needed --}}
@@ -108,9 +106,7 @@
                             <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
                                    value="{{ old('needed_date') }}">
-                            @error('needed_date')
-                            <p class="text-red-900 italic">{{ $message }}</p>
-                            @enderror
+                            <x-error field="needed_date" class=" text-red-900 italic"/>
                         </div>
 
                         {{-- documents --}}
@@ -132,9 +128,7 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                @error('documents')
-                                <p class="text-red-900 italic">{{ $message }}</p>
-                                @enderror
+                                <x-error field="documents" class=" text-red-900 italic"/>
                             </fieldset>
                         </div>
 

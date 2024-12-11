@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,16 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     protected $guarded = [];
+
+    public function cashierTransactions()
+    {
+        return Transaction::where('is_paid', '=', false)
+            ->where(function (Builder $query) {
+                $status = ['on process', 'for release', 'pending'];
+                $query->whereIn('status', $status);
+            })
+            ->paginate(5);
+    }
 
     public function getTransactions()
     {

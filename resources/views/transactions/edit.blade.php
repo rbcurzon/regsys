@@ -10,6 +10,21 @@
 @section('student_id', $user->student_id)
 
 @section('content')
+    <!-- /resources/views/post/create.blade.php -->
+
+    <h1>Create Post</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <!-- Create Post Form -->
     <div class="flex justify-center">
         <!-- Main Container -->
         <form method="POST" action="/transactions/{{ $transaction->id }}"
@@ -166,6 +181,7 @@
                     Submit
                 </button>
                 <input type="hidden" name="is_paid" value="{{ $transaction->is_paid }}">
+                <input type="hidden" name="status" value="{{ $transaction->status }}">
             </div>
         </form>
     </div>

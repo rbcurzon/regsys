@@ -171,9 +171,9 @@
 <!-- header end -->
 
 @auth
-    <div class="block text-2xl text-blue-900" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
     <!-- sidebar start -->
-    <aside id="sidebar" class="fixed bg-blue-900">
+    <div class="inline absolute text-2xl text-gray-900 h-full" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
+    <aside id="sidebar" class="absolute bg-blue-900">
         <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
             <a href="/profile"
                class="flex flex-col justify-center items-center mb-3 text-white hover:text-blue-600">
@@ -228,6 +228,8 @@
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('open');
+        // sidebar.classList.toggle("translate-x-full");
+        // sidebar.classList.toggle("translate-x-0");
     }
 </script>
 
@@ -237,5 +239,6 @@
 </main>
 
 @bukStyles(true)
+@include('sweetalert::alert')
 </body>
 </html>

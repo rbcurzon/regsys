@@ -11,6 +11,7 @@
         "laravel/tinker": "^2.9",
         "mailersend/laravel-driver": "^2.7",
         "mobiledetect/mobiledetectlib": "^4.8",
+        "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-collection-macros": "^7.14",
         "twbs/bootstrap-icons": "^1.11"
     },

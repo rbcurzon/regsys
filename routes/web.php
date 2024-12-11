@@ -36,16 +36,19 @@ Route::patch('/transactions/{transaction}', [TransactionController::class, 'upda
     ->can("update", ['transaction']);
 Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])
     ->middleware('auth')
-    ->can("delete", ['transaction']);
+    ->can("delete", ['transaction'])
+    ->name('transactions.destroy');
 
-Route::post('/journals', [JournalController::class, 'store']);
+Route::post('/journals', [JournalController::class, 'store'])
+    ->middleware('auth')
+    ->name('journals.store');
 
 Route::singleton('/profile', ProfileController::class);
 
 Route::get('/receipt', function () {
     return request()->session()->get('transaction') ?
-        view('receipt',['transaction' => request()->session()->get('transaction')]):
-    redirect('/');
+        view('receipt', ['transaction' => request()->session()->get('transaction')]) :
+        redirect('/');
 })->name('receipt');
 
 //Auth

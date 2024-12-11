@@ -19,8 +19,8 @@ return new class extends Migration {
 
         Schema::create('journals', function (Blueprint $table) {
             $table->id('journal_id');
-            $table->foreignId('financial_transaction_id')->references('financial_transaction_id')->on('financial_transactions')->nullOnDelete();
-            $table->foreignId("account_id")->references('account_id')->on('accounts')->nullOnDelete();
+            $table->foreignId('financial_transaction_id')->references('financial_transaction_id')->on('financial_transactions')->cascadeOnDelete();
+            $table->foreignId("account_id")->references('account_id')->on('accounts')->cascadeOnDelete();
             $table->float("cost");
             $table->boolean('is_credit')->nullable(false);
             $table->timestamps();
