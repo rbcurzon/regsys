@@ -148,9 +148,9 @@
                                     @else
                                         {{ $transaction->status }}
                                     @endif
-                                    @error('status')
-                                    <p class="text-red-900 italic">{{ $message }}.</p>
-                                    @enderror
+{{--                                    @error('status')--}}
+{{--                                    <p class="text-red-900 italic">{{ $message }}.</p>--}}
+{{--                                    @enderror--}}
                                 </x-table-data>
                                 <x-table-data class="flex space-x-2 justify-center">
                                     {{--                                    <form method="POST" action="/transactions/{{ $transaction->id }}" data-confirm-delete="true" id="delete-transaction">--}}
@@ -167,7 +167,8 @@
 
                                     <a href="{{ route('transactions.destroy', [$transaction->id]) }}"
                                        class="text-white bg-red-600 hover:bg-red-700 rounded-md px-3 py-2"
-                                       data-confirm-delete="true">
+                                       data-confirm-delete="true"
+                                    >
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -203,7 +204,6 @@
                                                 <x-form-input type="submit"
                                                               class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black "
                                                               value="Mark as paid"
-                                                              data-confirm-="true"
                                                 />
                                                 <input type="hidden" name="transaction_id"
                                                        value="{{ $transaction->id }}">
@@ -212,13 +212,6 @@
                                                 <input type="hidden" name="cost"
                                                        value="{{ $transaction->getTotalCost()}}">
                                             </form>
-
-                                            {{--                                            <a methods="POST" href="{{ Form('journals.store',['transaction_id'=>$transaction->id,'student_id'=>$transaction->student_id, 'cost'=>$transaction->cost]) }}">--}}
-                                            {{--                                                <span--}}
-                                            {{--                                                    class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black ">--}}
-                                            {{--                                                    Mark as paid--}}
-                                            {{--                                                </span>--}}
-                                            {{--                                            </a>--}}
                                         @else
                                             <p class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black">
                                                 Paid</p>

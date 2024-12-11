@@ -71,16 +71,16 @@ class DatabaseSeeder extends Seeder
         Purpose::insert($purpose_lists);
 
         $programs = [
-            ['course_name' => 'Bachelor of Elementary Education', 'code' => 'BEE', 'department'=>'DTE'],
-            ['course_name' => 'Bachelor of Secondary Education Major in English', 'code' => 'BSEDE', 'department'=>'DTE'],
-            ['course_name' => 'Bachelor of Secondary Education Major in Filipino', 'code' => 'BSEDF', 'department'=>'DTE'],
-            ['course_name' => 'Bachelor of Secondary Education Major in Mathematics', 'code' => 'BSEDM', 'department'=>'DTE'],
-            ['course_name' => 'Bachelor of Secondary Education Major in Science', 'code' => 'BSEDS', 'department'=>'DTE'],
-            ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT', 'department'=>'DCI'],
-            ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS', 'department'=>'DCI'],
-            ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA', 'department'=>'DBA'],
-            ['course_name' => 'Bachelor of Science in Accounting Information', 'code' => 'BSAI', 'department'=>'DBA'],
-            ['course_name' => 'Bachelor of Science of Arts in Psychology', 'code' => 'BSAP', 'department'=>'DAS'],
+            ['course_name' => 'Bachelor of Elementary Education', 'code' => 'BEE', 'department' => 'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in English', 'code' => 'BSEDE', 'department' => 'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Filipino', 'code' => 'BSEDF', 'department' => 'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Mathematics', 'code' => 'BSEDM', 'department' => 'DTE'],
+            ['course_name' => 'Bachelor of Secondary Education Major in Science', 'code' => 'BSEDS', 'department' => 'DTE'],
+            ['course_name' => 'Bachelor of Science in Information Technology', 'code' => 'BSIT', 'department' => 'DCI'],
+            ['course_name' => 'Bachelor of Science in Computer Science', 'code' => 'BSCS', 'department' => 'DCI'],
+            ['course_name' => 'Bachelor of Science in Accountancy', 'code' => 'BSA', 'department' => 'DBA'],
+            ['course_name' => 'Bachelor of Science in Accounting Information', 'code' => 'BSAI', 'department' => 'DBA'],
+            ['course_name' => 'Bachelor of Science of Arts in Psychology', 'code' => 'BSAP', 'department' => 'DAS'],
         ];
 
         Course::insert($programs);
@@ -96,6 +96,10 @@ class DatabaseSeeder extends Seeder
         User::factory()->create(
             ['student_id' => '2022-20306', 'first_name' => 'John', 'last_name' => 'Boe', 'email' => 'student@example.com', 'role' => null]
         );
+
+        \App\Models\Transaction::factory()->create([
+            'id' => 999
+        ]);
     }
 }
 

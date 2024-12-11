@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use function Laravel\Prompts\confirm;
 use function PHPUnit\Framework\returnArgument;
@@ -82,6 +83,10 @@ class TransactionController extends Controller
         $text = 'Are you sure you want to delete this transaction?';
         confirmDelete($title1, $text);
 
+        if (session('success_message')) {
+            Alert::success('Success', 'Transaction has been deleted!');
+        }
+
         return view('transactions.index', [
             'transactions' => $transactions ?? null,
             'title' => strtoupper($title),
@@ -92,7 +97,7 @@ class TransactionController extends Controller
             'revenue' => $revenue,
             'paid_transactions_count' => $paid_transactions_count,
             'statuses' => $statuses ?? null,
-        ]);
+            ]);
     }
 
     public function create(): View|Factory|Application
@@ -120,6 +125,7 @@ class TransactionController extends Controller
     public
     function store(StoreTransactionRequest $request)
     {
+
         $transaction = Transaction::create([
             'student_id' => request('student_id'),
             'requested_date' => Carbon::now('Asia/Manila'),
@@ -168,6 +174,14 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, UpdateTransactionRequest $request)
     {
+        $validator = Validator::make($request->all(),[
+            'status' => $request->get('status') !== 'pending' ? 'declined_if:is_paid,0' : '',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
         $transaction->update([
             'student_id' => $transaction->student_id,
             'needed_date' => $request->get('needed_date'),
@@ -191,7 +205,7 @@ class TransactionController extends Controller
 
         toast('Your request has been updated.','success');
 
-        return redirect("/");
+        return redirect("/")->withToastSuccess('Request has been updated.');
     }
 
     public
@@ -199,8 +213,7 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-
-        toast('Your request has been deleted.','success');
+        toast('A request has been deleted.','success');
 
         return redirect('/');
     }

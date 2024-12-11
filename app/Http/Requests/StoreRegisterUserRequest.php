@@ -40,5 +40,6 @@ class StoreRegisterUserRequest extends FormRequest
             'section' => ['required'],
             'password' => [Password::min(8)->mixedCase()->numbers(), "confirmed", "required"],
         ];
+        $this->dd();
     }
 }

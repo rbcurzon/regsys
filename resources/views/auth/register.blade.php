@@ -90,7 +90,7 @@
                                     <x-form-error name="student_id"/>
                                 </x-form-field>
 
-                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <x-form-input type="text"
                                                   id="first_name"
                                                   name="first_name"
@@ -118,7 +118,7 @@
                         <div>
                             <h3 class="section-title montserrat-semibold">Academic Information</h3>
                             <div class="grid grid-cols-6 gap-4">
-                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-x-3">
+                                <x-form-field class="col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                                     <x-form-select id="year_level"
                                                    name="year_level"
                                                    class="montserrat-regular"
@@ -147,7 +147,7 @@
                                     <x-form-input type="text"
                                                   id="section"
                                                   name="section"
-                                                  placeholder="Section"
+                                                  placeholder="Ex. 3-CS3"
                                                   :value="old('section')"
                                                   class="montserrat-regular"
                                     />

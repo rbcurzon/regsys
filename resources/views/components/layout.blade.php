@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(["resources/css/app.css", "resources/js/app.js"])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>@yield('title', '')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,7 +131,10 @@
         }
 
     </style>
-    @bukScripts(true)
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js "></script>
+    <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css " rel="stylesheet">
+    @bukStyles(true)
 </head>
 
 <body class="font-sans montserrat-regular relative">
@@ -238,7 +241,8 @@
     @yield('content')
 </main>
 
-@bukStyles(true)
+
 @include('sweetalert::alert')
+@bukScripts(true)
 </body>
 </html>

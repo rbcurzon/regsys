@@ -106,7 +106,8 @@
                             <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
                                    value="{{ old('needed_date') }}">
-                            <x-error field="needed_date" class=" text-red-900 italic"/>
+{{--                            <x-error field="needed_date" class=" text-red-900 italic"/>--}}
+                            <p class="text-sm italic text-red-900">Note: The needed date must be within the next 7 days</p>
                         </div>
 
                         {{-- documents --}}
@@ -148,21 +149,3 @@
         </form>
     </div>
 @endsection
-
-{{--@section('head')--}}
-{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
-{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
-{{--    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">--}}
-{{--    <style>--}}
-{{--        /* Custom Font Classes */--}}
-{{--        .montserrat-regular {--}}
-{{--            font-family: "Montserrat", sans-serif;--}}
-{{--            font-weight: 400;--}}
-{{--        }--}}
-
-{{--        .montserrat-bold {--}}
-{{--            font-family: "Montserrat", sans-serif;--}}
-{{--            font-weight: 700;--}}
-{{--        }--}}
-{{--    </style>--}}
-{{--@endsection--}}

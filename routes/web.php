@@ -29,7 +29,8 @@ Route::get('/transactions/{transaction}/show', [TransactionController::class, 's
     ->can("view", "transaction");
 Route::get('/transactions/{transaction}/edit', [TransactionController::class, 'edit'])
     ->middleware('auth')
-    ->can("update", ["transaction"]);
+    ->can("update", ["transaction"])
+->name('transactions.edit');
 Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])
     ->name('transactions.update')
     ->middleware('auth')

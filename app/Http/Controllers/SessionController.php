@@ -26,15 +26,18 @@ class SessionController extends Controller
         ]);
 
         if (!Auth::attempt($attributes)) {
-            throw ValidationException::withMessages([
-                "email" => "Sorry, those credentials are not matched.",
-            ]);
+//            throw ValidationException::withMessages([
+//                "email" => "Sorry, those credentials are not matched.",
+//            ]);
+
+            return back()->with('toast_error', 'Sorry, those credentials are not matched.')->withInput();
         }
 
         request()->session()->regenerate();
 
-        return redirect('/');
+        return redirect('/')->with('toast_success', 'You are now logged in');
     }
+
     public function destroy()
     {
         Auth::logout();
