@@ -118,15 +118,16 @@
                                 </legend>
                                 <ul>
                                     @foreach($documents as $document)
-                                        <li>
+                                       <li>
                                             <input type="checkbox"
                                                    name="documents[]"
                                                    value="{{ $document->document_id }}"
                                                    id="document{{ $document->document_name }}"
+                                                   onclick="showCheckBox()"
                                             >
                                             <label
-                                                for="document{{ $document->document_name }}">{{ $document->document_name }}   <span class=""> | &#8369;</span>  {{ $document->cost }}</label> x
-                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20" placeholder="qty" min=1></x-input>
+                                                for="document{{ $document->document_name }}">{{ $document->document_name }} <span class=""> | &#8369;</span>  {{ $document->cost }}</label> x
+                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20 hidden"  placeholder="qty" min=1></x-input>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -149,4 +150,27 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        function showCheckBox() {
+            // Select all checkboxes with the name "documents[]"
+            const checkboxes = document.querySelectorAll('input[name="documents[]"]:checked');
+
+            // Collect checked checkbox values
+            const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+            // Find all quantity inputs
+            const allInputs = document.querySelectorAll('input[name^="quantity[]"]');
+            allInputs.forEach(input => {
+                const parentLi = input.closest('li');
+                if (parentLi) {
+                    const checkbox = parentLi.querySelector('input[name="documents[]"]');
+                    if (checkbox && checkedValues.includes(checkbox.value)) {
+                        input.classList.remove('hidden'); // Show if checkbox is checked
+                    } else {
+                        input.classList.add('hidden'); // Hide if checkbox is not checked
+                    }
+                }
+            });
+        }
+    </script>
 @endsection

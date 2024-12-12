@@ -139,11 +139,17 @@
                                                name="documents[]"
                                                value="{{ $document->document_id }}"
                                                id="document{{ $document->document_name }}"
-                                            {{ in_array($document->document_id, $transaction_document_ids) ? "checked" : "" }}
+                                               {{ in_array($document->document_id, $transaction_document_ids) ? "checked" : "" }}
+                                               onclick="showCheckBox()"
                                         >
                                         <label
-                                            for="document{{ $document->document_name }}">{{ $document->document_name }} <span>  / </span> Php {{ $document->cost }}</label> x
-                                        <x-input type="number" name="quantity[]" class="mt-1 w-24" placeholder="quantity" value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}" min=1></x-input>
+                                            for="document{{ $document->document_name }}">{{ $document->document_name }}
+                                            <span>  / </span> Php {{ $document->cost }}</label> x
+                                        <x-input type="number" name="quantity[]"
+                                                 class="mt-1 w-24 hidden"
+                                                 placeholder="copies"
+                                                 value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}"
+                                                 min=1></x-input>
                                     </li>
                                 @endforeach
                             </ul>
@@ -154,20 +160,20 @@
                     </div>
 
                     @if(Auth::user()->isAdmin())
-{{--                        <div class="sm:col-span-3">--}}
-{{--                            <label for="status" class="block font-semibold text-gray-900">Status</label>--}}
-{{--                            <select id="status" name="status"--}}
-{{--                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">--}}
-{{--                                <option class="hidden"--}}
-{{--                                        value="{{ $transaction->status }}">{{ $transaction->status }}</option>--}}
-{{--                                @foreach($status as $s)--}}
-{{--                                    <option value="{{ $s }}">{{ $s }}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                            @error('status')--}}
-{{--                            <p class="text-red-900 italic">{{ $message }}.</p>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
+                        {{--                        <div class="sm:col-span-3">--}}
+                        {{--                            <label for="status" class="block font-semibold text-gray-900">Status</label>--}}
+                        {{--                            <select id="status" name="status"--}}
+                        {{--                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm">--}}
+                        {{--                                <option class="hidden"--}}
+                        {{--                                        value="{{ $transaction->status }}">{{ $transaction->status }}</option>--}}
+                        {{--                                @foreach($status as $s)--}}
+                        {{--                                    <option value="{{ $s }}">{{ $s }}</option>--}}
+                        {{--                                @endforeach--}}
+                        {{--                            </select>--}}
+                        {{--                            @error('status')--}}
+                        {{--                            <p class="text-red-900 italic">{{ $message }}.</p>--}}
+                        {{--                            @enderror--}}
+                        {{--                        </div>--}}
                     @endif
                 </div>
             </div>
@@ -183,4 +189,30 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        function showCheckBox() {
+            // Select all checkboxes with the name "documents[]"
+            const checkboxes = document.querySelectorAll('input[name="documents[]"]:checked');
+
+            // Collect checked checkbox values
+            const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+            // Find all quantity inputs
+            const allInputs = document.querySelectorAll('input[name^="quantity[]"]');
+            allInputs.forEach(input => {
+                const parentLi = input.closest('li');
+                if (parentLi) {
+                    const checkbox = parentLi.querySelector('input[name="documents[]"]');
+                    if (checkbox && checkedValues.includes(checkbox.value)) {
+                        input.classList.remove('hidden'); // Show if checkbox is checked
+                    } else {
+                        input.classList.add('hidden'); // Hide if checkbox is not checked
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', showCheckBox);
+    </script>i
+
 @endsection
