@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class,'student_id');
+            $table->string('or_number')->unique()->nullable();
             $table->date('requested_date')->default(Carbon::now()->setTimezone('UTC'));
             $table->date('needed_date');
             $table->foreignIdFor(Purpose::class,'purpose_id');

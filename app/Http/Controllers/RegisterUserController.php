@@ -23,16 +23,31 @@ class RegisterUserController extends Controller
     public function store(Request $request)
     {
 
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
-            'student_id' => ['required', 'string', 'regex:/^\d{4}-\d{5,}$/', 'unique:users'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'year_level' => ['required'],
-            'course_id' => ['required', 'gte:0'], //gte = greater that or equal
-            'section' => ['required'],
-            'password' => [Password::min(8)->mixedCase()->numbers(), "confirmed", "required"],
-        ]);
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(),
+            [
+                'student_id' => ['required', 'string', 'regex:/^\d{4}-\d{5,}$/', 'unique:users'],
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'year_level' => ['required', 'gte:0', 'max:4'],
+                'course_id' => ['required', 'gte:0'], //gte = greater that or equal
+                'section' => ['required'],
+                'password' => [Password::min(8)->mixedCase()->numbers()->symbols(), "confirmed", "required"],
+            ],
+            $messages = [
+                'student_id.required' => 'Student ID is required',
+                'student_id.regex' => 'Student ID is invalid',
+                'student_id' => 'Student ID is already registered',
+                'first_name' => 'First Name is required',
+                'last_name.required' => 'Last Name is required',
+                'email.required' => 'Email is required',
+                'email.email' => 'Email is invalid',
+                'email.unique' => 'Email already exists',
+                'year_level.gte' => 'Year level is required',
+                'course_id.gte' => 'Course is required',
+                'section.required' => 'Section is required',
+                'password.required' => 'Password is required',
+            ]);
 
         if ($validator->fails()) {
             return back()->with('toast_error', [$validator->messages()->all()])->withInput();
@@ -42,6 +57,6 @@ class RegisterUserController extends Controller
 
         Auth::login($user);
 
-        return redirect("/")->with('toast_success', 'You successfully registered your account.')->autoClose(5000);
+        return redirect("/")->with('toast_success', 'You successfully registered your account.');
     }
 }

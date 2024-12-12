@@ -189,6 +189,7 @@ class TransactionController extends Controller
 
         $transaction->update([
             'student_id' => $transaction->student_id,
+            'or_number' => $transaction->or_number,
             'needed_date' => $request->get('needed_date'),
             'purpose_id' => $request->get('purpose_id'),
             'status' => $request->get('status') ?? $transaction->status,

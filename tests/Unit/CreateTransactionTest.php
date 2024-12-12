@@ -82,7 +82,7 @@ test('transaction can be recorded on journal', function () {
     ]);
 
     $response = $this->actingAs($user)
-        ->post(route('journals.store', ['transaction_id' => $transaction->id, 'student_id' => $user->student_id, 'cost' => $transaction->cost]));
+        ->post(route('journals.store', ['or_number' => '1234-1231','transaction_id' => $transaction->id, 'student_id' => $user->student_id, 'cost' => $transaction->cost]));
 
     $this->assertDatabaseCount('journals', 2);
 });

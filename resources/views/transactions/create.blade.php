@@ -126,7 +126,7 @@
                                             >
                                             <label
                                                 for="document{{ $document->document_name }}">{{ $document->document_name }}   <span class=""> | &#8369;</span>  {{ $document->cost }}</label> x
-                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20" placeholder="qty"></x-input>
+                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20" placeholder="qty" min=1></x-input>
                                         </li>
                                     @endforeach
                                 </ul>

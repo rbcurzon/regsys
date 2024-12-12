@@ -87,14 +87,6 @@ class DatabaseSeeder extends Seeder
                 "cost" => 30.00,
             ],
             [
-                "document_name" => "Entrance Exam",
-                "cost" => 30.00,
-            ],
-            [
-                "document_name" => "Entrance Exam Transferee",
-                "cost" => 200.00,
-            ],
-            [
                 "document_name" => "Lost Class Card",
                 "cost" => 30.00,
             ],

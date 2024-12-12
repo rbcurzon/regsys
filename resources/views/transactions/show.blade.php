@@ -72,13 +72,20 @@
 
                         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 px-2">
                             {{-- Documenet start--}}
+
+                            <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2 bg-">
+                            <span class="font-bold text-gray-900">
+                                OR Number:
+                            </span> {{ $transaction->or_number }}
+                            </div>
+
                             <div class="sm:col-span-1 sm:col-start-1 bg-">
                             <span class="font-bold text-gray-900">
                                 Documents:
                             </span>
                                 <ul class="list-decimal pl-12">
                                     @foreach($transaction->transactionDocument as $document)
-                                        <li>{{ $document->document->document_name }}</li>
+                                        <li>{{ $document->document->document_name }} x{{ $document->quantity }} copies</li>
                                     @endforeach
                                 </ul>
                             </div>

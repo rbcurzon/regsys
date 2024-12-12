@@ -143,7 +143,7 @@
                                         >
                                         <label
                                             for="document{{ $document->document_name }}">{{ $document->document_name }} <span>  / </span> Php {{ $document->cost }}</label> x
-                                        <x-input name="quantity[]" class="mt-1 w-24" placeholder="quantity" value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}"></x-input>
+                                        <x-input type="number" name="quantity[]" class="mt-1 w-24" placeholder="quantity" value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}" min=1></x-input>
                                     </li>
                                 @endforeach
                             </ul>

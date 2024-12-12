@@ -22,6 +22,7 @@ class JournalController extends Controller
 
         $transaction->update([
             'is_paid' => true,
+            'or_number' => $request->get('or_number'),
         ]);
 
         $transaction->save();

@@ -15,6 +15,8 @@ class SearchController extends Controller
             $transactions = Auth::user()->transactions()->where(function (Builder $query) {
                 return $query->where('id', 'LIKE', request('q') . '%')
                     ->orWhere("user_id", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("needed_date", "LIKE", "%" . request('q') . "%")
+                    ->orWhere("requested_date", "LIKE", "%" . request('q') . "%")
                     ->orWhere("status", "LIKE", "%" . request('q') . "%");
             })
                 ->orderBy("needed_date")
