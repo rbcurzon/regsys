@@ -15,6 +15,10 @@ class Document extends Model
 
     protected $primaryKey = 'document_id';
 
+    public function getCost()
+    {
+        return $this->cost;
+    }
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'document_id', 'document_id');

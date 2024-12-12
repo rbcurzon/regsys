@@ -21,9 +21,13 @@ class TransactionDocumentFactory extends Factory
      */
     public function definition(): array
     {
+        $quantity = $this->faker->numberBetween(1, 10);
+        $document_id = Document::inRandomOrder()->first()->document_id;
         return [
             'transaction_id' => Transaction::inRandomOrder()->first()->id,
-            'document_id' => Document::inRandomOrder()->first()->document_id,
+            'document_id' => $document_id,
+            'quantity' => $quantity,
+            'price' => $quantity * Document::find($document_id)->getCost(),
         ];
     }
 }

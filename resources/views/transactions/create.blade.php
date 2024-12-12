@@ -111,7 +111,7 @@
                         </div>
 
                         {{-- documents --}}
-                        <div class="sm:col-start-1 sm:col-span-1">
+                        <div class="col-span-1 sm:col-start-1 sm:col-span-2">
                             <fieldset>
                                 <legend class="font-semibold">
                                     Documents
@@ -125,7 +125,8 @@
                                                    id="document{{ $document->document_name }}"
                                             >
                                             <label
-                                                for="document{{ $document->document_name }}">{{ $document->document_name }}</label>
+                                                for="document{{ $document->document_name }}">{{ $document->document_name }}   <span class=""> | &#8369;</span>  {{ $document->cost }}</label> x
+                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20" placeholder="qty"></x-input>
                                         </li>
                                     @endforeach
                                 </ul>

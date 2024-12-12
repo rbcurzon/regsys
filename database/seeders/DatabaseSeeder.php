@@ -50,6 +50,70 @@ class DatabaseSeeder extends Seeder
             ['document_name' => 'Application for Re-admission', 'cost' => 50],
             ['document_name' => 'Application for Shifting', 'cost' => 50],
             ['document_name' => 'Application for Clearance for Graduating Students', 'cost' => 0],
+            [
+                "document_name" => "Addition Change Subject Fee",
+                "cost" => 50.00,
+            ],
+            [
+                "document_name" => "Additional Transcript Of Record",
+                "cost" => 50.00, // per page
+            ],
+            [
+                "document_name" => "Certificate Of Completion",
+                "cost" => 300.00,
+            ],
+            [
+                "document_name" => "Certificate Of Enrollment",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Certificate Of Good Moral",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Completion Form",
+                "cost" => 50.00,
+            ],
+            [
+                "document_name" => "Copy Of Grades",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Course Description",
+                "cost" => 30.00, // per page
+            ],
+            [
+                "document_name" => "Endorsement Letter",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Entrance Exam",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Entrance Exam Transferee",
+                "cost" => 200.00,
+            ],
+            [
+                "document_name" => "Lost Class Card",
+                "cost" => 30.00,
+            ],
+            [
+                "document_name" => "Lost Diploma 2nd Copy",
+                "cost" => 300.00,
+            ],
+            [
+                "document_name" => "Lost ID",
+                "cost" => 100.00,
+            ],
+            [
+                "document_name" => "Lost Registration Card",
+                "cost" => 100.00,
+            ],
+            [
+                "document_name" => "Other Certification",
+                "cost" => 30.00,
+            ],
         ];
 
         Document::insert($document_lists);
@@ -98,6 +162,7 @@ class DatabaseSeeder extends Seeder
         );
 
         \App\Models\Transaction::factory()->create([
+
             'id' => 999
         ]);
     }

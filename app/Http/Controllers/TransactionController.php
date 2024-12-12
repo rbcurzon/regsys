@@ -67,7 +67,7 @@ class TransactionController extends Controller
             $on_process_count = $this->transaction->getOnProcessCount();
             $statuses = ['on process', 'for release', 'released'];
             if ($this->user->isAdmin()) {
-            $transactions = $this->transaction->getTransactions();
+                $transactions = $this->transaction->getTransactions();
                 $pending_count = $this->transaction->getPendingCount();
                 $released_count = $this->transaction->getReleasedCount();
                 $title = 'admin dashboard';
@@ -97,12 +97,11 @@ class TransactionController extends Controller
             'revenue' => $revenue,
             'paid_transactions_count' => $paid_transactions_count,
             'statuses' => $statuses ?? null,
-            ]);
+        ]);
     }
 
     public function create(): View|Factory|Application
     {
-
         return view('transactions.create', [
             'purposes' => $this->purpose->getPurposes(),
             'documents' => Document::all(),
@@ -126,6 +125,7 @@ class TransactionController extends Controller
     function store(StoreTransactionRequest $request)
     {
 
+//        dd((request()->all()));
         $transaction = Transaction::create([
             'student_id' => request('student_id'),
             'requested_date' => Carbon::now('Asia/Manila'),
@@ -134,10 +134,12 @@ class TransactionController extends Controller
             'cost' => -1,
         ]);
 
-        foreach ($request->get('documents') as $document) {
+        foreach (($request->get('documents')) as $document) {
             TransactionDocument::create([
                 'transaction_id' => $transaction->id,
                 'document_id' => $document,
+                'quantity' => request('quantity')[$document - 1] ?? 1,
+                'price' => (request('quantity')[$document - 1] ?? 1) * Document::find($document)->getCost(),
             ]);
         }
 
@@ -146,9 +148,9 @@ class TransactionController extends Controller
 
         Mail::to($request->user())->queue(new TransactionCreated($transaction));
 
-        Auth::user()->course_name;
+//        Auth::user()->course_name;
 
-        toast('Your request has been submitted.','success');
+        toast('Your request has been submitted.', 'success');
 
         return redirect('/receipt')->with(['transaction' => $transaction]);
     }
@@ -174,7 +176,10 @@ class TransactionController extends Controller
     public
     function update(Transaction $transaction, UpdateTransactionRequest $request)
     {
-        $validator = Validator::make($request->all(),[
+
+//        dd($request->all());
+
+        $validator = Validator::make($request->all(), [
             'status' => $request->get('status') !== 'pending' ? 'declined_if:is_paid,0' : '',
         ]);
 
@@ -193,17 +198,19 @@ class TransactionController extends Controller
 
         TransactionDocument::where('transaction_id', $transaction->id)->delete();
 
-        foreach ( $documents as $document) {
+        foreach ($documents as $document) {
             $td = $transaction->transactionDocument()->create([
                 'transaction_id' => $transaction->id,
                 'document_id' => $document,
+                'quantity' => request('quantity')[$document - 1] ?? 1,
+                'price' => (request('quantity')[$document - 1] ?? 1) * Document::find($document)->getCost(),
             ]);
         }
 
         $transaction->cost = $transaction->getTotalCost();
         $transaction->save();
 
-        toast('Your request has been updated.','success');
+        toast('Your request has been updated.', 'success');
 
         return redirect("/")->withToastSuccess('Request has been updated.');
     }
@@ -213,7 +220,7 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        toast('A request has been deleted.','success');
+        toast('A request has been deleted.', 'success');
 
         return redirect('/');
     }

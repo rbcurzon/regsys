@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Transaction::class, 'transaction_id');
             $table->foreignIdFor(Document::class, 'document_id');
+            $table->integer('quantity')->default(0);
+            $table->integer('price')->default(0);
             $table->timestamps();
         });
     }

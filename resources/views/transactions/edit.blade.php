@@ -11,9 +11,6 @@
 
 @section('content')
     <!-- /resources/views/post/create.blade.php -->
-
-    <h1>Create Post</h1>
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -130,12 +127,12 @@
                     </div>
 
                     {{-- documents --}}
-                    <div class="sm:col-span-1 sm:col-start-1">
+                    <div class="col-span-1 sm:col-span-2 sm:col-start-1">
                         <fieldset>
                             <legend class="font-semibold text-gray-900">
                                 Documents
                             </legend>
-                            <ul>
+                            <ul class="list-inside text-gray-900/90">
                                 @foreach($documents as $document)
                                     <li>
                                         <input type="checkbox"
@@ -145,7 +142,8 @@
                                             {{ in_array($document->document_id, $transaction_document_ids) ? "checked" : "" }}
                                         >
                                         <label
-                                            for="document{{ $document->document_name }}">{{ $document->document_name }}</label>
+                                            for="document{{ $document->document_name }}">{{ $document->document_name }} <span>  / </span> Php {{ $document->cost }}</label> x
+                                        <x-input name="quantity[]" class="mt-1 w-24" placeholder="quantity" value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}"></x-input>
                                     </li>
                                 @endforeach
                             </ul>

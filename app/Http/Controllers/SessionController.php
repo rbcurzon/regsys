@@ -41,6 +41,6 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/login')->with('toast_error', 'You are now logged out');
     }
 }

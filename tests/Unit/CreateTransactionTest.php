@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Document;
 use App\Models\Transaction;
 use App\Models\TransactionDocument;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use function Pest\Laravel\assertDatabaseCount;
 
 uses(RefreshDatabase::class);
 
@@ -53,21 +55,18 @@ test('transaction associates to correct window', function () {
     $student_id = User::factory()->create()->student_id;
 
     $transaction = Transaction::factory()->create([
-       'student_id' => $student_id,
-   ]);
+        'student_id' => $student_id,
+    ]);
 
     $department = $transaction->user->course->department;
 
     if ($department == 'DTE') {
         expect($transaction->window())->toBe(1);
-    }
-    else if ($department == 'DCI') {
+    } else if ($department == 'DCI') {
         expect($transaction->window())->toBe(2);
-    }
-    else if ($department == 'DBA') {
+    } else if ($department == 'DBA') {
         expect($transaction->window())->toBe(3);
-    }
-    else if($department == 'DAS') {
+    } else if ($department == 'DAS') {
         expect($transaction->window())->toBe(4);
     }
 });
@@ -80,10 +79,66 @@ test('transaction can be recorded on journal', function () {
     $transaction = Transaction::factory()->create([
         'student_id' => User::factory()->create()->student_id,
         'cost' => 50,
-        ]);
+    ]);
 
     $response = $this->actingAs($user)
-        ->post(route('journals.store',['transaction_id'=>$transaction->id, 'student_id'=>$user->student_id, 'cost'=>$transaction->cost]));
+        ->post(route('journals.store', ['transaction_id' => $transaction->id, 'student_id' => $user->student_id, 'cost' => $transaction->cost]));
 
     $this->assertDatabaseCount('journals', 2);
+});
+
+test('user can request two copies of a document', function () {
+    $this->seed();
+
+    $document_id = 2;
+    $quantity = 2;
+
+    $transaction = Transaction::factory()->create([
+    ]);
+
+    $transaction_document = TransactionDocument::factory()->create([
+        'transaction_id' => $transaction->id,
+        'document_id' => $document_id,
+        'quantity' => $quantity,
+        'price' => $quantity * Document::find($document_id)->cost,
+    ]);
+
+//    $transaction_document->computePrice();
+
+    $total = Document::find($document_id)->cost * $transaction_document->quantity;
+
+    $transaction->setCost($total);
+
+    expect($transaction->cost)->toBe($total);
+});
+
+test('user can request a document and multiple copies of another document', function () {
+    $this->seed();
+
+    $document_id = 2;
+    $quantity = 2;
+
+    $transaction = Transaction::factory()->create([
+    ]);
+
+    TransactionDocument::factory()->create([
+        'transaction_id' => $transaction->id,
+        'document_id' => $document_id,
+        'quantity' => $quantity,
+        'price' => $quantity * Document::find($document_id)->cost,
+    ]);
+
+    $document_id = 1;
+    $quantity = 1;
+
+    TransactionDocument::factory()->create([
+        'transaction_id' => $transaction->id,
+        'document_id' => $document_id,
+        'quantity' => $quantity,
+        'price' => $quantity * Document::find($document_id)->cost,
+    ]);
+
+    $transaction->setCost($transaction->transactionDocument->sum('price'));
+
+//    dd($transaction->cost);
 });

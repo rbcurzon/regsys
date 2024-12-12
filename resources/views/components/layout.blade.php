@@ -69,7 +69,9 @@
 
             aside.open {
                 transform: translateX(0); /* Show sidebar when 'open' */
-                position: fixed;
+                /*position: fixed;*/
+                position: absolute;
+                height: 100svh;
                 top: 130px; /* Maintain the position below the header */
                 left: 0;
                 width: 205px; /* Fixed width on mobile */

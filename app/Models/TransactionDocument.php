@@ -15,17 +15,30 @@ class TransactionDocument extends Model
 
     protected $guarded = [];
 
+//    public function computePrice()
+//    {
+//        $this->price = $this->getQuantity() * $this->document->getCost();
+//
+//        return $this->save();
+//    }
+
+    public function test($id)
+    {
+        return $this->where('document_id','=',$id)->first()->quantity;
+    }
+
     public function getCost()
     {
         $cost = 0;
 
-        $documents = $this->with('document')->where('transaction_id','=',19)->get();
+        $documents = $this->with('document')->where('transaction_id', '=', 19)->get();
         foreach ($documents as $document) {
             $cost = $cost + $document->cost;
         }
 
         return $cost;
     }
+
     public function transaction()
     {
         return $this->belongsTo(Transaction::class, 'transaction_id');

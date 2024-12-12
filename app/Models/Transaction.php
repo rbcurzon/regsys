@@ -23,6 +23,19 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
+    public function idsOfDocumentRequests()
+    {
+        return $documentIdsAndQuantity = $this->transactionDocument()->get()->map->only(['document_id','quantity'])->all();
+
+        return array_column($documentIdsAndQuantity, 'document_id');
+    }
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+
+        $this->save();
+    }
+
     public function cashierTransactions()
     {
         return Transaction::where('is_paid', '=', false)
@@ -112,11 +125,11 @@ class Transaction extends Model
     public function getTotalCost()
     {
         $cost = 0;
-        $requests = $this->transactionDocument;
+        $cost = $this->transactionDocument->sum('price');
 
-        foreach ($requests as $request) {
-            $cost += $request->document->cost;
-        }
+//        foreach ($requests as $request) {
+//            $cost += $request->document->cost;
+//        }
 
         return $cost;
     }
