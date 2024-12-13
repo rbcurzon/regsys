@@ -221,8 +221,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        toast('A request has been deleted.', 'success');
-
-        return redirect('/');
+        return redirect('/')->withToastSuccess('Request has been deleted.');
     }
 }

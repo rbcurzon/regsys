@@ -17,7 +17,10 @@ class RegisterUserController extends Controller
 {
     public function create()
     {
-        return view('auth.register', ['courses' => Course::with('users')->get()]);
+        return view('auth.register', [
+            'courses' => Course::with('users')->get(),
+            'year_levels' => [1,2,3,4],
+        ]);
     }
 
     public function store(Request $request)
@@ -47,6 +50,9 @@ class RegisterUserController extends Controller
                 'course_id.gte' => 'Course is required',
                 'section.required' => 'Section is required',
                 'password.required' => 'Password is required',
+                'password.min' => 'Password must be at least 8 characters',
+                'password.confirmed' => 'Password does not match',
+                'password.regex' => 'Password is invalid',
             ]);
 
         if ($validator->fails()) {

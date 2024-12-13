@@ -106,7 +106,7 @@
                         @foreach ($transactions as $transaction)
                             <tr class="hover:bg-blue-200 border-b border-gray-300 text-black text-center">
                                 <x-table-data>{{ $transaction->id }}</x-table-data>
-                                <x-table-data>{{ 97654 }}</x-table-data>
+                                <x-table-data>{{ $transaction->or_number }}</x-table-data>
                                 @if(!Auth::user()->isNormalUser())
                                     <x-table-data>{{ $transaction->student_id }}</x-table-data>
                                     <x-table-data>{{ $transaction->user->first_name }}</x-table-data>
@@ -215,10 +215,10 @@
                                             {{--                                                                                                   value="{{ $transaction->getTotalCost()}}">--}}
                                             {{--                                                                                        </form>--}}
                                             <x-form-input
-                                                data-modal-target="authentication-modal"
-                                                data-modal-toggle="authentication-modal"
+                                                data-modal-target="authentication-modal{{ $transaction->id }}"
+                                                data-modal-toggle="authentication-modal{{ $transaction->id }}"
                                                 type="button"
-                                                class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black w-16"
+                                                class="border-2 border-green-400 bg-green-200 rounded-full font-semibold px-2 py-1 text-black w-16 cursor-pointer"
                                                 value="Mark as paid">Mark as paid
                                             </x-form-input>
                                             <input type="hidden" name="transaction_id"
@@ -228,7 +228,7 @@
                                             <input type="hidden" name="cost"
                                                    value="{{ $transaction->getTotalCost()}}">
                                             <!-- Main modal -->
-                                            <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+                                            <div id="authentication-modal{{ $transaction->id }}" tabindex="-1" aria-hidden="true"
                                                  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                 <div class="relative p-4 w-full max-w-md max-h-full">
                                                     <!-- Modal content -->
@@ -237,11 +237,11 @@
                                                         <div
                                                             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                                                Official Receipt
+                                                                Official Receipt {{ $transaction->id }}
                                                             </h3>
                                                             <button type="button"
                                                                     class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                                    data-modal-hide="authentication-modal">
+                                                                    data-modal-hide="authentication-modal{{ $transaction->id }}">
                                                                 <svg class="w-3 h-3" aria-hidden="true"
                                                                      xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                      viewBox="0 0 14 14">

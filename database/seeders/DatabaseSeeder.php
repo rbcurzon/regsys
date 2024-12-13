@@ -153,7 +153,7 @@ class DatabaseSeeder extends Seeder
             ['student_id' => '2022-20306', 'first_name' => 'John', 'last_name' => 'Boe', 'email' => 'student@example.com', 'role' => null]
         );
 
-        \App\Models\Transaction::factory()->create([
+        Transaction::factory()->create([
 
             'id' => 999
         ]);

@@ -23,7 +23,8 @@ Route::get('/transactions/create', [TransactionController::class, 'create'])
     ->can('create', Transaction::class);
 Route::post('/transactions', [TransactionController::class, 'store'])
     ->middleware('auth')
-    ->can('create', Transaction::class);
+    ->can('create', Transaction::class)
+->name('transactions.store');
 Route::get('/transactions/{transaction}/show', [TransactionController::class, 'show'])
     ->middleware('auth')
     ->can("view", "transaction");

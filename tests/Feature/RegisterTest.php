@@ -23,8 +23,8 @@ test('user can register', function () {
         'course_id' => fake()->numberBetween(1,7),
         'section' => fake()->numberBetween(1,7),
         'email' => 'ronaldcurzon@gmail.com',
-        'password_confirmation' => 'Password1',
-        'password' => 'Password1',
+        'password_confirmation' => 'Password1@',
+        'password' => 'Password1@',
     ];
 
     $response = $this->post('/register', $userData);

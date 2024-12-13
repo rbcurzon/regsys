@@ -5,7 +5,7 @@
 
 @extends('components.layout')
 
-@section('title', 'Update')
+@section('title', 'Edit')
 
 @section('student_id', $user->student_id)
 
@@ -142,14 +142,22 @@
                                                {{ in_array($document->document_id, $transaction_document_ids) ? "checked" : "" }}
                                                onclick="showCheckBox()"
                                         >
-                                        <label
-                                            for="document{{ $document->document_name }}">{{ $document->document_name }}
-                                            <span>  / </span> Php {{ $document->cost }}</label> x
-                                        <x-input type="number" name="quantity[]"
-                                                 class="mt-1 w-24 hidden"
-                                                 placeholder="copies"
+                                        <label for="document{{ $document->document_name }}">
+                                        {{ $document->document_name }}
+                                        </label>
+                                        <label class="quantity{{ $document->document_id }}"
+                                               for="quantity{{ $document->document_id }}"
+                                        >
+                                           | Php {{ $document->cost }} x
+                                        </label>
+                                        <x-input id="quantity{{ $document->document_id }}"
+                                                type="number"
+                                                 name="quantity[]"
+                                                 class="p-1 w-20 hidden"
+                                                 placeholder="copy"
                                                  value="{{ in_array($document->document_id, $transaction_document_ids) ? $transaction->transactionDocument->where('document_id', '=',$document->document_id)->first()->quantity : null }}"
-                                                 min=1></x-input>
+                                                 min=1>
+                                        </x-input>
                                     </li>
                                 @endforeach
                             </ul>
@@ -191,27 +199,30 @@
     </div>
     <script type="text/javascript">
         function showCheckBox() {
-            // Select all checkboxes with the name "documents[]"
+            // Select all checked checkboxes with the name "documents[]"
             const checkboxes = document.querySelectorAll('input[name="documents[]"]:checked');
 
-            // Collect checked checkbox values
+            // Collect the values of checked checkboxes
             const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
 
-            // Find all quantity inputs
+            // Find all quantity inputs and their associated labels
             const allInputs = document.querySelectorAll('input[name^="quantity[]"]');
+
             allInputs.forEach(input => {
-                const parentLi = input.closest('li');
+                const parentLi = input.closest('li'); // Find the parent <li> element
                 if (parentLi) {
                     const checkbox = parentLi.querySelector('input[name="documents[]"]');
+                    const label = parentLi.querySelector(`label[for="${input.id}"]`); // Find the associated label
                     if (checkbox && checkedValues.includes(checkbox.value)) {
-                        input.classList.remove('hidden'); // Show if checkbox is checked
+                        input.classList.remove('hidden'); // Show the input
+                        if (label) label.classList.remove('hidden'); // Show the label
                     } else {
-                        input.classList.add('hidden'); // Hide if checkbox is not checked
+                        input.classList.add('hidden'); // Hide the input
+                        if (label) label.classList.add('hidden'); // Hide the label
                     }
                 }
             });
         }
-
         document.addEventListener('DOMContentLoaded', showCheckBox);
     </script>i
 

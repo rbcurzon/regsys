@@ -178,15 +178,21 @@
 
 @auth
     <!-- sidebar start -->
-    <div class="inline absolute text-2xl text-gray-900 h-full" onclick="toggleSidebar()">&#9776;</div> <!-- Burger icon -->
-    <aside id="sidebar" class="absolute bg-blue-900">
-        <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+    </button>
+
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-blue-900" aria-label="Sidebar">
+    <nav class="flex flex-col space-y-4 pb-5 px-2 mt-6">
             <a href="/profile"
                class="flex flex-col justify-center items-center mb-3 text-white hover:text-blue-600">
                 <img src="{{ asset('/images/profile-icon-design-free-vector.jpg') }}" alt=""
                      class="rounded-full w-20 h-20 ">
                 <span
-                    class="text-lg font-bold text-center sidebar-label montserrat-regular">{{ Auth::user()->getFirstNameAndLastNameAbbreviation() }}</span>
+                    class="text-lg font-bold text-center montserrat-regular">{{ Auth::user()->getFirstNameAndLastNameAbbreviation() }}</span>
             </a>
             <x-nav-link href="/" class="mb-2" :active="request()->is('/')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -195,7 +201,7 @@
                           d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
                 </svg>
                 <span
-                    class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Dashboard</span>
+                    class='flex flex-col justify-center items-center h-full text-black font-bold text-base montserrat-bold'>Dashboard</span>
             </x-nav-link>
             @can('create', Transaction::class)
                 <x-nav-link href="/transactions/create" :active="request()->is('transactions/create')">
@@ -205,7 +211,7 @@
                               d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
                     </svg>
                     <span
-                        class='flex flex-col justify-center items-center h-full text-black font-bold text-base sidebar-label montserrat-bold'>Request</span>
+                        class='flex flex-col justify-center items-center h-full text-black font-bold text-base montserrat-bold'>Request</span>
                 </x-nav-link>
             @endcan
             <form method="POST" action="/logout">
@@ -219,7 +225,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"/>
                         </svg>
-                        <span class="ps-3 sidebar-label montserrat-bold">Logout</span>
+                        <span class="ps-3 montserrat-bold">Logout</span>
                     </label>
                     <input type="submit" id="logout" value="Logout" class="hidden">
                 </div>
