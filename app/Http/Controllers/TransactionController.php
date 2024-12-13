@@ -174,17 +174,19 @@ class TransactionController extends Controller
     }
 
     public
-    function update(Transaction $transaction, UpdateTransactionRequest $request)
+    function update(Transaction $transaction,Request $request)
     {
 
 //        dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'status' => $request->get('status') !== 'pending' ? 'declined_if:is_paid,0' : '',
+        ], $messages=[
+            'status.declined_if' => 'The payment must be made.',
         ]);
 
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('error', $validator->messages()->all()[0])->withInput();
         }
 
         $transaction->update([
