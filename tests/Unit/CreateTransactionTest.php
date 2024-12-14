@@ -4,6 +4,7 @@ use App\Models\Document;
 use App\Models\Transaction;
 use App\Models\TransactionDocument;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use function Pest\Laravel\assertDatabaseCount;
@@ -82,7 +83,7 @@ test('transaction can be recorded on journal', function () {
     ]);
 
     $response = $this->actingAs($user)
-        ->post(route('journals.store', ['or_number' => '1234-1231','transaction_id' => $transaction->id, 'student_id' => $user->student_id, 'cost' => $transaction->cost]));
+        ->post(route('journals.store', ['or_number' => '1234-1231', 'transaction_id' => $transaction->id, 'student_id' => $user->student_id, 'cost' => $transaction->cost]));
 
     $this->assertDatabaseCount('journals', 2);
 });
@@ -142,3 +143,4 @@ test('user can request a document and multiple copies of another document', func
 
 //    dd($transaction->cost);
 });
+

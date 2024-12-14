@@ -29,7 +29,6 @@ class TransactionFactory extends Factory
             'is_paid' => fake()->boolean(0),
             'cost' => 0,
             'status' => $status[array_rand($status)],
-            'or_number' => $this->faker->unique()->randomNumber(8, true),
             ];
     }
 }

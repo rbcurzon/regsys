@@ -149,132 +149,15 @@ aside.open {
         z-index: 10; /* Ensure it's on top */
     }
 
-    .sidebar-label {
-        opacity: 0; /* Hide labels but keep space */
-        visibility: hidden; /* Ensure it doesn't interfere with layout */
-    }
+    /*.sidebar-label {*/
+    /*    opacity: 0; !* Hide labels but keep space *!*/
+    /*    visibility: hidden; !* Ensure it doesn't interfere with layout *!*/
+    /*}*/
 
-    aside.open .sidebar-label {
-        opacity: 1; /* Show labels when the sidebar is open */
-        visibility: visible; /* Ensure they are visible */
-    }
-
-    .sidebar-icon {
-        display: block;
-        width: 24px;
-        height: 24px;
-    }
-
-    .burger {
-        display: block; /* Show burger icon on smaller screens */
-    }
-}
-
-/* Optional: If you want the sidebar to be less wide on very small screens */
-@media (max-width: 480px) {
-    aside.open {
-        width: 180px; /* Adjust width further for very small screens */
-    }
-}
-
-/* Completely hide sidebar below 480px */
-@media (max-width: 480px) {
-    aside {
-        transform: translateX(-100%); /* Hide sidebar fully on mobile */
-    }
-}
-
-/* Apply Montserrat font styles */
-.montserrat-regular {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-}
-
-.montserrat-bold {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-}
-
-.text-shadow-white {
-    position: relative;
-    z-index: 50;
-    color: white !important;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    background-color: #f0f0f0; /* Light gray background */
-}
-
-
-header {
-    z-index: 10;
-    position: relative;
-    background-color: rgb(0, 0, 85);
-}
-
-/* Sidebar - hidden by default in mobile view */
-aside {
-    position: absolute;
-    top: 110px; /* Adjust this if necessary to match your header height */
-    left: 0;
-    width: 205px; /* Fixed width for larger screens */
-    height: calc(100vh - 110px); /* Use the header height here */
-    border: 1px solid black;
-    border-radius: 0 10px 10px 0;
-    padding-top: 1rem;
-    transition: transform 0.3s ease;
-    transform: translateX(0); /* Visible by default on larger screens */
-    z-index: 9;
-}
-
-/* Show sidebar when 'open' class is added */
-aside.open {
-    transform: translateX(0); /* Visible when 'open' */
-}
-
-/* Style for the toggle button */
-.burger {
-    cursor: pointer;
-    color: white;
-    font-size: 2rem;
-    display: none; /* Hidden by default */
-}
-
-/* Sidebar Label Styles */
-.sidebar-label {
-    transition: opacity 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    aside {
-        width: 205px; /* Keep this width for larger screens */
-        transform: translateX(-100%); /* Hidden by default */
-        height: calc(100vh - 110px); /* Adjust height for mobile */
-    }
-
-    aside.open {
-        transform: translateX(0); /* Show sidebar when 'open' */
-        position: fixed;
-        top: 160px; /* Maintain the position below the header */
-        left: 0;
-        width: 205px; /* Fixed width on mobile */
-        height: calc(100vh - 110px); /* Adjust height for mobile */
-        z-index: 10; /* Ensure it's on top */
-    }
-
-    .sidebar-label {
-        opacity: 0; /* Hide labels but keep space */
-        visibility: hidden; /* Ensure it doesn't interfere with layout */
-    }
-
-    aside.open .sidebar-label {
-        opacity: 1; /* Show labels when the sidebar is open */
-        visibility: visible; /* Ensure they are visible */
-    }
+    /*aside.open .sidebar-label {*/
+    /*    opacity: 1; !* Show labels when the sidebar is open *!*/
+    /*    visibility: visible; !* Ensure they are visible *!*/
+    /*}*/
 
     .sidebar-icon {
         display: block;
@@ -383,15 +266,15 @@ aside.open {
         z-index: 10; /* Ensure it's on top */
     }
 
-    .sidebar-label {
-        opacity: 0; /* Hide labels but keep space */
-        visibility: hidden; /* Ensure it doesn't interfere with layout */
-    }
+    /*.sidebar-label {*/
+    /*    opacity: 0; !* Hide labels but keep space *!*/
+    /*    visibility: hidden; !* Ensure it doesn't interfere with layout *!*/
+    /*}*/
 
-    aside.open .sidebar-label {
-        opacity: 1; /* Show labels when the sidebar is open */
-        visibility: visible; /* Ensure they are visible */
-    }
+    /*aside.open .sidebar-label {*/
+    /*    opacity: 1; !* Show labels when the sidebar is open *!*/
+    /*    visibility: visible; !* Ensure they are visible *!*/
+    /*}*/
 
     .sidebar-icon {
         display: block;
@@ -500,15 +383,132 @@ aside.open {
         z-index: 10; /* Ensure it's on top */
     }
 
-    .sidebar-label {
-        opacity: 0; /* Hide labels but keep space */
-        visibility: hidden; /* Ensure it doesn't interfere with layout */
+    /*.sidebar-label {*/
+    /*    opacity: 0; !* Hide labels but keep space *!*/
+    /*    visibility: hidden; !* Ensure it doesn't interfere with layout *!*/
+    /*}*/
+
+    /*aside.open .sidebar-label {*/
+    /*    opacity: 1; !* Show labels when the sidebar is open *!*/
+    /*    visibility: visible; !* Ensure they are visible *!*/
+    /*}*/
+
+    .sidebar-icon {
+        display: block;
+        width: 24px;
+        height: 24px;
     }
 
-    aside.open .sidebar-label {
-        opacity: 1; /* Show labels when the sidebar is open */
-        visibility: visible; /* Ensure they are visible */
+    .burger {
+        display: block; /* Show burger icon on smaller screens */
     }
+}
+
+/* Optional: If you want the sidebar to be less wide on very small screens */
+@media (max-width: 480px) {
+    aside.open {
+        width: 180px; /* Adjust width further for very small screens */
+    }
+}
+
+/* Completely hide sidebar below 480px */
+@media (max-width: 480px) {
+    aside {
+        transform: translateX(-100%); /* Hide sidebar fully on mobile */
+    }
+}
+
+/* Apply Montserrat font styles */
+.montserrat-regular {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.montserrat-bold {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.text-shadow-white {
+    position: relative;
+    z-index: 50;
+    color: white !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; /* Light gray background */
+}
+
+
+header {
+    z-index: 10;
+    position: relative;
+    background-color: rgb(0, 0, 85);
+}
+
+/* Sidebar - hidden by default in mobile view */
+aside {
+    position: absolute;
+    top: 110px; /* Adjust this if necessary to match your header height */
+    left: 0;
+    width: 205px; /* Fixed width for larger screens */
+    height: calc(100vh - 110px); /* Use the header height here */
+    border: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    padding-top: 1rem;
+    transition: transform 0.3s ease;
+    transform: translateX(0); /* Visible by default on larger screens */
+    z-index: 9;
+}
+
+/* Show sidebar when 'open' class is added */
+aside.open {
+    transform: translateX(0); /* Visible when 'open' */
+}
+
+/* Style for the toggle button */
+.burger {
+    cursor: pointer;
+    color: white;
+    font-size: 2rem;
+    display: none; /* Hidden by default */
+}
+
+/* Sidebar Label Styles */
+.sidebar-label {
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 205px; /* Keep this width for larger screens */
+        transform: translateX(-100%); /* Hidden by default */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+    }
+
+    aside.open {
+        transform: translateX(0); /* Show sidebar when 'open' */
+        position: fixed;
+        top: 160px; /* Maintain the position below the header */
+        left: 0;
+        width: 205px; /* Fixed width on mobile */
+        height: calc(100vh - 110px); /* Adjust height for mobile */
+        z-index: 10; /* Ensure it's on top */
+    }
+
+    /*.sidebar-label {*/
+    /*    opacity: 0; !* Hide labels but keep space *!*/
+    /*    visibility: hidden; !* Ensure it doesn't interfere with layout *!*/
+    /*}*/
+
+    /*aside.open .sidebar-label {*/
+    /*    opacity: 1; !* Show labels when the sidebar is open *!*/
+    /*    visibility: visible; !* Ensure they are visible *!*/
+    /*}*/
 
     .sidebar-icon {
         display: block;

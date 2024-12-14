@@ -97,7 +97,7 @@
                                     <option value="{{$purpose->purpose_id}}">{{ $purpose->purpose_name }}</option>
                                 @endforeach
                             </select>
-                            <x-error field="purpose_id" class="text-red-900 italic" />
+                            <x-error field="purpose_id" class="text-red-900 italic"/>
                         </div>
 
                         {{-- date needed --}}
@@ -105,9 +105,10 @@
                             <label for="needed_date" class="block font-semibold">Date needed</label>
                             <input type="date" name="needed_date" id="needed_date" autocomplete="needed_date"
                                    class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-                                   value="{{ old('needed_date') }}">
-{{--                            <x-error field="needed_date" class=" text-red-900 italic"/>--}}
-                            <p class="text-sm italic text-red-900">Note: The needed date must be within the next 7 days</p>
+                                   value="{{ \Carbon\Carbon::now()->addDays(8)->toDateString()  }}">
+                            {{--                            <x-error field="needed_date" class=" text-red-900 italic"/>--}}
+                            <p class="text-sm italic text-red-900">Note: The needed date must be after 7 days
+                                days</p>
                         </div>
 
                         {{-- documents --}}
@@ -116,18 +117,27 @@
                                 <legend class="font-semibold">
                                     Documents
                                 </legend>
-                                <ul>
+                                <ul class="list-inside text-gray-900/90">
                                     @foreach($documents as $document)
-                                       <li>
+                                        <li>
                                             <input type="checkbox"
                                                    name="documents[]"
                                                    value="{{ $document->document_id }}"
                                                    id="document{{ $document->document_name }}"
                                                    onclick="showCheckBox()"
                                             >
-                                            <label
-                                                for="document{{ $document->document_name }}">{{ $document->document_name }} <span class=""> | &#8369;</span>  {{ $document->cost }}</label> x
-                                            <x-input type="number" name="quantity[]" class="text-sm mt-1 w-20 hidden"  placeholder="qty" min=1></x-input>
+                                            <label for="document{{ $document->document_name }}">
+                                                {{ $document->document_name }}
+                                            </label>
+                                            <label class="quantity{{ $document->document_id }}"
+                                                   for="quantity{{ $document->document_id }}"
+                                            >
+                                                | Php {{ $document->cost }} x
+                                            </label>
+                                            <x-input id="quantity{{ $document->document_id }}" type="number"
+                                                     name="quantity[]"
+                                                     class=" p-1 w-20 hidden"
+                                                     placeholder="copy" min=1></x-input>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -152,25 +162,31 @@
     </div>
     <script type="text/javascript">
         function showCheckBox() {
-            // Select all checkboxes with the name "documents[]"
+            // Select all checked checkboxes with the name "documents[]"
             const checkboxes = document.querySelectorAll('input[name="documents[]"]:checked');
 
-            // Collect checked checkbox values
+            // Collect the values of checked checkboxes
             const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
 
-            // Find all quantity inputs
+            // Find all quantity inputs and their associated labels
             const allInputs = document.querySelectorAll('input[name^="quantity[]"]');
+
             allInputs.forEach(input => {
-                const parentLi = input.closest('li');
+                const parentLi = input.closest('li'); // Find the parent <li> element
                 if (parentLi) {
                     const checkbox = parentLi.querySelector('input[name="documents[]"]');
+                    const label = parentLi.querySelector(`label[for="${input.id}"]`); // Find the associated label
                     if (checkbox && checkedValues.includes(checkbox.value)) {
-                        input.classList.remove('hidden'); // Show if checkbox is checked
+                        input.classList.remove('hidden'); // Show the input
+                        if (label) label.classList.remove('hidden'); // Show the label
                     } else {
-                        input.classList.add('hidden'); // Hide if checkbox is not checked
+                        input.classList.add('hidden'); // Hide the input
+                        if (label) label.classList.add('hidden'); // Hide the label
                     }
                 }
             });
         }
-    </script>
+
+        document.addEventListener('DOMContentLoaded', showCheckBox);
+    </script>i>
 @endsection

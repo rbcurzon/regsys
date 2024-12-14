@@ -56,7 +56,6 @@ test('user can update his document request', function () {
 //    $response->assertSuccessful();
 
 //    dd($doc_requests);
-    dd(TransactionDocument::all());
 
     $this->assertDatabaseCount('transaction_document', count($doc_requests));
     $this->assertDatabaseHas('transaction_document', [

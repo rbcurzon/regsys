@@ -75,19 +75,8 @@
 
                             <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2 bg-">
                             <span class="font-bold text-gray-900">
-                                OR Number:
-                            </span> {{ $transaction->or_number }}
-                            </div>
-
-                            <div class="sm:col-span-1 sm:col-start-1 bg-">
-                            <span class="font-bold text-gray-900">
-                                Documents:
-                            </span>
-                                <ul class="list-decimal pl-12">
-                                    @foreach($transaction->transactionDocument as $document)
-                                        <li>{{ $document->document->document_name }} x{{ $document->quantity }} copies</li>
-                                    @endforeach
-                                </ul>
+                                Reference ID:
+                            </span> {{ $transaction->id }}
                             </div>
 
                             {{-- Date of request--}}
@@ -96,11 +85,10 @@
                                     class="font-semibold text-gray-900">Date of request:</span> {{ $transaction->created_at->format('F j, Y') }}
                             </div>
 
-                            {{-- Purpose --}}
-                            <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2">
+                            <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2 bg-">
                             <span class="font-bold text-gray-900">
-                                Purpose:
-                            </span>{{ $transaction->purpose->purpose_name }}
+                                OR Number:
+                            </span> {{ $transaction->or_number }}
                             </div>
 
                             {{-- Date of need --}}
@@ -109,10 +97,29 @@
                                     class="font-semibold text-gray-900">Date of need:</span> {{ date('F j, Y', strtotime($transaction->needed_date)) }}
                             </div>
 
+                            <div class="sm:col-span-1 sm:col-start-1 bg-">
+                            <span class="font-bold text-gray-900">
+                                Documents:
+                            </span>
+                                <ul class="list-decimal pl-12">
+                                    @foreach($transaction->transactionDocument as $document)
+                                        <li>{{ $document->document->document_name }} x {{ $document->quantity }} copy
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
                             {{-- amount --}}
                             <div class="sm:col-span-1 sm:col-start-2 grid grid-cols-2">
                                 <span
                                     class="font-semibold text-gray-900">Amount:</span> {{ $transaction->getTotalCost() . " Php" }}
+                            </div>
+
+                            {{-- Purpose --}}
+                            <div class="sm:col-span-1 sm:col-start-1 grid grid-cols-2">
+                            <span class="font-bold text-gray-900">
+                                Purpose:
+                            </span>{{ $transaction->purpose->purpose_name }}
                             </div>
                         </div>
                     </fieldset>
