@@ -141,7 +141,7 @@
                     </div>
 
                     <x-form-error name="email"></x-form-error>
-                   <p class="text-white text-sm">Login attempt: {{ session()->get('login_attempt_count')}}</p>
+                   <p class="text-white text-sm">Login attempts: {{ session()->get('login_attempt') ?? 3 }}</p>
                     <!-- Login Button -->
                     <div class="text-center">
                         <button type="submit" class="w-full login-button py-2 rounded-lg transition duration-200 montserrat-semibold">

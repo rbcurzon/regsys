@@ -22,32 +22,28 @@ class SessionController extends Controller
      */
     public function store()
     {
-//        $executed = RateLimiter::attempt(
-//            'send-message:' . \request('student_id'),
-//            $perMinute = 5,
-//            function () {
-//            },
-//            $decayRate = 120,
-//        );
+        if (session()->missing('login_attempt')) {
+            session()->put('login_attempt', 3);
+        }
 
+        session()->decrement('login_attempt');
 
-        if (RateLimiter::tooManyAttempts('login:' . \request()->ip(), $perMinute = 3)) {
+        $executed = RateLimiter::attempt(
+            'login:' . \request()->ip(),
+            3,
+            function () {
+
+            }
+        );
+
+        if (!$executed) {
             $seconds = RateLimiter::availableIn('login:' . \request()->ip());
 
-            session()->put('login_attempt_count', 0);
+            session()->put('login_attempt', 3);
 
             return back()->with('toast_error', 'You may try again in ' . $seconds . ' seconds.')->withInput();
         }
 
-        session()->increment('login_attempt_count');
-
-        RateLimiter::increment('login:' . \request()->ip());
-
-// Send message...
-
-//        if (!$executed) {
-////            return 'Too many messages sent!';
-//        }
         $attributes = request()->validate([
             'email' => ['required', 'email'],
             'password' => ['required']
@@ -57,11 +53,10 @@ class SessionController extends Controller
 //            throw ValidationException::withMessages([
 //                "email" => "Sorry, those credentials are not matched.",
 //            ]);
-
             return back()->with('toast_error', 'Sorry, those credentials are not matched.')->withInput();
         }
 
-        session()->put('login_attempt_count', 0);
+        session()->put('login_attempt', 3);
 
         request()->session()->regenerate();
 
@@ -71,6 +66,7 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
+
         return redirect('/login')->with('toast_error', 'You are now logged out');
     }
 }
