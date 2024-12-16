@@ -14,6 +14,11 @@ class SessionController extends Controller
 
     public function create()
     {
+        $seconds = RateLimiter::availableIn('login:' . \request()->ip());
+
+        if ($seconds == 0)
+            session()->put('login_attempt', 3);
+
         return view('auth.login');
     }
 
@@ -28,18 +33,23 @@ class SessionController extends Controller
 
         session()->decrement('login_attempt');
 
+
         $executed = RateLimiter::attempt(
             'login:' . \request()->ip(),
-            3,
+            $perTwoMinutes = 3,
             function () {
 
-            }
+            },
+            $decayRate = 500,
         );
 
         if (!$executed) {
             $seconds = RateLimiter::availableIn('login:' . \request()->ip());
 
-            session()->put('login_attempt', 3);
+            if ($seconds > 0) {
+                session()->put('login_attempt', 0);
+            } else
+                session()->put('login_attempt', 3);
 
             return back()->with('toast_error', 'You may try again in ' . $seconds . ' seconds.')->withInput();
         }
