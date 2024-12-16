@@ -14,10 +14,7 @@ class SessionController extends Controller
 
     public function create()
     {
-        $seconds = RateLimiter::availableIn('login:' . \request()->ip());
-
-        if ($seconds == 0)
-            session()->put('login_attempt', 3);
+        session()->put('login_attempt', RateLimiter::remaining('login:' . \request()->ip(), 3));
 
         return view('auth.login');
     }
@@ -27,12 +24,8 @@ class SessionController extends Controller
      */
     public function store()
     {
-        if (session()->missing('login_attempt')) {
-            session()->put('login_attempt', 3);
-        }
 
-        session()->decrement('login_attempt');
-
+        session()->put('login_attempt', RateLimiter::remaining('login:' . \request()->ip(), 3));
 
         $executed = RateLimiter::attempt(
             'login:' . \request()->ip(),
@@ -40,7 +33,7 @@ class SessionController extends Controller
             function () {
 
             },
-            $decayRate = 500,
+            $decayRate = 300,
         );
 
         if (!$executed) {
