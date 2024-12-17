@@ -6,7 +6,7 @@
    Navigate to your desired project directory.
    Use the git clone command to clone the repository.
 
-git clone <repository_url> <folder_name>
+git clone git@github.com:rbcurzon/regsys.git
 
 2. Install Composer Dependencies
 
